@@ -1,0 +1,185 @@
+
+
+
+<ion-header class="text-center" color="light" [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/quest-pages"></ion-back-button>
+    </ion-buttons>
+
+    <ion-label style="text-transform: uppercase;"  >
+      <strong>{{titulo}}</strong>
+      </ion-label>
+
+    
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-grid fixed>
+    <!--CATEGORIA INPUT-->
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Categoria : {{ quest.category || "?"}}</ion-label>
+          <ion-select
+            [(ngModel)]="quest.category"
+            interface="popover"
+            placeholder="Select Category"
+          >
+            <ion-select-option
+              *ngFor="let category of categorys | async"
+              [value]="category.categoria"
+              >{{category.categoria}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        
+      </ion-col>
+
+      <ion-col>
+        <ion-item>
+          <ion-label>Dificultad : {{ quest.difficulty || "?"}}</ion-label>
+          <ion-select
+            [(ngModel)]="quest.difficulty"
+            interface="popover"
+            placeholder="Select Dificultad"
+          >
+            <ion-select-option
+              *ngFor="let difficulty of difficultys | async"
+              [value]="difficulty.difficulty"
+              >{{difficulty.difficulty}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        
+      </ion-col>
+    </ion-row>
+    <!--PREGUNTA INPUT-->
+    <ion-row>
+      <ion-col>
+        <!--Question-->
+        <ion-item>
+          <ion-label position="floating">Question</ion-label>
+          <ion-input
+            [(ngModel)]="quest.question"
+            type="text"
+            required
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!--ANSWER CORRECT-->
+    <ion-list>
+      <ion-radio-group name="auto" [(ngModel)]="quest.answer">
+        <ion-row>
+          <ion-col size="12">
+            <ion-list-header>
+              <ion-label>Select Correct Answer: </ion-label>
+            </ion-list-header>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="3" *ngFor="let a of options">
+            <ion-item>
+              <ion-label>{{a.val}}</ion-label>
+              <ion-radio [value]="a.val"></ion-radio>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+    </ion-list>
+
+
+<!--ANSWERS INPUT-->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">A - answer</ion-label>
+          <ion-input
+            [(ngModel)]="quest.ansOptionsA"
+            type="text"
+            required
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label
+            ><ion-label position="floating">B - answer</ion-label>
+            <ion-input
+              [(ngModel)]="quest.ansOptionsB"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">C - answer</ion-label>
+            <ion-input
+              [(ngModel)]="quest.ansOptionsC"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">D - answer</ion-label>
+            <ion-input
+              [(ngModel)]="quest.ansOptionsD"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <label>Respuesta Correcta: {{quest.answer || "?"}}</label>
+      </ion-col>
+    </ion-row>
+<!--SEND BUTTON-->
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          (click)="createQuest(quest)"
+          class="ion-padding"
+          expand="full"
+          fill="solid"
+          shape="round"
+        >
+          Create
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!--Categoria-->
+
+  <!--Answers options-->
+
+  <!-- Checkboxes in a List -->
+
+  <!--AnswersOptions-->
+</ion-content>

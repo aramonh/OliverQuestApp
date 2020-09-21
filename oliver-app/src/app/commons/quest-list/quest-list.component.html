@@ -1,0 +1,16 @@
+<ion-grid fixed>
+  <ion-row>
+    <ion-col
+      size="12"
+      size-lg="3"
+      size-md="4"
+      size-sm="6"
+      size-xs="12"
+      *ngFor="let quest of quests  | filtro: textoBuscar: 'question'"
+    >
+ 
+<app-quest-card [userId]="userId" [quest]="quest" ></app-quest-card>
+
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="background">
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-label text-capitalize class="ml-3" slot="start">{{titulo}}</ion-label>
+
+
+    <ion-label class="ml-3" slot="start" >{{user.name}}</ion-label>
+    <ion-buttons slot="end">
+    
+      <ion-button (click)="salir()" expand="block" fill="solid" shape="round">
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

@@ -1,0 +1,8 @@
+{
+  "name": "app-oliver-quest",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

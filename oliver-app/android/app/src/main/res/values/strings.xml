@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">OliverQuest</string>
+    <string name="title_activity_main">OliverQuest</string>
+    <string name="package_name">app.oliver.quest</string>
+    <string name="custom_url_scheme">app.oliver.quest</string>
+</resources>

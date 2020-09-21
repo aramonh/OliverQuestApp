@@ -1,0 +1,49 @@
+<ion-header class="text-center" color="light" [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-label class="ml-3" slot="start" *ngIf="user.name" >{{user.name}}</ion-label>
+
+    <ion-label style="text-transform: uppercase;" >
+      <strong>{{titulo}}</strong>
+      </ion-label>
+     
+    
+    <ion-buttons class="mr-4"  slot="end">
+      <ion-button color="tertiary" (click)="salir()" expand="block" fill="solid" shape="round">
+        <ion-icon slot="icon-only" name="exit-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+
+
+<ion-content style="background-color: background;" class="ion-no-padding"  >
+
+<ion-grid class="text-center" style="width: 100%; height: 100%;" fixed>
+  <ion-row class="mt-5" >
+    <ion-col size="12">
+
+      <ion-button class="mx-auto" style="width: 60%;" fill="solid" expand="full"  routerLink="/quest-pages">
+        <ion-icon slot="icon-only"  name="help-circle"></ion-icon>
+      </ion-button>
+
+    </ion-col >
+    <ion-col class="mx-auto mt-5 text-center" size="12">
+      <ion-button class="mx-auto" style="width: 60%;" fill="solid" expand="full"  (click)="showToast('Proximamente to Work Dinamic Dialogs')">
+        <ion-icon slot="icon-only"  name="chatbubbles-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="mt-5 mx-auto">
+    <ion-col size="12" text-align-center>
+      <ion-img class="mx-auto" style="width: 128px; height: 128px;" src="assets/media/oliver_waiting.gif"></ion-img>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid  class="text-center" fixed>
+    <ion-row>
+      <ion-col >
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="user.email" type="email" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input [(ngModel)]="user.password" type="password" required></ion-input>
+        </ion-item>
+      </ion-col>
+     
+    </ion-row>
+
+    <ion-row>
+      <ion-col >
+        <ion-button (click)="onLogin(user)" class="ion-padding" expand="full" fill="solid" shape="round">
+          Login
+        </ion-button>
+      
+      
+        <ion-button color="danger" (click)="onLoginGoogle()" class="ion-padding" expand="full" fill="solid" shape="round">
+          Login con Google
+        </ion-button>
+      
+        <ion-button  class="mt-5 " color="tertiary" routerLink="/register" class="ion-padding"  expand="full" fill="solid" shape="round">
+          Register
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
+
+  
+</ion-content>
