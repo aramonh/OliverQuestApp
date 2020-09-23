@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TabAllPageRoutingModule } from './tab-all-routing.module';
 
 import { TabAllPage } from './tab-all.page';
+import { CommonsModule } from 'src/app/commons/commons.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabAllPageRoutingModule
+    TabAllPageRoutingModule,
+    CommonsModule
   ],
   declarations: [TabAllPage]
 })

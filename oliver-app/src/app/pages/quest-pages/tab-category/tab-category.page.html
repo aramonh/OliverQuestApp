@@ -1,9 +1,46 @@
-<ion-header>
+<ion-header class="text-center" color="light" [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-label style="text-transform: uppercase;" >
+      <strong>{{titulo}}</strong>
+      </ion-label>
+
+    
+    <ion-buttons class="mr-4"  slot="end">
+      <ion-button color="tertiary" (click)="changeSearchBarState()" expand="block" fill="solid" shape="round">
+
+        
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
   <ion-toolbar>
-    <ion-title>tabCategory</ion-title>
+    <ion-segment  (ionChange)="cambioCategoria( $event )"
+    [value]="categoriaAct"  scrollable mode="md" color="primary">
+      <ion-segment-button mode="md"
+      *ngFor="let categoria of categorys | async"
+       [value]="categoria.categoria">
+        <ion-label text-capitalize>{{categoria.categoria}}</ion-label>
+      </ion-segment-button>
+
+
+   
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="light" class="ion-no-padding">
+  
 
+  <app-quest-list [userId]="user.uid" [quests]="quests" [textoBuscar]="textoBuscar" ></app-quest-list>
+
+  <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="medium" routerLink="/add-quest">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

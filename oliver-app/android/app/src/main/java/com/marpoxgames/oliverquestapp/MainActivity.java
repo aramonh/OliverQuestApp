@@ -1,4 +1,4 @@
-package app.oliver.quest;
+package com.marpoxgames.oliverquestapp;
 
 import android.os.Bundle;
 

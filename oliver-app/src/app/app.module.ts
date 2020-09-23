@@ -17,6 +17,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CommonsModule } from './commons/commons.module';
 import { PipesModule } from './pipes/pipes.module';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { PipesModule } from './pipes/pipes.module';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    GooglePlus,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

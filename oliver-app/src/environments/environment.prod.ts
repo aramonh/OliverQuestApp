@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebase_config: {
-    apiKey: "AIzaSyB1ALaVdkjScqrxCBpHWz1QB8D9WpG7ES8",
-    authDomain: "app-oliver-quest.firebaseapp.com",
-    databaseURL: "https://app-oliver-quest.firebaseio.com",
-    projectId: "app-oliver-quest",
-    storageBucket: "app-oliver-quest.appspot.com",
-    messagingSenderId: "682861303862",
-    appId: "1:682861303862:web:0a911412d55c9517e2a097"
+    apiKey: "AIzaSyDWLREo8i2oRQvopbHyrQHTQ0cnJs-NokE",
+    authDomain: "app-oliver-quest-5d65d.firebaseapp.com",
+    databaseURL: "https://app-oliver-quest-5d65d.firebaseio.com",
+    projectId: "app-oliver-quest-5d65d",
+    storageBucket: "app-oliver-quest-5d65d.appspot.com",
+    messagingSenderId: "469177720356",
+    appId: "1:469177720356:web:576d12b649d7e57e1d42b1"
   }
 };

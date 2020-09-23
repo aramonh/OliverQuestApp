@@ -6,15 +6,29 @@ import { QuestPagesPage } from './quest-pages.page';
 const routes: Routes = [
   {
     path: '',
-    component: QuestPagesPage
+    component: QuestPagesPage,
+    children: [
+      {
+        path: 'tab1',
+        loadChildren: () => import('../quest-pages/tab-all/tab-all.module').then(m => m.TabAllPageModule)
+      },
+      {
+        path: 'tab2',
+        loadChildren: () => import('../quest-pages/tab-category/tab-category.module').then(m => m.TabCategoryPageModule)
+      },
+      
+      {
+        path: '',
+        redirectTo: 'tab1',
+        pathMatch: 'full'
+      }
+    ]
   },
+      
   {
-    path: 'tab-all',
-    loadChildren: () => import('./tab-all/tab-all.module').then( m => m.TabAllPageModule)
-  },
-  {
-    path: 'tab-category',
-    loadChildren: () => import('./tab-category/tab-category.module').then( m => m.TabCategoryPageModule)
+    path: '',
+    redirectTo: 'tab1',
+    pathMatch: 'full'
   }
 ];
 

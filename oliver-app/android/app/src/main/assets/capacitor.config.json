@@ -1,5 +1,5 @@
 {
-  "appId": "app.oliver.quest",
+  "appId": "com.marpoxgames.oliverquestapp",
   "appName": "OliverQuest",
   "bundledWebRuntime": false,
   "npmClient": "npm",

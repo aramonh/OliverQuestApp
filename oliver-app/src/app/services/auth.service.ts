@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
+import { Platform } from '@ionic/angular';
 import {
   NavController,
   ToastController,
   LoadingController,
 } from '@ionic/angular';
 import { User } from '../interfaces/interfaces';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 
 
@@ -19,14 +21,17 @@ export class AuthService {
   
 user:User ={
   email:"",
-  name:"Aventurero"
+  name:"Aventurero",
+  picture:""
 }
 
   constructor(
     private afAuth: AngularFireAuth,
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private platform : Platform,
+    private googlePlus : GooglePlus
   ) {
     this.setUser();
   
@@ -47,6 +52,7 @@ user:User ={
       await this.afAuth.signOut();
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+      localStorage.removeItem('user');
       window.location.reload();
     } catch (err) {
       this.showToast(err);
@@ -74,7 +80,7 @@ user:User ={
     (await loader).dismiss();
   }
 
-  async loginGoogle() {
+  /*async loginGoogle() {
     // show loader
     const loader = this.loadingCtrl.create({
       message: 'Please wait..',
@@ -92,7 +98,61 @@ user:User ={
     }
 
     (await loader).dismiss();
+  }*/
+
+  loginGoogle() {
+    if (this.platform.is('cordova')) {
+      console.log("PLATFORM ANDROID")
+      this.loginGoogleAndroid();
+    } else {
+      console.log("PLATFORM WEB")
+      this.loginGoogleWeb();
+    }
   }
+  async loginGoogleAndroid() {
+    const res = await this.googlePlus.login({
+      'webClientId': "469177720356-ttqfhh5ep8gnhnhv37pa3h6718vlt8lg.apps.googleusercontent.com",
+      'offline': true
+    });
+     await this.afAuth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken)).then(
+       res=>{
+        this.setTokentoHeader();
+
+        this.navCtrl.navigateRoot('home');
+       }
+     ).catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      const email = error.email;
+
+      const credential = error.credential;
+      this.showToast(error);
+    });
+    
+  
+  }
+
+  async loginGoogleWeb() {
+     await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+      res =>{
+        this.setTokentoHeader();
+
+        this.navCtrl.navigateRoot('home');
+      }
+    ).catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      const email = error.email;
+
+      const credential = error.credential;
+      this.showToast(error);
+    });
+
+  }
+ 
+
 
   async login(user: User) {
     // show loader
@@ -152,11 +212,7 @@ user:User ={
   private async loginWithSocial(provider: any){
    
     await this.afAuth.signInWithPopup(provider).then( result => {
-      console.log(result);
-      const token = result.credential["accessToken"];
-      console.log('google token', token);
-      // The signed-in user info.
-     const user = result.user;
+     
     // tslint:disable-next-line: align
       this.setTokentoHeader();
 
@@ -177,14 +233,16 @@ user:User ={
   private async setTokentoHeader() {
     try {
 
-     var user = {
+     var user:User = {
         uid:"",
         name:"Aventurero",
-        email:""
+        email:"",
+        picture:null
      }
      user.uid = await  (await this.afAuth.currentUser).uid
      user.email = await  (await this.afAuth.currentUser).email
      user.name = await  (await this.afAuth.currentUser).displayName
+     user.picture = await  (await this.afAuth.currentUser).photoURL
       console.log("USER",user)
     localStorage.setItem('user', JSON.stringify(user));
 
