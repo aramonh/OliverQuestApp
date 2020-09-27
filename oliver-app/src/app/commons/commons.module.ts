@@ -9,6 +9,7 @@ import { PipesModule } from '../pipes/pipes.module';
 
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,12 +21,13 @@ import { PipesModule } from '../pipes/pipes.module';
     HeaderComponent,
     QuestCardComponent,
     QuestListComponent
+  
   ],
   exports:[
     HeaderComponent,
     QuestListComponent
+   
   ]
-
   
 })
 export class CommonsModule { }

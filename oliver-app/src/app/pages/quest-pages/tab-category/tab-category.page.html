@@ -8,6 +8,36 @@
       <strong>{{titulo}}</strong>
       </ion-label>
 
+      
+      
+
+
+
+      <ion-label slot="end" class="ml-3 text-center">
+        <ion-badge color="success" >{{totalQuestBasica}}</ion-badge>
+      </ion-label>
+
+      <ion-label slot="end" class="mx-1 text-center">
+        <ion-badge color="warning" >{{totalQuestIntermedia}}</ion-badge>
+      </ion-label>
+      
+      <ion-label slot="end" class="mr-1 text-center">
+        <ion-badge style="background-color: red;" >{{totalQuestAlta}}</ion-badge>
+      </ion-label>
+      <ion-label class="mx-1" slot="end">
+        
+        <ion-badge color="light">=</ion-badge>
+        
+      </ion-label>
+      <ion-label slot="end" class="mr-3 text-center">
+        <ion-badge color="tertiary" >{{totalQuest}}</ion-badge>
+      </ion-label>
+
+      
+
+
+
+
     
     <ion-buttons class="mr-4"  slot="end">
       <ion-button color="tertiary" (click)="changeSearchBarState()" expand="block" fill="solid" shape="round">
@@ -20,7 +50,7 @@
 
   <ion-toolbar>
     <ion-segment  (ionChange)="cambioCategoria( $event )"
-    [value]="categoriaAct"  scrollable mode="md" color="primary">
+    [value]="categorySelected "  scrollable mode="md" color="primary">
       <ion-segment-button mode="md"
       *ngFor="let categoria of categorys | async"
        [value]="categoria.categoria">
@@ -31,6 +61,10 @@
    
     </ion-segment>
   </ion-toolbar>
+
+
+  
+  <ion-searchbar autofocus="true"  *ngIf="stateBarState" placeholder="Buscar por pregunta..."   (ionChange)="onSearchChange($event)" animated></ion-searchbar>
 </ion-header>
 
 <ion-content color="light" class="ion-no-padding">

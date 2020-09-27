@@ -12,6 +12,13 @@ data:any
   constructor(private firestore: AngularFirestore) { }
 
 
+
+
+  
+
+
+
+
  
 
   getByID(colleccion:string, id:any){

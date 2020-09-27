@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, NavController } from '@ionic/angular';
-import { Quest } from 'src/app/interfaces/interfaces';
+import { Quest, User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
 
@@ -12,10 +12,13 @@ import { GlobalOperationsService } from 'src/app/utils/global-operations.service
 })
 export class TabAllPage implements OnInit {
 
-  user:any;
-  titulo="Quest List"
+  user:User;
+  titulo="Quest All"
   quests:Quest[]=[];
-  
+  totalQuest=0;
+  totalQuestAlta=0;
+  totalQuestIntermedia=0;
+  totalQuestBasica=0;
   textoBuscar= '';
   stateBarState=false;
   
@@ -39,6 +42,7 @@ export class TabAllPage implements OnInit {
       }
     }
   
+    
   
     onSearchChange(evento){
       console.log(evento.detail.value);
@@ -54,7 +58,7 @@ export class TabAllPage implements OnInit {
       }else{
         this.stateBarState=true;
       }
-  
+      this.textoBuscar="";
       console.log("searchbarState", this.stateBarState)
     }
     salir(){
@@ -68,36 +72,45 @@ export class TabAllPage implements OnInit {
       });
       (await loader).present();
       try {
-       await this.firestore
-          .collection('quest')
-          .snapshotChanges()
-          .subscribe((data) => {
-            // console.log(data);
-            console.log('map data',data);
-            this.quests = data.map((e) => {
-             
-  
-              return {
-  
-                id: e.payload.doc.id,
-                uid: e.payload.doc.data()['uid'],
-                // tslint:disable-next-line: no-string-literal
-                category: e.payload.doc.data()['category'],
-                // tslint:disable-next-line: no-string-literal
-                  difficulty:e.payload.doc.data()['difficulty'],
-                  question:e.payload.doc.data()['question'],
-                  ansOptionsA:e.payload.doc.data()['ansOptionsA'] ,
-                  ansOptionsB:e.payload.doc.data()['ansOptionsB'],
-                  ansOptionsC:e.payload.doc.data()['ansOptionsC'],
-                  ansOptionsD:e.payload.doc.data()['ansOptionsD'],
-                  answer:e.payload.doc.data()['answer']
-                
+
+        await this.firestore.firestore.collection("quest")
+      .onSnapshot(querysnap=>{
+        var quests:any[]=[];
+        querysnap.forEach(doc=>{
           
-              };
-  
-            });
-          });
-  
+          console.log("GUET CATEGORY",  )
+          var quest;
+          quest = doc.data();
+          quest.id = doc.id;
+          quests.push( quest )
+        })
+        console.log("TAMAÑO", querysnap.size)
+        console.log("FIN CAT", quests)
+       this.quests = quests;
+       this.totalQuest = querysnap.size
+      })
+
+      await this.firestore.firestore.collection("quest")
+      .where("difficulty","==","Alta")
+      .onSnapshot(querysnap=>{
+       this.totalQuestAlta = querysnap.size
+      })
+
+      await this.firestore.firestore.collection("quest")
+      .where("difficulty","==","Intermedia")
+      .onSnapshot(querysnap=>{
+       this.totalQuestIntermedia = querysnap.size
+      })
+
+
+      await this.firestore.firestore.collection("quest")
+      .where("difficulty","==","Basica")
+      .onSnapshot(querysnap=>{
+       this.totalQuestBasica = querysnap.size
+      })
+
+
+    
   
   
       } catch (er) {

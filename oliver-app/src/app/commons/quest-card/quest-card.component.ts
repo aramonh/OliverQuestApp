@@ -27,6 +27,7 @@ export class QuestCardComponent implements OnInit {
 
 
   async presentActionSheet(data?:any ) {
+    console.log("setingcard", data)
     const actionSheet = await this.actionSheetController.create({
       header: 'Quest Configuration',
       cssClass: 'my-custom-class',
