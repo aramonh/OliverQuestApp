@@ -1,3 +1,72 @@
+
+export interface NPCNormalDialog {
+    id?:string;
+    numInteraction:number;
+
+    questSorprise:boolean;
+    numPages:number;
+    contenidoPages:string[];
+
+    idProv?:string;
+    idPrev?:string;
+
+
+    accionCausa?:string;
+    accionConsecunecia?:string;
+    
+    idPlus?:string;
+    idOriginal?:string;
+
+
+}
+
+
+export interface NPCSabioDialogAnswer {
+    id?:string;
+    numInteraction?:number;
+    sabio:string;
+    tipo:string;
+
+    numCorrectas?:number;
+    numErroneas?:number;
+
+    numPages:number;
+    contenidoPages:string[]
+
+    idPrev?:string;
+    idProvCorrecta?:string;
+    idProvErronea?:string;
+
+    idInteractionOut?:string;
+    idInteractionBack?:string;
+
+
+    
+    accionCausa?:string;
+    accionConsecunecia?:string;
+    
+    idPlus?:string;
+    idOriginal?:string;
+}
+
+
+
+
+export interface NPC{
+    id?:string;
+    name:string;
+    town:string;
+    actions?:any[];
+}
+
+export interface AccionCausaConsecuencia{
+    id?:string;
+    name:string;
+    npcCausa:string;
+    npcConsecuencia?:string;
+}
+
+
 export interface Quest {
     id?:string;
     uid?:string;
@@ -19,7 +88,12 @@ export interface Difficulty{
 export interface Category{
     categoria:string;
 }
-
+export interface Action{
+    action:string;
+}
+export interface Town{
+    town:string;
+}
 
 export interface User {
     uid?:string,

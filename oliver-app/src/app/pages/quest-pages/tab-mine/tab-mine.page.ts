@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, NavController } from '@ionic/angular';
-import { Quest, User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
-
+import {  Quest, User } from "src/app/interfaces/interfaces";
 @Component({
-  selector: 'app-tab-all',
-  templateUrl: './tab-all.page.html',
-  styleUrls: ['./tab-all.page.scss'],
+  selector: 'app-tab-mine',
+  templateUrl: './tab-mine.page.html',
+  styleUrls: ['./tab-mine.page.scss'],
 })
-export class TabAllPage implements OnInit {
+export class TabMinePage implements OnInit {
 
   user:User;
   titulo="Quest All"
@@ -37,7 +36,7 @@ export class TabAllPage implements OnInit {
         this.globalOperation.showToast('Recuerda iniciar sesion...');
       }else{
         this.user= this.authCtrl.user;
-        this.getQuests();
+        this.getQuestsUser();
         console.log(this.quests)
       }
     }
@@ -66,15 +65,15 @@ export class TabAllPage implements OnInit {
     }
   
 
-
+  
     clickAll(){
-      this.getQuests();
+      this.getQuestsUser();
     }
     clickDificultad(dificultad){
-      this.getQuestsCategoryWithDificultad(dificultad) ;
+      this.getQuestsUserWithDificultad(dificultad) ;
     }
   
-    async getQuestsCategoryWithDificultad(dificultad) {
+    async getQuestsUserWithDificultad(dificultad) {
       // show loader
       const loader = this.loadingCtrl.create({
         message: "Please wait...",
@@ -83,6 +82,7 @@ export class TabAllPage implements OnInit {
       try {
   
         await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
         .where("difficulty","==",dificultad)
         .onSnapshot(querysnap=>{
           var quests:any[]=[];
@@ -100,17 +100,20 @@ export class TabAllPage implements OnInit {
         })
   
         await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
         .onSnapshot(querysnap=>{
           this.totalQuest = querysnap.size
         })
   
         await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
         .where("difficulty","==","Alta")
         .onSnapshot(querysnap=>{
          this.totalQuestAlta = querysnap.size
         })
   
         await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
         .where("difficulty","==","Intermedia")
         .onSnapshot(querysnap=>{
          this.totalQuestIntermedia = querysnap.size
@@ -118,6 +121,7 @@ export class TabAllPage implements OnInit {
   
   
         await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
         .where("difficulty","==","Basica")
         .onSnapshot(querysnap=>{
          this.totalQuestBasica = querysnap.size
@@ -137,55 +141,59 @@ export class TabAllPage implements OnInit {
       (await loader).dismiss();
     }
   
-
-
-
-    async getQuests() {
+  
+    async getQuestsUser() {
       // show loader
       const loader = this.loadingCtrl.create({
-        message: 'Please wait...',
+        message: "Please wait...",
       });
       (await loader).present();
       try {
-
+  
         await this.firestore.firestore.collection("quest")
-      .onSnapshot(querysnap=>{
-        var quests:any[]=[];
-        querysnap.forEach(doc=>{
-          
-          console.log("GUET CATEGORY",  )
-          var quest;
-          quest = doc.data();
-          quest.id = doc.id;
-          quests.push( quest )
+        .where("uid","==",this.user.uid)
+        .onSnapshot(querysnap=>{
+          var quests:any[]=[];
+          querysnap.forEach(doc=>{
+            console.log("GUET CATEGORY",  )
+            var quest;
+            quest = doc.data();
+            quest.id = doc.id;
+            quests.push( quest )
+          })
+          console.log("TAMAÑO", querysnap.size)
+          console.log("FIN CAT", quests)
+         this.quests = quests;
+         this.totalQuest = querysnap.size
         })
-        console.log("TAMAÑO", querysnap.size)
-        console.log("FIN CAT", quests)
-       this.quests = quests;
-       this.totalQuest = querysnap.size
-      })
-
-      await this.firestore.firestore.collection("quest")
-      .where("difficulty","==","Alta")
-      .onSnapshot(querysnap=>{
-       this.totalQuestAlta = querysnap.size
-      })
-
-      await this.firestore.firestore.collection("quest")
-      .where("difficulty","==","Intermedia")
-      .onSnapshot(querysnap=>{
-       this.totalQuestIntermedia = querysnap.size
-      })
-
-
-      await this.firestore.firestore.collection("quest")
-      .where("difficulty","==","Basica")
-      .onSnapshot(querysnap=>{
-       this.totalQuestBasica = querysnap.size
-      })
-
-
-    
+  
+        await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
+        .where("difficulty","==","Alta")
+        .onSnapshot(querysnap=>{
+         this.totalQuestAlta = querysnap.size
+        })
+  
+        await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
+        .where("difficulty","==","Intermedia")
+        .onSnapshot(querysnap=>{
+         this.totalQuestIntermedia = querysnap.size
+        })
+  
+  
+        await this.firestore.firestore.collection("quest")
+        .where("uid","==",this.user.uid)
+        .where("difficulty","==","Basica")
+        .onSnapshot(querysnap=>{
+         this.totalQuestBasica = querysnap.size
+        })
+  
+  
+  
+  
+  
+  
   
   
       } catch (er) {
@@ -194,6 +202,7 @@ export class TabAllPage implements OnInit {
       // dismiss loader
       (await loader).dismiss();
     }
+  
   
   
 }

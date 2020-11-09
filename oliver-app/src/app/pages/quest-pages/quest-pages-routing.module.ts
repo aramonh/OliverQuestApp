@@ -18,6 +18,11 @@ const routes: Routes = [
       },
       
       {
+        path: 'tab3',
+        loadChildren: () => import('../quest-pages/tab-mine/tab-mine.module').then(m => m.TabMinePageModule)
+      },
+      
+      {
         path: '',
         redirectTo: 'tab1',
         pathMatch: 'full'
@@ -29,6 +34,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'tab1',
     pathMatch: 'full'
+  },
+  {
+    path: 'tab-mine',
+    loadChildren: () => import('./tab-mine/tab-mine.module').then( m => m.TabMinePageModule)
   }
 ];
 

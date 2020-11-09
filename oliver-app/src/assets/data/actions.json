@@ -1,0 +1,14 @@
+[   
+    {
+        "action":"Idle"
+    },
+    {
+        "action":"Move"
+    },
+    {
+        "action":"ChangeDirection"
+    },
+    {
+        "action":"Jump"
+    }
+]

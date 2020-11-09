@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { rejects } from 'assert';
+import { resolve } from 'dns';
+import { send } from 'process';
 import { error } from 'protractor';
 import { Quest } from '../interfaces/interfaces';
 import { QuestPagesPage } from '../pages/quest-pages/quest-pages.page';
@@ -16,7 +19,31 @@ data:any
 
   
 
+async getDataAll(collection:string){
+try {
+  var res=[];
+     await this.firestore.firestore.collection(collection)
+     .onSnapshot(querySnap => {
 
+      
+        querySnap.forEach(doc => {
+          console.log("Data", doc.data())
+          res.push( doc.data());
+        })
+
+
+        
+        
+        
+     })
+     console.log("REs", res)
+     return res;
+
+   
+} catch (error) {
+  
+}
+}
 
 
  

@@ -1,19 +1,22 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="background">
+<ion-header class="text-center" color="light" [translucent]="true">
+  <ion-toolbar color="light">
 
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
 
-    <ion-label text-capitalize class="ml-3" slot="start">{{titulo}}</ion-label>
+    <ion-label class="ml-1 " style="width: 40%;" slot="start" *ngIf="user.name" >{{user.name}}</ion-label>
 
-
-    <ion-label class="ml-3" slot="start" >{{user.name}}</ion-label>
-    <ion-buttons slot="end">
+    <ion-label style="text-transform: uppercase;" >
+      <strong>{{titulo}}</strong>
+      </ion-label>
+     
     
-      <ion-button (click)="salir()" expand="block" fill="solid" shape="round">
-        Salir
+    <ion-buttons class="mr-4"  slot="end">
+      <ion-button color="tertiary" (click)="salir()" expand="block" fill="solid" shape="round">
+        <ion-icon slot="icon-only" name="exit-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+
 </ion-header>

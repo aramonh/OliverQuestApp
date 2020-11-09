@@ -34,11 +34,19 @@ const routes: Routes = [
     path: 'quest-pages',
     loadChildren: () => import('./pages/quest-pages/quest-pages.module').then( m => m.QuestPagesPageModule)
   },
+
+
+  
+  {
+    path: 'global-dialog-page',
+    loadChildren: () => import('./pages/global-dialog-page/global-dialog-page.module').then( m => m.GlobalDialogPagePageModule)
+  },
   {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
   }
+
 
 ];
 

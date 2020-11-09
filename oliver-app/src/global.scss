@@ -25,3 +25,10 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+
+
+.popover-big .popover-content{
+    width: 95%;
+    height: auto;
+    text-align: center;
+}

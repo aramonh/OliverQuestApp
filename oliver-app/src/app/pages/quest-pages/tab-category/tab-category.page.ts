@@ -24,7 +24,7 @@ export class TabCategoryPage implements OnInit {
   categorys: Observable<Category[]>;
   textoBuscar = "";
   stateBarState = false;
-  categorySelected="videojuegos";
+  categorySelected="videojuegos&Anime";
   constructor(
     private loadingCtrl: LoadingController,
     private firestore: AngularFirestore,
@@ -76,6 +76,83 @@ export class TabCategoryPage implements OnInit {
     this.categorySelected = event.detail.value;
     this.getQuestsCategory();
   }
+
+
+  clickAll(){
+    this.getQuestsCategory();
+  }
+  clickDificultad(dificultad){
+    this.getQuestsCategoryWithDificultad(dificultad) ;
+  }
+
+  async getQuestsCategoryWithDificultad(dificultad) {
+    // show loader
+    const loader = this.loadingCtrl.create({
+      message: "Please wait...",
+    });
+    (await loader).present();
+    try {
+
+      await this.firestore.firestore.collection("quest")
+      .where("category","==",this.categorySelected)
+      .where("difficulty","==",dificultad)
+      .onSnapshot(querysnap=>{
+        var quests:any[]=[];
+        querysnap.forEach(doc=>{
+          console.log("GUET CATEGORY",  )
+          var quest;
+          quest = doc.data();
+          quest.id = doc.id;
+          quests.push( quest )
+        })
+        console.log("TAMAÑO", querysnap.size)
+        console.log("FIN CAT", quests)
+       this.quests = quests;
+    //   this.totalQuest = querysnap.size
+      })
+
+      await this.firestore.firestore.collection("quest")
+      .where("category","==",this.categorySelected)
+      .onSnapshot(querysnap=>{
+        this.totalQuest = querysnap.size
+      })
+
+      await this.firestore.firestore.collection("quest")
+      .where("category","==",this.categorySelected)
+      .where("difficulty","==","Alta")
+      .onSnapshot(querysnap=>{
+       this.totalQuestAlta = querysnap.size
+      })
+
+      await this.firestore.firestore.collection("quest")
+      .where("category","==",this.categorySelected)
+      .where("difficulty","==","Intermedia")
+      .onSnapshot(querysnap=>{
+       this.totalQuestIntermedia = querysnap.size
+      })
+
+
+      await this.firestore.firestore.collection("quest")
+      .where("category","==",this.categorySelected)
+      .where("difficulty","==","Basica")
+      .onSnapshot(querysnap=>{
+       this.totalQuestBasica = querysnap.size
+      })
+
+
+
+
+
+
+
+
+    } catch (er) {
+      this.globalOperation.showToast(er);
+    }
+    // dismiss loader
+    (await loader).dismiss();
+  }
+
 
   async getQuestsCategory() {
     // show loader

@@ -1,26 +1,23 @@
 [   
     {
-        "categoria":"videojuegos"
+        "categoria":"videojuegos&Anime"
     },
     {
         "categoria":"cine&TV"
     },
     {
-        "categoria":"Anime"
-    },
-    {
-        "categoria":"Musica"
-    },
-    {
         "categoria":"Ciencias"
-    },
-    {
-        "categoria":"Deportes"
     },
     {
         "categoria":"Historia&Geografia"
     },
     {
         "categoria":"Literatura&Arte"
+    },
+    {
+        "categoria":"Acertijo"
+    },
+    {
+        "categoria":"Logica"
     }
 ]
