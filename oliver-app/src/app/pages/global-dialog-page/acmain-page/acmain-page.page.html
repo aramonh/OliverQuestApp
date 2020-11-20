@@ -2,4 +2,39 @@
 
 <ion-content>
 
+
+
+
+
+<ion-list>
+    <ion-item-sliding   *ngFor="let AC of ACs; let i = index " >
+        <ion-item style="text-align: center; text-transform: uppercase; width: 100%; " >
+            <div style="width: 100%; height: 100%; margin: 0%; padding: 0%; background-color: aquamarine;">
+            <ion-label style="width: 100%;  background-color: #a9ddc9;" >  <strong style="display: block;"  > {{i+1}}. </strong>  <strong style="display: block;" >Nombre:</strong> {{AC.name}}</ion-label>
+            <ion-label  style="width: 100%;   background-color: #9acabc;" >  <strong style="display: block;" >npcCausa:</strong>  {{AC.npcCausa}}</ion-label>
+            <ion-label style="width: 100%;   background-color: #86d1b4;"  > <strong style="display: block;" >npcConsecuencia:</strong>  {{AC.npcConsecuencia}}</ion-label>
+            <ion-label style="width: 100%;  background-color: #a9ddc9;" >   <strong style="display: block;" >description:</strong> {{AC.description}}</ion-label>
+            </div>
+        </ion-item>
+        <ion-item-options  side="start">
+            <ion-item-option (click)="presentPopoverupdate($event, AC)" >Editar</ion-item-option>
+          
+        </ion-item-options>
+      
+        <ion-item-options >
+            <ion-item-option color="danger" (click)="presentAlertConfirmDelete( AC.id )" >Eliminar</ion-item-option>
+          
+        </ion-item-options>
+    </ion-item-sliding>
+</ion-list>
+
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentPopover();" >
+        <ion-icon   name="add"></ion-icon>
+    </ion-fab-button>
+</ion-fab>
+
+
 </ion-content>
+

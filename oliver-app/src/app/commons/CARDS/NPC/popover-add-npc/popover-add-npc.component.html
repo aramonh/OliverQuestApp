@@ -27,7 +27,11 @@
         <ion-col size="12">
           <ion-item>
             <ion-label>Town: </ion-label>
-            <ion-select [(ngModel)]="this.NPC.town" multiple="false">
+            <ion-select [(ngModel)]="this.NPC.town"
+            interface="popover"
+            placeholder="Select Town"
+            [value]="this.NPC.town"
+            multiple="false">
                 <ion-select-option *ngFor="let town of towns | async" [value]="town.town" >{{town.town}}</ion-select-option>
             </ion-select>
           </ion-item>

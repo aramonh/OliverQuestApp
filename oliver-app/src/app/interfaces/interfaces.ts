@@ -59,11 +59,19 @@ export interface NPC{
     actions?:any[];
 }
 
+export interface Sabio{
+    id?:string;
+    name:string;
+    town:string;
+    category:string;
+}
+
 export interface AccionCausaConsecuencia{
     id?:string;
     name:string;
     npcCausa:string;
     npcConsecuencia?:string;
+    description:string;
 }
 
 

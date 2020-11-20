@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, NavController, PopoverController, ToastController } from '@ionic/angular';
-import { AccionCausaConsecuencia } from 'src/app/interfaces/interfaces';
+import { AccionCausaConsecuencia, NPC, Sabio } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { LocalService } from 'src/app/services/local.service';
@@ -12,27 +13,92 @@ import { GlobalOperationsService } from 'src/app/utils/global-operations.service
   styleUrls: ['./popover-add-ac.component.scss'],
 })
 export class PopoverAddACComponent implements OnInit {
-  AccionCausaConsecuencia : AccionCausaConsecuencia = {
+  accionCausaConsecuencia : AccionCausaConsecuencia = {
     name:"",
     npcCausa:"",
     npcConsecuencia:"",
+    description:""
   }; 
+
+  NPCSAndSabios:{
+    tipo:string;
+    name:string;
+  }[]=[];
   constructor(
 
-    private popoverCtrl: PopoverController,
+    private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-
-
+    private navCtrl: NavController,
+    private authCtrl: AuthService,
     private dataSvc: CRUDfirebaseService,
+    private localSvc: LocalService,
+    private globalOperation: GlobalOperationsService,
+    private popoverCtrl: PopoverController,
+    private firestore: AngularFirestore,
 
-    private globalOperation: GlobalOperationsService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    if (!this.authCtrl.logIn) {
+      this.navCtrl.navigateRoot("login");
+      this.globalOperation.showToast("Recuerda iniciar sesion...");
+    }else{
+
+      this.getNPCAndSabios();
+
+    }
+  }
+
+
+ async getNPCAndSabios(){
+   try {
+     
+    await this.firestore.firestore.collection("NPC")
+    .onSnapshot(querysnap=>{
+      var names:any[]=[];
+      querysnap.forEach(doc=>{
+        
+        
+        var name = {
+          tipo:"NPC",
+          name:""
+        };
+        name.name = doc.data().name;
+        console.log("GUET CATEGORY", name )
+        names.push( name )
+      })
+      this.NPCSAndSabios.push(...names);
+    })
+    await this.firestore.firestore.collection("Sabios")
+    .onSnapshot(querysnap=>{
+      var names:any[]=[];
+      querysnap.forEach(doc=>{
+        
+       
+        var name = {
+          tipo:"Sabio",
+          name:""
+        };
+        name.name = doc.data().name;
+        console.log("GUET CATEGORY", name )
+        names.push( name )
+      })
+      this.NPCSAndSabios.push(...names);
+    })
+ 
+ 
+
+  console.log(this.NPCSAndSabios)
+   } catch (error) {
+     console.log(error)
+   }
+
+  }
 
 
 
-  async createQuest(data: AccionCausaConsecuencia) {
+  async CreateData(data: AccionCausaConsecuencia) {
 
     console.log("post to create", data);
     if (this.formValidation()) {
@@ -43,7 +109,7 @@ export class PopoverAddACComponent implements OnInit {
       (await loader).present();
 
       try {
-        this.dataSvc.createData("accionCausaConsecuencia", data);
+        this.dataSvc.createData("accionCausaConsecuencias", data);
       } catch (er) {
         this.globalOperation.showToast(er);
       }
@@ -57,9 +123,9 @@ export class PopoverAddACComponent implements OnInit {
 
   formValidation() {
 
-    for (const key in this.AccionCausaConsecuencia) {
+    for (const key in this.accionCausaConsecuencia) {
  
-        const element = this.AccionCausaConsecuencia[key];
+        const element = this.accionCausaConsecuencia[key];
         
 
         if(element==""){
