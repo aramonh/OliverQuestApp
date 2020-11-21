@@ -28,7 +28,13 @@
 
 
 .popover-big .popover-content{
-    width: 95%;
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+
+.popover-dialog .popover-content{
+    width: auto;
     height: auto;
     text-align: center;
 }

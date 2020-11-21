@@ -12,6 +12,8 @@ import { PopoverAddSabioComponent } from './CARDS/Sabio/popover-add-sabio/popove
 import { PopoverEditACComponent } from './CARDS/AC/popover-edit-ac/popover-edit-ac.component';
 import { PopoverEditNPCComponent } from './CARDS/NPC/popover-edit-npc/popover-edit-npc.component';
 import { PopoverEditSabioComponent } from './CARDS/Sabio/popover-edit-sabio/popover-edit-sabio.component';
+import { PopoverDialogNPCComponent } from './CARDS/popover-dialog-npc/popover-dialog-npc.component';
+import { PopoverDialogSabioComponent } from './CARDS/popover-dialog-sabio/popover-dialog-sabio.component';
 
 
 
@@ -32,7 +34,9 @@ import { PopoverEditSabioComponent } from './CARDS/Sabio/popover-edit-sabio/popo
     PopoverAddSabioComponent,
     PopoverEditACComponent,
     PopoverEditNPCComponent,
-    PopoverEditSabioComponent
+    PopoverEditSabioComponent,
+    PopoverDialogNPCComponent,
+    PopoverDialogSabioComponent
   
   ],
   exports:[
@@ -43,7 +47,9 @@ import { PopoverEditSabioComponent } from './CARDS/Sabio/popover-edit-sabio/popo
     PopoverAddSabioComponent,
     PopoverEditACComponent,
     PopoverEditNPCComponent,
-    PopoverEditSabioComponent
+    PopoverEditSabioComponent,
+    PopoverDialogNPCComponent,
+    PopoverDialogSabioComponent
    
   ]
   
