@@ -48,21 +48,50 @@ export class CRUDfirebaseService {
     await this.firestore.collection(colleccion).doc(id).delete();
   }
 
-  async createData(colleccion: string, data: any) {
-    await this.firestore
+   createData(colleccion: string, data: any) {
+
+      this.firestore
       .collection(colleccion)
       .add(data)
       .then((data) => {
-        console.log("created", data);
+        console.log("created", data.id);
+  
         return data;
       })
       .catch((err) => {
         console.log(err);
       });
+
   }
 
+  createDialogPlus(colleccion: string, dataOriginal: any,dataNEW: any) {
+
+    this.firestore
+    .collection(colleccion)
+    .add(dataNEW)
+    .then((data) => {
+
+
+
+      console.log("created", data.id);
+      dataOriginal.idPlus = data.id
+      this.firestore
+      .collection(colleccion)
+      .doc(dataOriginal.id)
+      .update(dataOriginal)
+      .then((data) => {
+        console.log("updated", data);
+      })
+      return data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+}
+
   async updateData(colleccion: string, id: any, data: any) {
-    await this.firestore
+   return await this.firestore
       .collection(colleccion)
       .doc(id)
       .update(data)

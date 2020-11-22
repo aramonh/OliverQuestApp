@@ -1,9 +1,7 @@
 <ion-card style="width: 90%; height: 100%;"  class="text-center" >
   <ion-card-header class="text-center" >
 
-    <ion-card-title>Crear Interaccion</ion-card-title>
-    <ion-card-subtitle *ngIf="!thisIsPlus" >{{NPCNormalDialog.numInteraction }} - {{NPCNormalDialog.npcName}} </ion-card-subtitle>
-    <ion-card-subtitle  *ngIf="thisIsPlus"  >PLUS: {{NPCNormalDialogOriginal.numInteraction }} - {{NPCNormalDialogOriginal.npcName}}</ion-card-subtitle>
+    <ion-card-title>Update Interaccion    {{NPCNormalDialog.numInteraction }} - {{NPCNormalDialog.npcName}}</ion-card-title>
   </ion-card-header>
 
 
@@ -108,7 +106,7 @@
             <ion-select [(ngModel)]="this.NPCNormalDialog.accionCausa"     
             interface="popover"
             placeholder="Select accionCausa"
-            value=""
+            [value]="this.NPCNormalDialog.accionCausa"
              multiple="false">
                 <ion-select-option *ngFor="let AC of ACsCausa" [value]="AC"  > {{  AC  }}</ion-select-option>
 
@@ -189,32 +187,16 @@
   
 
 
-      <ion-row  *ngIf="!thisIsPlus"    >
+      <ion-row>
         <ion-col size="12">
           <ion-button
-            (click)="CreateData( NPCNormalDialog )"
+            (click)="updateData( NPCNormalDialog )"
             class="ion-padding"
             expand="full"
             fill="solid"
             shape="round"
           >
-            Create
-          </ion-button>
-        </ion-col>
-      </ion-row>
-
-
-
-      <ion-row   *ngIf="thisIsPlus"   >
-        <ion-col size="12">
-          <ion-button
-            (click)="createNPCDialogPLUS(  )"
-            class="ion-padding"
-            expand="full"
-            fill="solid"
-            shape="round"
-          >
-            Create PLUS
+            Update
           </ion-button>
         </ion-col>
       </ion-row>

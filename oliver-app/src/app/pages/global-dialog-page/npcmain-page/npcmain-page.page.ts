@@ -7,7 +7,8 @@ import { PopoverAddNPCComponent } from 'src/app/commons/CARDS/NPC/popover-add-np
 import { PopoverEditNPCComponent } from 'src/app/commons/CARDS/NPC/popover-edit-npc/popover-edit-npc.component';
 import { PopoverDialogNPCComponent } from 'src/app/commons/CARDS/popover-dialog-npc/popover-dialog-npc.component';
 import { PopoverDialogSabioComponent } from 'src/app/commons/CARDS/popover-dialog-sabio/popover-dialog-sabio.component';
-import { NPC } from 'src/app/interfaces/interfaces';
+import { PopoverDialogNPCEditComponent } from 'src/app/commons/CARDS/popover-dialog-npcedit/popover-dialog-npcedit.component';
+import { NPC, NPCNormalDialog } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
@@ -92,6 +93,18 @@ async presentPopoverCreateDialogNPC() {
   return await popover.present();
 };
 
+async presentPopoverCreatePlusDialogNPC(idOriginal:any) {
+  const popover = await this.popoverController.create({
+    component: PopoverDialogNPCComponent,
+    cssClass: 'popover-dialog',
+    translucent: true,
+    componentProps:{
+      idOriginal:idOriginal,
+    }
+  });
+  return await popover.present();
+};
+
 
 async selectNPC(data:NPC){
   try {
@@ -104,12 +117,16 @@ async selectNPC(data:NPC){
       var interaction;
       interaction = doc.data();
       interaction.id = doc.id;
-      interactions.push( interaction )
+      if(interaction.idOriginal==null){
+        interactions.push( interaction )
+      }
+    
     })
 
 
    this.interactions = interactions;
    this.totalInteractions = querysnap.size
+   console.log("DIALOGOS",this.interactions )
   })
   } catch (error) {
     
@@ -142,10 +159,24 @@ cleanNPC(){
       translucent: true,
       componentProps:{
         id : data.id,
+      
       }
     });
     return await popover.present();
   }
+  async presentPopoverupdateDialogNPC(ev, data: NPCNormalDialog) {
+    const popover = await this.popoverController.create({
+      component: PopoverDialogNPCEditComponent,
+      cssClass: 'popover-dialog',
+      translucent: true,
+      componentProps:{
+        id : data.id,
+        npcName:this.npcSelected.name,
+      }
+    });
+    return await popover.present();
+  }
+
 
   async presentAlertConfirmDelete(data?:any) {
     const alert = await this.alertController.create({
@@ -165,7 +196,7 @@ cleanNPC(){
           cssClass:'dark',
           handler: () => {
             console.log('Confirm Okay');
-            this.deleteQuest(data);
+            this.deleteNPC(data);
           }
         }
       ]
@@ -174,7 +205,51 @@ cleanNPC(){
     await alert.present();
   }
 
-  async deleteQuest(id: string) {
+  
+  async presentAlertConfirmDeleteDialog(data?:any) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¿Confirmar Eliminacion?',
+      message: 'Seguro que quieres eliminar este <strong>NPC Dialog</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'dark',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          cssClass:'dark',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.deleteDialogNPC(data);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async deleteDialogNPC(id: string) {
+    // show loader
+    console.log('Delete', id);
+    const loader = this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+    (await loader).present();
+    try {
+     // await this.firestore.doc('aerolines' + id).delete();
+      this.dataSvc.deleteData("DialogsNPC",id);
+    } catch (er) {
+      this.globalOperation.showToast(er);
+    }
+    (await loader).dismiss();
+  }
+
+  async deleteNPC(id: string) {
     // show loader
     console.log('Delete', id);
     const loader = this.loadingCtrl.create({
