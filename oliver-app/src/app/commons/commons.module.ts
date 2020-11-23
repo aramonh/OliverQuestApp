@@ -12,10 +12,11 @@ import { PopoverAddSabioComponent } from './CARDS/Sabio/popover-add-sabio/popove
 import { PopoverEditACComponent } from './CARDS/AC/popover-edit-ac/popover-edit-ac.component';
 import { PopoverEditNPCComponent } from './CARDS/NPC/popover-edit-npc/popover-edit-npc.component';
 import { PopoverEditSabioComponent } from './CARDS/Sabio/popover-edit-sabio/popover-edit-sabio.component';
-import { PopoverDialogNPCComponent } from './CARDS/popover-dialog-npc/popover-dialog-npc.component';
-import { PopoverDialogSabioComponent } from './CARDS/popover-dialog-sabio/popover-dialog-sabio.component';
-import { PopoverDialogNPCEditComponent } from './CARDS/popover-dialog-npcedit/popover-dialog-npcedit.component';
-import { PopoverDialogSabioEditComponent } from './CARDS/popover-dialog-sabio-edit/popover-dialog-sabio-edit.component';
+import { PopoverDialogNPCComponent } from './CARDS/NPC/popover-dialog-npc/popover-dialog-npc.component';
+import { PopoverDialogSabioComponent } from './CARDS/Sabio/popover-dialog-sabio/popover-dialog-sabio.component';
+import { PopoverDialogNPCEditComponent } from './CARDS/NPC/popover-dialog-npcedit/popover-dialog-npcedit.component';
+import { PopoverDialogSabioEditComponent } from './CARDS/Sabio/popover-dialog-sabio-edit/popover-dialog-sabio-edit.component';
+import { PopoverDialogNPCVerComponent } from './CARDS/NPC/popover-dialog-npcver/popover-dialog-npcver.component';
 
 
 
@@ -40,7 +41,8 @@ import { PopoverDialogSabioEditComponent } from './CARDS/popover-dialog-sabio-ed
     PopoverDialogNPCComponent,
     PopoverDialogSabioComponent,
     PopoverDialogNPCEditComponent,
-    PopoverDialogSabioEditComponent
+    PopoverDialogSabioEditComponent,
+    PopoverDialogNPCVerComponent
   
   ],
   exports:[
@@ -55,7 +57,8 @@ import { PopoverDialogSabioEditComponent } from './CARDS/popover-dialog-sabio-ed
     PopoverDialogNPCComponent,
     PopoverDialogSabioComponent,
     PopoverDialogNPCEditComponent,
-    PopoverDialogSabioEditComponent
+    PopoverDialogSabioEditComponent,
+    PopoverDialogNPCVerComponent
    
   ]
   

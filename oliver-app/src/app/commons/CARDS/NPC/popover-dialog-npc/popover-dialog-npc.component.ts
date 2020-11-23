@@ -82,6 +82,7 @@ export class PopoverDialogNPCComponent implements OnInit {
     if (npcName) {
       this.NPCNormalDialog.npcName = npcName;
       this.getsizeInteractions();
+      this.getAC();
     }
     if (idPlus) {
       this.NPCNormalDialog.idPlus = idPlus;
@@ -89,6 +90,7 @@ export class PopoverDialogNPCComponent implements OnInit {
     if (idOriginal) {
       this.thisIsPlus = true;
       this.getDialogOriginal(idOriginal);
+   
       this.NPCNormalDialog.idOriginal = idOriginal;
     }
   }
@@ -100,7 +102,7 @@ export class PopoverDialogNPCComponent implements OnInit {
     } else {
   
 
-      this.getAC();
+ 
     }
   }
 
@@ -121,6 +123,38 @@ export class PopoverDialogNPCComponent implements OnInit {
             }
             if (
               this.NPCNormalDialog.npcName == AC.npcConsecuencia ||
+              AC.npcConsecuencia == "Todos"
+            ) {
+              ACs2.push(AC.name);
+            }
+          });
+          console.log("TAMAÑO", querysnap.size);
+          console.log("FIN CAT", ACs1, ACs2);
+          this.ACsCausa = ACs2;
+          this.ACsConsecuencia = ACs1;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  async getACPlus() {
+    try {
+      await this.firestore.firestore
+        .collection("accionCausaConsecuencias")
+        .onSnapshot((querysnap) => {
+          var ACs1: string[] = [];
+          var ACs2: string[] = [];
+          querysnap.forEach((doc) => {
+            console.log("GUET CATEGORY");
+            var AC;
+            AC = doc.data();
+            AC.id = doc.id;
+            if (this.NPCNormalDialogOriginal.npcName == AC.npcCausa) {
+              ACs1.push(AC.name);
+            }
+            if (
+              this.NPCNormalDialogOriginal.npcName == AC.npcConsecuencia ||
               AC.npcConsecuencia == "Todos"
             ) {
               ACs2.push(AC.name);
@@ -159,13 +193,15 @@ async getDialogOriginal(id){
       this.NPCNormalDialogOriginal.npcName = data["npcName"];
       this.NPCNormalDialogOriginal.idOriginal = data["idOriginal"];
       this.NPCNormalDialogOriginal.idPlus = data["idPlus"];
+
+      this.NPCNormalDialog.npcName=this.NPCNormalDialogOriginal.npcName;
       for (const key in data["contenidoPages"]) {
       
           const element = data["contenidoPages"];
           
           this.NPCNormalDialogOriginal.contenidoPages.push(...element );
       }
-
+      this.getACPlus();
       
     });
  
@@ -183,7 +219,8 @@ async getDialogOriginal(id){
 }
 
   async createNPCDialogPLUS(){
-
+    if (this.formValidationOriginal()) {
+      if (this.formValidation()) {
     // show loader
     const loader = this.loadingCtrl.create({
       message: 'Please Wait...'
@@ -209,22 +246,26 @@ async getDialogOriginal(id){
       // dismiss loader
       await this.popoverCtrl.dismiss();
       (await loader).dismiss();
-}
+}}}
 
   async getsizeInteractions() {
     try {
       await this.firestore.firestore
         .collection("DialogsNPC")
+        .where("idOriginal","==",null)
+        .where("npcName","==",this.NPCNormalDialog.npcName)
         .onSnapshot((querysnap) => {
           var interactions: any[] = [];
           querysnap.forEach((doc) => {
             var interaction;
             interaction = doc.data();
             interaction.id = doc.id;
-            interactions.push(interaction);
+            if(interaction.idOriginal==null){
+              interactions.push( interaction )
+            }
           });
 
-          this.NPCNormalDialog.numInteraction = querysnap.size + 1;
+          this.NPCNormalDialog.numInteraction = interactions.length + 1;
         });
     } catch (error) {}
   }
@@ -257,6 +298,56 @@ async getDialogOriginal(id){
       arr.splice(i, 1);
     }
   }
+
+
+  formValidationOriginal() {
+    if (this.NPCNormalDialogOriginal.questSorprise == "false") {
+      this.NPCNormalDialogOriginal.questSorpriseAnsGood = null;
+      this.NPCNormalDialogOriginal.questSorpriseAnsBad = null;
+    } else {
+      if (
+        this.NPCNormalDialogOriginal.questSorpriseAnsBad == null ||
+        this.NPCNormalDialogOriginal.questSorpriseAnsBad == "" ||
+        this.NPCNormalDialogOriginal.questSorpriseAnsGood == null ||
+        this.NPCNormalDialogOriginal.questSorpriseAnsGood == ""
+      ) {
+        this.globalOperation.showToast("Ingresa Answers de Quests");
+        return false;
+      }
+    }
+
+    for (
+      let index = this.NPCNormalDialogOriginal.contenidoPages.length;
+      this.NPCNormalDialogOriginal.numPages < index;
+      index--
+    ) {
+      const element = index - 1;
+      this.removeItemFromArr(this.NPCNormalDialogOriginal.contenidoPages, element);
+    }
+
+    for (let index = 0; index < this.NPCNormalDialogOriginal.numPages - 1; index++) {
+      const element = this.NPCNormalDialogOriginal.contenidoPages[index];
+
+      if (element == "" || element == null || element == undefined) {
+        this.globalOperation.showToast(
+          "Ingresa contenido " + (index + 1).toString()
+        );
+        return false;
+      }
+    }
+
+    for (const key in this.NPCNormalDialogOriginal) {
+      const element = this.NPCNormalDialogOriginal[key];
+
+      if (element == "" || element == []) {
+        this.globalOperation.showToast("Ingresa " + key);
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   formValidation() {
     if (this.NPCNormalDialog.questSorprise == "false") {
       this.NPCNormalDialog.questSorpriseAnsGood = null;
@@ -301,6 +392,12 @@ async getDialogOriginal(id){
         return false;
       }
     }
+
+    if(this.thisIsPlus){
+    if(this.NPCNormalDialog.accionCausa==null){
+      this.globalOperation.showToast("Ingresa accionCausa" );
+      return false;
+    }}
 
     return true;
   }

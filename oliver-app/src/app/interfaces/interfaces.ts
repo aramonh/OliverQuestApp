@@ -3,6 +3,7 @@ export interface NPCNormalDialog {
     id?:string;
     numInteraction:number;
     npcName:string;
+    
     questSorprise:any;
     questSorpriseAnsGood?:string;
     questSorpriseAnsBad?:string;

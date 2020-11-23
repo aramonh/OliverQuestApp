@@ -57,8 +57,27 @@ export class PopoverDialogNPCEditComponent implements OnInit {
   ) { 
 
     console.log(this.navParams.data);
-     this.id = this.navParams.get('id');
-     this.NPCNormalDialog.npcName = this.navParams.get('npcName');
+    let id = this.navParams.get('id');
+    if(id){
+      this.id=id;
+
+    }
+    let npcName  = this.navParams.get('npcName');
+
+    if(npcName){
+      this.NPCNormalDialog.npcName = npcName;
+    }
+     let idPlus = this.navParams.get("idPlus");
+     if (idPlus) {
+      this.id = idPlus;
+
+      this.thisIsPlus = true;
+  
+
+    }
+
+
+
   }
 
   ngOnInit() {
@@ -103,11 +122,9 @@ export class PopoverDialogNPCEditComponent implements OnInit {
           this.NPCNormalDialog.npcName = data["npcName"];
           this.NPCNormalDialog.idOriginal = data["idOriginal"];
           this.NPCNormalDialog.idPlus = data["idPlus"];
-          for (const key in data["contenidoPages"]) {
-          
-              const element = data["contenidoPages"];
-              
-              this.NPCNormalDialog.contenidoPages.push(...element );
+          for (let index = 0; index < data["contenidoPages"].length; index++) {
+            const element = data["contenidoPages"][index];
+            this.NPCNormalDialog.contenidoPages.push(element );
           }
 
           
@@ -189,49 +206,58 @@ export class PopoverDialogNPCEditComponent implements OnInit {
           arr.splice( i, 1 );
       }
   }
-    formValidation() {
-
-      if(this.NPCNormalDialog.questSorprise=='false'){
-        this.NPCNormalDialog.questSorpriseAnsGood=null;
-        this.NPCNormalDialog.questSorpriseAnsBad=null;
-      }else{
-        if( this.NPCNormalDialog.questSorpriseAnsBad==null || this.NPCNormalDialog.questSorpriseAnsBad==""  ||        this.NPCNormalDialog.questSorpriseAnsGood==null ||       this.NPCNormalDialog.questSorpriseAnsGood==""  ){
-          this.globalOperation.showToast("Ingresa Answers de Quests")
-          return false;
-        }
+  formValidation() {
+    if (this.NPCNormalDialog.questSorprise == "false") {
+      this.NPCNormalDialog.questSorpriseAnsGood = null;
+      this.NPCNormalDialog.questSorpriseAnsBad = null;
+    } else {
+      if (
+        this.NPCNormalDialog.questSorpriseAnsBad == null ||
+        this.NPCNormalDialog.questSorpriseAnsBad == "" ||
+        this.NPCNormalDialog.questSorpriseAnsGood == null ||
+        this.NPCNormalDialog.questSorpriseAnsGood == ""
+      ) {
+        this.globalOperation.showToast("Ingresa Answers de Quests");
+        return false;
       }
-
-      for (let index = this.NPCNormalDialog.contenidoPages.length  ; this.NPCNormalDialog.numPages < index ; index--) {
-        const element = index-1;
-        this.removeItemFromArr( this.NPCNormalDialog.contenidoPages , element  )
-      }
-
-
-
-      for (let index = 0; index < this.NPCNormalDialog.numPages-1; index++) {
-        const element = this.NPCNormalDialog.contenidoPages[index];
-        
-        if(element=="" ||  element==null ||  element==undefined   ){
-          this.globalOperation.showToast("Ingresa contenido "+ (index + 1).toString() )
-          return false;
-        }
-      }
-
-
-      for (const key in this.NPCNormalDialog) {
-   
-          const element = this.NPCNormalDialog[key];
-          
-  
-          if(element==""  ||  element==[] ){
-            this.globalOperation.showToast("Ingresa "+ key)
-            return false;
-          }
-       
-      }
-  
-  
-      return true;
     }
+
+    for (
+      let index = this.NPCNormalDialog.contenidoPages.length;
+      this.NPCNormalDialog.numPages < index;
+      index--
+    ) {
+      const element = index - 1;
+      this.removeItemFromArr(this.NPCNormalDialog.contenidoPages, element);
+    }
+
+    for (let index = 0; index < this.NPCNormalDialog.numPages - 1; index++) {
+      const element = this.NPCNormalDialog.contenidoPages[index];
+
+      if (element == "" || element == null || element == undefined) {
+        this.globalOperation.showToast(
+          "Ingresa contenido " + (index + 1).toString()
+        );
+        return false;
+      }
+    }
+
+    for (const key in this.NPCNormalDialog) {
+      const element = this.NPCNormalDialog[key];
+
+      if (element == "" || element == []) {
+        this.globalOperation.showToast("Ingresa " + key);
+        return false;
+      }
+    }
+
+    if(this.thisIsPlus){
+    if(this.NPCNormalDialog.accionCausa==null){
+      this.globalOperation.showToast("Ingresa accionCausa" );
+      return false;
+    }}
+
+    return true;
+  }
 
 }

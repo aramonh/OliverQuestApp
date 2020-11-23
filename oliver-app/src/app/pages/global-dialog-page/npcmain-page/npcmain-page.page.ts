@@ -5,13 +5,14 @@ import { database } from 'firebase';
 import { PopoverEditACComponent } from 'src/app/commons/CARDS/AC/popover-edit-ac/popover-edit-ac.component';
 import { PopoverAddNPCComponent } from 'src/app/commons/CARDS/NPC/popover-add-npc/popover-add-npc.component';
 import { PopoverEditNPCComponent } from 'src/app/commons/CARDS/NPC/popover-edit-npc/popover-edit-npc.component';
-import { PopoverDialogNPCComponent } from 'src/app/commons/CARDS/popover-dialog-npc/popover-dialog-npc.component';
-import { PopoverDialogSabioComponent } from 'src/app/commons/CARDS/popover-dialog-sabio/popover-dialog-sabio.component';
-import { PopoverDialogNPCEditComponent } from 'src/app/commons/CARDS/popover-dialog-npcedit/popover-dialog-npcedit.component';
+import { PopoverDialogNPCComponent } from 'src/app/commons/CARDS/NPC/popover-dialog-npc/popover-dialog-npc.component';
+
+import { PopoverDialogNPCEditComponent } from 'src/app/commons/CARDS/NPC/popover-dialog-npcedit/popover-dialog-npcedit.component';
 import { NPC, NPCNormalDialog } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
+import { PopoverDialogNPCVerComponent } from 'src/app/commons/CARDS/NPC/popover-dialog-npcver/popover-dialog-npcver.component';
 
 @Component({
   selector: 'app-npcmain-page',
@@ -110,6 +111,8 @@ async selectNPC(data:NPC){
   try {
     this.npcSelected=data;
     await this.firestore.firestore.collection("DialogsNPC")
+    .where("idOriginal","==",null)
+    .where("npcName","==",this.npcSelected.name)
       .onSnapshot(querysnap=>{
     var interactions:any[]=[];
     querysnap.forEach(doc=>{
@@ -117,15 +120,15 @@ async selectNPC(data:NPC){
       var interaction;
       interaction = doc.data();
       interaction.id = doc.id;
-      if(interaction.idOriginal==null){
+  
         interactions.push( interaction )
-      }
+      
     
     })
 
 
    this.interactions = interactions;
-   this.totalInteractions = querysnap.size
+   this.totalInteractions = interactions.length
    console.log("DIALOGOS",this.interactions )
   })
   } catch (error) {
@@ -140,7 +143,18 @@ cleanNPC(){
   this.interactions=null;
   this.totalInteractions=0;
 }
-
+async presentPopoverVerDialogoNPC(id:any) {
+  const popover = await this.popoverController.create({
+    component: PopoverDialogNPCVerComponent,
+    cssClass: 'popover-dialog',
+    translucent: true,
+    componentProps:{
+      id : id,
+    
+    }
+  });
+  return await popover.present();
+}
 
 
   async presentPopoverCreateNPC() {
@@ -177,6 +191,18 @@ cleanNPC(){
     return await popover.present();
   }
 
+  async presentPopoverupdateDialogNPCPLUS(idPlus:any) {
+    const popover = await this.popoverController.create({
+      component: PopoverDialogNPCEditComponent,
+      cssClass: 'popover-dialog',
+      translucent: true,
+      componentProps:{
+        idPlus : idPlus,
+ 
+      }
+    });
+    return await popover.present();
+  }
 
   async presentAlertConfirmDelete(data?:any) {
     const alert = await this.alertController.create({

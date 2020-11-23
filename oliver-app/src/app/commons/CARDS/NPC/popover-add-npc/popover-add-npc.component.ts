@@ -72,6 +72,7 @@ export class PopoverAddNPCComponent implements OnInit {
 
       try {
         this.dataSvc.createData("NPC", data);
+ 
       } catch (er) {
         this.globalOperation.showToast(er);
       }

@@ -71,6 +71,7 @@ export class PopoverAddSabioComponent implements OnInit {
 
       try {
         this.dataSvc.createData("Sabios", data);
+       
       } catch (er) {
         this.globalOperation.showToast(er);
       }

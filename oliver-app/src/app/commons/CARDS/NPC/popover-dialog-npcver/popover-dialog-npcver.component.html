@@ -1,0 +1,128 @@
+<ion-card style="width: 100%;" (click)="close()" >
+  <ion-card-header>
+      <ion-card-subtitle> Dialogo N°  {{NPCNormalDialog?.numInteraction}} </ion-card-subtitle>
+      <ion-card-title> {{NPCNormalDialog?.npcName}} </ion-card-title>
+
+  </ion-card-header>
+  <ion-card-content>
+
+      <ion-grid class="text-center" fixed>
+
+        <ion-row>
+            <ion-col size="12">
+                <ion-toolbar>
+
+                    <ion-button *ngIf="NPCNormalDialog.idOriginal!=null"  slot="start" (click)="close()">
+                        <ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon>        
+                    </ion-button>
+
+
+
+                  <ion-button *ngIf="NPCNormalDialog.idOriginal!=null"  slot="end" (click)="presentPopoverupdateDialogNPCPLUS(NPCNormalDialog.id)">
+                    <ion-icon  slot="icon-only" name="settings-outline"></ion-icon>
+                </ion-button>
+                
+
+                <ion-button *ngIf="NPCNormalDialog.idOriginal!=null"  slot="end" (click)="presentAlertConfirmDeleteDialogPlus(NPCNormalDialog.id ,NPCNormalDialog.idOriginal )">
+                    <ion-icon  slot="icon-only" name="trash"></ion-icon>
+                </ion-button>
+
+                </ion-toolbar>
+            </ion-col>
+        </ion-row>
+
+
+          <ion-row>
+              <ion-col size="6">
+                  <ion-label>
+                      <strong> N°Pages: </strong>
+                  </ion-label>
+              </ion-col>
+              <ion-col size="6">
+                  <ion-label>
+                      {{NPCNormalDialog.numPages}}
+                  </ion-label>
+              </ion-col>
+          </ion-row>
+
+          <ion-row  *ngFor="let contenidoPage of NPCNormalDialog.contenidoPages; let in= index "  >
+              <ion-col size="6">
+                  <ion-label>
+                      <strong> contenido Page {{in+1}}: </strong>
+                  </ion-label>
+              </ion-col>
+              <ion-col size="6">
+                  <ion-label>
+                   -   {{contenidoPage}}
+                  </ion-label>
+              </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+              <ion-col size="6">
+                  <ion-label>
+                      <strong> Quest Sorprie: </strong>
+                  </ion-label>
+              </ion-col>
+              <ion-col size="6">
+                  <ion-label>
+                      {{NPCNormalDialog.questSorprise}}
+                  </ion-label>
+              </ion-col>
+          </ion-row>
+
+
+          <ion-row *ngIf="NPCNormalDialog.questSorprise=='true'" >
+              <ion-col size="6">
+                  <ion-label>
+                      <strong> QS-AnsGood: </strong>
+                  </ion-label>
+              </ion-col>
+              <ion-col size="6">
+                  <ion-label>
+                      {{NPCNormalDialog.questSorpriseAnsGood}}
+                  </ion-label>
+              </ion-col>
+          </ion-row>
+          <ion-row *ngIf="NPCNormalDialog.questSorprise=='true'" >
+              <ion-col size="6">
+                  <ion-label>
+                      <strong> QS-AnsBad: </strong>
+                  </ion-label>
+              </ion-col>
+              <ion-col size="6">
+                  <ion-label>
+                      {{NPCNormalDialog.questSorpriseAnsBad}}
+                  </ion-label>
+              </ion-col>
+          </ion-row>
+
+          <ion-row  *ngIf="NPCNormalDialog.accionCausa!=null" >
+            <ion-col size="6">
+                <ion-label>
+                    <strong> AC que Causa este dialogo: </strong>
+                </ion-label>
+            </ion-col>
+            <ion-col size="6">
+                <ion-label>
+                    {{NPCNormalDialog.accionCausa}}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+          <ion-row>
+              <ion-col size="6">
+                  <ion-label>
+                      <strong> AC a Activar: </strong>
+                  </ion-label>
+              </ion-col>
+              <ion-col size="6">
+                  <ion-label>
+                      {{NPCNormalDialog.accionConsecunecia}}
+                  </ion-label>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+
+  </ion-card-content>
+</ion-card>

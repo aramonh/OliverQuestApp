@@ -4,7 +4,7 @@ import { rejects } from "assert";
 import { resolve } from "dns";
 import { send } from "process";
 import { error } from "protractor";
-import { Quest } from "../interfaces/interfaces";
+import { NPCNormalDialog, Quest } from "../interfaces/interfaces";
 import { QuestPagesPage } from "../pages/quest-pages/quest-pages.page";
 
 @Injectable({
@@ -62,6 +62,25 @@ export class CRUDfirebaseService {
         console.log(err);
       });
 
+  }
+   async deleteDialogPlus(colleccion: string, id: any , dataOriginal: NPCNormalDialog) {
+    console.log("uppp", dataOriginal)
+    dataOriginal.idPlus = null;
+    await this.firestore
+    .collection(colleccion)
+    .doc(dataOriginal.id)
+    .update(dataOriginal)
+    .then((data) => {
+      console.log("updated", data);
+    })
+    
+     this.firestore.collection(colleccion).doc(id).delete();
+
+     
+
+   
+      
+    
   }
 
   createDialogPlus(colleccion: string, dataOriginal: any,dataNEW: any) {
