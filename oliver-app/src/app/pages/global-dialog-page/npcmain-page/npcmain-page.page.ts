@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AlertController, LoadingController, NavController, PopoverController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, PopoverController } from '@ionic/angular';
 import { database } from 'firebase';
 import { PopoverEditACComponent } from 'src/app/commons/CARDS/AC/popover-edit-ac/popover-edit-ac.component';
 import { PopoverAddNPCComponent } from 'src/app/commons/CARDS/NPC/popover-add-npc/popover-add-npc.component';
@@ -36,7 +36,8 @@ export class NPCMainPagePage implements OnInit {
     private authCtrl: AuthService,
     private navCtrl: NavController,
     private globalOperation: GlobalOperationsService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private actionSheetController: ActionSheetController
   ) { }
 
  ngOnInit() {
@@ -48,6 +49,50 @@ export class NPCMainPagePage implements OnInit {
 }
   
   }
+
+
+  async presentActionSheetNPC(data?:any ) {
+    console.log("setingcard", data)
+    const actionSheet = await this.actionSheetController.create({
+      header: 'NPC Configuration',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+          //this.deleteQuest(data);
+          this.presentAlertConfirmDelete(data.id);
+        }
+      },{
+        text: 'Editar',
+        icon: 'pencil',
+        handler: () => {
+          console.log('Share clicked');
+          this.presentPopoverupdateNPC( data)
+        }
+      },
+        {
+
+        text: 'Dialogo',
+        icon: 'pencil',
+        handler: () => {
+          console.log('Share clicked');
+          this.selectNPC(data)
+        }
+      } ,{
+        text: 'Volver',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
  
 
  async getNPCS(){
@@ -166,7 +211,7 @@ async presentPopoverVerDialogoNPC(id:any) {
     return await popover.present();
   }
 
-  async presentPopoverupdateNPC(ev, data: NPC) {
+  async presentPopoverupdateNPC( data: NPC) {
     const popover = await this.popoverController.create({
       component: PopoverEditNPCComponent,
       cssClass: 'popover-big',

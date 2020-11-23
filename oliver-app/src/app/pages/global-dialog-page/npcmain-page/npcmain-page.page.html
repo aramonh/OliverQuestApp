@@ -1,211 +1,222 @@
-<app-header [titulo]="titulo" ></app-header>
+<app-header [titulo]="titulo"></app-header>
 
-<ion-content   *ngIf="!npcSelected"  >
+<ion-content *ngIf="!npcSelected" color="light" class="ion-no-padding">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col
+        size="12"
+        size-lg="3"
+        size-md="4"
+        size-sm="6"
+        size-xs="12"
+        *ngFor="let npc of npcs; let i = index  "
+      >
+        <ion-card
+          style="text-align: center; text-transform: uppercase"
+          class="text-center"
+        >
+          <ion-card-header class="text-center" color="primary">
+            <ion-toolbar color="primary">
+              <ion-card-title>
+                <ion-label style="width: 100%">
+                  <strong style="display: block"> {{i+1}}. </strong>
+                  {{npc.name}}</ion-label
+                >
+              </ion-card-title>
+              <ion-card-subtitle>
+                <ion-label style="width: 100%">
+                  <strong style="display: block">Town:</strong>
+                  {{npc.town}}</ion-label
+                >
+              </ion-card-subtitle>
 
+              <ion-button
+                color="danger"
+                slot="end"
+                (click)="presentActionSheetNPC(npc)"
+              >
+                <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+              </ion-button>
+            </ion-toolbar>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label style="width: 100%">
+                    <strong style="display: block">Actions:</strong>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="12" *ngFor="let action of npc.actions">
+                  <ion-label> - {{action}} </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-
-
-
-<ion-list>
-    <ion-item-sliding   *ngFor="let npc of npcs; let i = index  " >
-        <ion-item style="text-align: center; text-transform: uppercase; width: 100%; " >
-
-            <ion-label style="width: 100%; " >  <strong style="display: block;"  > {{i+1}}. </strong>  <strong style="display: block;" >Nombre:</strong> {{npc.name}}</ion-label>
-            <ion-label  style="width: 100%;  " >  <strong style="display: block;" >Town:</strong>  {{npc.town}}</ion-label>
-            <ion-label style="width: 100%;   "  >  <strong style="display: block;" >Action:</strong> <p *ngFor="let action of npc.actions" >- {{action}}</p><br>  </ion-label>
-       
-        </ion-item>
-        <ion-item-options  side="start">
-            <ion-item-option (click)="presentPopoverupdateNPC($event, npc)" >Editar</ion-item-option>
-            <ion-item-option color="success" (click)="selectNPC( npc)" >Dialogos</ion-item-option>
-        </ion-item-options>
-      
-        <ion-item-options >
-            <ion-item-option color="danger" (click)="presentAlertConfirmDelete( npc.id )" >Eliminar</ion-item-option>
-          
-        </ion-item-options>
-    </ion-item-sliding>
-</ion-list>
-
-
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="presentPopoverCreateNPC();" >
-        <ion-icon   name="add"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentPopoverCreateNPC();">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-</ion-fab>
-
-
+  </ion-fab>
 </ion-content>
 
-
-<ion-content *ngIf="npcSelected"  >
-<ion-grid fixed>
+<ion-content *ngIf="npcSelected" color="light" class="ion-no-padding">
+  <ion-grid fixed>
     <ion-row>
-        <ion-col class="text-center" size="3">
-            <ion-button (click)="cleanNPC()">
-                <ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon>
-            </ion-button>
-        </ion-col>
-        <ion-col class="text-center" size="6">
-            {{npcSelected.name}}
-        </ion-col>
-        <ion-col class="text-center" size="3"><ion-label>  <strong style="display: block;" >Total Dialog: </strong> 
-            {{totalInteractions}}</ion-label>
-            </ion-col>
+      <ion-col class="text-center" size="3">
+        <ion-button (click)="cleanNPC()">
+          <ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="text-center" size="6"> {{npcSelected.name}} </ion-col>
+      <ion-col class="text-center" size="3"
+        ><ion-label>
+          <strong style="display: block">Total Dialog: </strong>
+          {{totalInteractions}}</ion-label
+        >
+      </ion-col>
     </ion-row>
+  </ion-grid>
 
-</ion-grid>
+  <ion-list color="light" class="ion-no-padding">
+    <ion-item-sliding
+      color="light"
+      class="ion-no-padding"
+      *ngFor="let interaction of interactions; let i = index;"
+    >
+      <ion-item
+        style="text-align: center; text-transform: uppercase; width: 100%"
+      >
+        <ion-card style="width: 100%">
+          <ion-card-header>
+            <ion-card-subtitle>
+              Dialogo N° {{interaction.numInteraction}}
+            </ion-card-subtitle>
+            <ion-card-title> {{interaction.npcName}} </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid class="text-center" fixed>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-toolbar>
+                    <ion-button
+                      *ngIf="interaction.idPlus==null"
+                      slot="end"
+                      (click)="presentPopoverCreatePlusDialogNPC(interaction.id)"
+                    >
+                      <ion-icon slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
 
+                    <ion-button
+                      *ngIf="interaction.idPlus!=null"
+                      slot="end"
+                      (click)="presentPopoverVerDialogoNPC(interaction.idPlus)"
+                    >
+                      <ion-icon slot="icon-only" name="star"></ion-icon>
+                    </ion-button>
+                  </ion-toolbar>
+                </ion-col>
+              </ion-row>
 
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <strong> N°Pages: </strong>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label> {{interaction.numPages}} </ion-label>
+                </ion-col>
+              </ion-row>
 
+              <ion-row
+                *ngFor="let contenidoPage of interaction.contenidoPages; let in= index "
+              >
+                <ion-col size="6">
+                  <ion-label>
+                    <strong> contenido Page {{in+1}}: </strong>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label> - {{contenidoPage}} </ion-label>
+                </ion-col>
+              </ion-row>
 
-    <ion-list>
-        <ion-item-sliding *ngFor="let interaction of interactions; let i = index;"  >
-            <ion-item style="text-align: center; text-transform: uppercase; width: 100%; " >
-                <ion-card style="width: 100%;" >
-                    <ion-card-header>
-                        <ion-card-subtitle> Dialogo N°  {{interaction.numInteraction}} </ion-card-subtitle>
-                        <ion-card-title> {{interaction.npcName}} </ion-card-title>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <strong> Quest Sorprie: </strong>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label> {{interaction.questSorprise}} </ion-label>
+                </ion-col>
+              </ion-row>
 
-                    </ion-card-header>
-                    <ion-card-content>
+              <ion-row *ngIf="interaction.questSorprise=='true'">
+                <ion-col size="6">
+                  <ion-label>
+                    <strong> QS-AnsGood: </strong>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label> {{interaction.questSorpriseAnsGood}} </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="interaction.questSorprise=='true'">
+                <ion-col size="6">
+                  <ion-label>
+                    <strong> QS-AnsBad: </strong>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label> {{interaction.questSorpriseAnsBad}} </ion-label>
+                </ion-col>
+              </ion-row>
 
-                        <ion-grid class="text-center" fixed>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <strong> AC a Activar: </strong>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label> {{interaction.accionConsecunecia}} </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
 
+      <ion-item-options side="start">
+        <ion-item-option
+          (click)="presentPopoverupdateDialogNPC($event, interaction)"
+          >Editar</ion-item-option
+        >
+      </ion-item-options>
 
-                            <ion-row>
-                                <ion-col size="12">
-                                    <ion-toolbar>
+      <ion-item-options *ngIf="interaction.numInteraction==totalInteractions">
+        <ion-item-option
+          color="danger"
+          (click)="presentAlertConfirmDeleteDialog( interaction.id )"
+          >Eliminar</ion-item-option
+        >
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
-
-
-                                      <ion-button *ngIf="interaction.idPlus==null"  slot="end" (click)="presentPopoverCreatePlusDialogNPC(interaction.id)">
-                                          <ion-icon slot="icon-only" name="add"></ion-icon>
-                                      </ion-button>
-
-
-
-                                      <ion-button *ngIf="interaction.idPlus!=null"  slot="end" (click)="presentPopoverVerDialogoNPC(interaction.idPlus)">
-                                        <ion-icon slot="icon-only" name="star"></ion-icon>
-                                    </ion-button>
-
-
-
-
-                                    </ion-toolbar>
-                                </ion-col>
-                            </ion-row>
-
-                            <ion-row>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        <strong> N°Pages: </strong>
-                                    </ion-label>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        {{interaction.numPages}}
-                                    </ion-label>
-                                </ion-col>
-                            </ion-row>
-
-                            <ion-row  *ngFor="let contenidoPage of interaction.contenidoPages; let in= index "  >
-                                <ion-col size="6">
-                                    <ion-label>
-                                        <strong> contenido Page {{in+1}}: </strong>
-                                    </ion-label>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <ion-label>
-                                     -   {{contenidoPage}}
-                                    </ion-label>
-                                </ion-col>
-                            </ion-row>
-
-
-                            <ion-row>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        <strong> Quest Sorprie: </strong>
-                                    </ion-label>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        {{interaction.questSorprise}}
-                                    </ion-label>
-                                </ion-col>
-                            </ion-row>
-
-
-                            <ion-row *ngIf="interaction.questSorprise=='true'" >
-                                <ion-col size="6">
-                                    <ion-label>
-                                        <strong> QS-AnsGood: </strong>
-                                    </ion-label>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        {{interaction.questSorpriseAnsGood}}
-                                    </ion-label>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row *ngIf="interaction.questSorprise=='true'" >
-                                <ion-col size="6">
-                                    <ion-label>
-                                        <strong> QS-AnsBad: </strong>
-                                    </ion-label>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        {{interaction.questSorpriseAnsBad}}
-                                    </ion-label>
-                                </ion-col>
-                            </ion-row>
-
-
-                            <ion-row>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        <strong> AC a Activar: </strong>
-                                    </ion-label>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <ion-label>
-                                        {{interaction.accionConsecunecia}}
-                                    </ion-label>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-
-                    </ion-card-content>
-                </ion-card>
-
-
-
-
-            </ion-item>
-
-
-            <ion-item-options  side="start">
-                <ion-item-option (click)="presentPopoverupdateDialogNPC($event, interaction)" >Editar</ion-item-option>
-
-            </ion-item-options>
-          
-            <ion-item-options  *ngIf="interaction.numInteraction==totalInteractions" >
-                <ion-item-option color="danger" (click)="presentAlertConfirmDeleteDialog( interaction.id )" >Eliminar</ion-item-option>
-              
-            </ion-item-options>
-
-
-        </ion-item-sliding>
-    </ion-list>
-
-
-
-<ion-fab vertical="bottom"  horizontal="end" slot="fixed">
-    <ion-fab-button color="secondary" (click)="presentPopoverCreateDialogNPC();" >
-        <ion-icon   name="add"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button
+      color="secondary"
+      (click)="presentPopoverCreateDialogNPC();"
+    >
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-</ion-fab>
-
-</ion-content> 
+  </ion-fab>
+</ion-content>
