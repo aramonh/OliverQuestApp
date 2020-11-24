@@ -50,6 +50,7 @@ export class PopoverAddACComponent implements OnInit {
     }
   }
 
+  
 
  async getNPCAndSabios(){
    try {
@@ -61,9 +62,11 @@ export class PopoverAddACComponent implements OnInit {
         
         
         var name = {
+          id:"",
           tipo:"NPC",
           name:""
         };
+        name.id = doc.id;
         name.name = doc.data().name;
         console.log("GUET CATEGORY", name )
         names.push( name )
@@ -77,9 +80,11 @@ export class PopoverAddACComponent implements OnInit {
         
        
         var name = {
+          id:"",
           tipo:"Sabio",
           name:""
         };
+        name.id = doc.id;
         name.name = doc.data().name;
         console.log("GUET CATEGORY", name )
         names.push( name )

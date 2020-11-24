@@ -209,7 +209,7 @@ async presentAlertConfirmDeleteDialogPlus(id: string, idOriginal:string) {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
     header: '¿Confirmar Eliminacion?',
-    message: 'Seguro que quieres eliminar este <strong>NPC Dialog</strong>',
+    message: 'Seguro que quieres eliminar este <strong>NPC Dialog PLUS</strong>',
     buttons: [
       {
         text: 'Cancel',

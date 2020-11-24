@@ -51,6 +51,13 @@ export class NPCMainPagePage implements OnInit {
   }
 
 
+
+
+  
+
+
+
+
   async presentActionSheetNPC(data?:any ) {
     console.log("setingcard", data)
     const actionSheet = await this.actionSheetController.create({
@@ -72,14 +79,62 @@ export class NPCMainPagePage implements OnInit {
           console.log('Share clicked');
           this.presentPopoverupdateNPC( data)
         }
-      },
-        {
+      } ,{
+        text: 'Volver',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 
-        text: 'Dialogo',
+  async presentActionSheetDialogNPCWithDelete(data?:any ) {
+    console.log("setingcard", data)
+    const actionSheet = await this.actionSheetController.create({
+      header: 'NPC Configuration',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+          //this.deleteQuest(data);
+          this.presentAlertConfirmDeleteDialog(data.id);
+        }
+      },{
+        text: 'Editar',
         icon: 'pencil',
         handler: () => {
           console.log('Share clicked');
-          this.selectNPC(data)
+          this.presentPopoverupdateDialogNPC( data)
+        }
+      } ,{
+        text: 'Volver',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async presentActionSheetDialogNPC(data?:any ) {
+    console.log("setingcard", data)
+    const actionSheet = await this.actionSheetController.create({
+      header: 'NPC Configuration',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Editar',
+        icon: 'pencil',
+        handler: () => {
+          console.log('Share clicked');
+          this.presentPopoverupdateDialogNPC( data)
         }
       } ,{
         text: 'Volver',
@@ -223,7 +278,7 @@ async presentPopoverVerDialogoNPC(id:any) {
     });
     return await popover.present();
   }
-  async presentPopoverupdateDialogNPC(ev, data: NPCNormalDialog) {
+  async presentPopoverupdateDialogNPC( data: NPCNormalDialog) {
     const popover = await this.popoverController.create({
       component: PopoverDialogNPCEditComponent,
       cssClass: 'popover-dialog',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AlertController, LoadingController, NavController, PopoverController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, PopoverController } from '@ionic/angular';
 import { PopoverAddACComponent } from 'src/app/commons/CARDS/AC/popover-add-ac/popover-add-ac.component';
 import { PopoverEditACComponent } from 'src/app/commons/CARDS/AC/popover-edit-ac/popover-edit-ac.component';
-import { AccionCausaConsecuencia } from 'src/app/interfaces/interfaces';
+import { AccionCausaConsecuencia, NPC, Sabio } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
@@ -29,7 +29,8 @@ export class ACMainPagePage implements OnInit {
     private authCtrl: AuthService,
     private navCtrl: NavController,
     private globalOperation: GlobalOperationsService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private actionSheetController : ActionSheetController
   ) { }
 
  ngOnInit() {
@@ -39,9 +40,57 @@ export class ACMainPagePage implements OnInit {
 }else{ 
   this.getAccionCausaConsecuencias();
 }
+
   
   }
- 
+
+
+  async presentActionSheetAC(data?:any ) {
+    console.log("setingcard", data)
+    const actionSheet = await this.actionSheetController.create({
+      header: 'AC Configuration',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+          //this.deleteQuest(data);
+          this.presentAlertConfirmDelete(data.id);
+        }
+      },{
+        text: 'Editar',
+        icon: 'pencil',
+        handler: () => {
+          console.log('Share clicked');
+          this.presentPopoverupdate( data)
+        }
+      } ,{
+        text: 'Volver',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+
+
+ async  getNameNPCByID( id: any) {
+    var data: any;
+        await    this.firestore
+.doc( "NPC/" + id)
+.valueChanges()
+.subscribe((res)=>{
+  data = res;
+});
+console.log("DATA", data)
+  return data
+  }
 
  async getAccionCausaConsecuencias(){
   // show loader
@@ -82,7 +131,7 @@ export class ACMainPagePage implements OnInit {
 
 
 
-  async presentPopover() {
+  async presentPopoverAC() {
     const popover = await this.popoverController.create({
       component: PopoverAddACComponent,
       cssClass: 'popover-big',
@@ -91,7 +140,7 @@ export class ACMainPagePage implements OnInit {
     return await popover.present();
   }
 
-  async presentPopoverupdate(ev, data: AccionCausaConsecuencia) {
+  async presentPopoverupdate( data: AccionCausaConsecuencia) {
     const popover = await this.popoverController.create({
       component: PopoverEditACComponent,
       cssClass: 'popover-big',

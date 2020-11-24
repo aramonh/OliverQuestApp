@@ -17,6 +17,14 @@
         >
           <ion-card-header class="text-center" color="primary">
             <ion-toolbar color="primary">
+              <ion-button
+                color="danger"
+                slot="start"
+                (click)="presentActionSheetNPC(npc)"
+              >
+                <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+              </ion-button>
+
               <ion-card-title>
                 <ion-label style="width: 100%">
                   <strong style="display: block"> {{i+1}}. </strong>
@@ -30,12 +38,11 @@
                 >
               </ion-card-subtitle>
 
-              <ion-button
-                color="danger"
-                slot="end"
-                (click)="presentActionSheetNPC(npc)"
-              >
-                <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+              <ion-button color="success" slot="end" (click)="selectNPC(npc)">
+                <ion-icon
+                  slot="icon-only"
+                  name="chatbubbles-outline"
+                ></ion-icon>
               </ion-button>
             </ion-toolbar>
           </ion-card-header>
@@ -66,63 +73,89 @@
 </ion-content>
 
 <ion-content *ngIf="npcSelected" color="light" class="ion-no-padding">
-  <ion-grid fixed>
+  <ion-grid  style="text-transform: uppercase;" fixed>
     <ion-row>
       <ion-col class="text-center" size="3">
         <ion-button (click)="cleanNPC()">
           <ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon>
         </ion-button>
       </ion-col>
-      <ion-col class="text-center" size="6"> {{npcSelected.name}} </ion-col>
+      <ion-col class="text-center" size="6">
+        <ion-label>
+          <strong> 
+            {{npcSelected.name}}
+          </strong>
+        </ion-label>
+        </ion-col>
       <ion-col class="text-center" size="3"
         ><ion-label>
-          <strong style="display: block">Total Dialog: </strong>
+          <strong style="display: block">Total de Dialogos: </strong>
           {{totalInteractions}}</ion-label
         >
       </ion-col>
     </ion-row>
-  </ion-grid>
 
-  <ion-list color="light" class="ion-no-padding">
-    <ion-item-sliding
-      color="light"
-      class="ion-no-padding"
-      *ngFor="let interaction of interactions; let i = index;"
-    >
-      <ion-item
-        style="text-align: center; text-transform: uppercase; width: 100%"
+    <ion-row>
+      <ion-col
+        size="12"
+        size-lg="3"
+        size-md="4"
+        size-sm="6"
+        size-xs="12"
+        *ngFor="let interaction of interactions; let i = index;"
       >
-        <ion-card style="width: 100%">
-          <ion-card-header>
-            <ion-card-subtitle>
-              Dialogo N° {{interaction.numInteraction}}
-            </ion-card-subtitle>
-            <ion-card-title> {{interaction.npcName}} </ion-card-title>
+        <ion-card
+          style="text-align: center; text-transform: uppercase"
+          class="text-center"
+        >
+          <ion-card-header class="text-center" color="primary">
+            <ion-toolbar color="primary">
+ 
+
+              <ion-button
+                color="danger"
+                *ngIf="interaction.numInteraction==totalInteractions"
+                slot="start"
+                (click)="presentActionSheetDialogNPCWithDelete(interaction)"
+              >
+                <ion-icon slot="icon-only" name="settings-outline" ></ion-icon>
+              </ion-button>
+
+              <ion-button
+                color="danger"
+                *ngIf="interaction.numInteraction!=totalInteractions"
+                slot="start"
+                (click)="presentActionSheetDialogNPC(interaction)"
+              >
+                <ion-icon slot="icon-only" name="settings-outline" ></ion-icon>
+              </ion-button>
+
+              <ion-card-subtitle>
+                Dialogo N° {{interaction.numInteraction}}
+              </ion-card-subtitle>
+              <ion-card-title> {{interaction.npcName}} </ion-card-title>
+
+              <ion-button
+                color="success"
+                *ngIf="interaction.idPlus==null"
+                slot="end"
+                (click)="presentPopoverCreatePlusDialogNPC(interaction.id)"
+              >
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+
+              <ion-button
+                color="success"
+                *ngIf="interaction.idPlus!=null"
+                slot="end"
+                (click)="presentPopoverVerDialogoNPC(interaction.idPlus)"
+              >
+                <ion-icon slot="icon-only" name="star"></ion-icon>
+              </ion-button>
+            </ion-toolbar>
           </ion-card-header>
           <ion-card-content>
             <ion-grid class="text-center" fixed>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-toolbar>
-                    <ion-button
-                      *ngIf="interaction.idPlus==null"
-                      slot="end"
-                      (click)="presentPopoverCreatePlusDialogNPC(interaction.id)"
-                    >
-                      <ion-icon slot="icon-only" name="add"></ion-icon>
-                    </ion-button>
-
-                    <ion-button
-                      *ngIf="interaction.idPlus!=null"
-                      slot="end"
-                      (click)="presentPopoverVerDialogoNPC(interaction.idPlus)"
-                    >
-                      <ion-icon slot="icon-only" name="star"></ion-icon>
-                    </ion-button>
-                  </ion-toolbar>
-                </ion-col>
-              </ion-row>
-
               <ion-row>
                 <ion-col size="6">
                   <ion-label>
@@ -146,7 +179,11 @@
                   <ion-label> - {{contenidoPage}} </ion-label>
                 </ion-col>
               </ion-row>
-
+                <ion-row>
+                  <ion-col size="12">
+                    <p>___________________________________</p>
+                  </ion-col>
+                </ion-row>
               <ion-row>
                 <ion-col size="6">
                   <ion-label>
@@ -178,7 +215,12 @@
                   <ion-label> {{interaction.questSorpriseAnsBad}} </ion-label>
                 </ion-col>
               </ion-row>
-
+              <ion-row>
+                <ion-col size="12">
+                  <p>___________________________________</p>
+                </ion-col>
+              </ion-row>
+           
               <ion-row>
                 <ion-col size="6">
                   <ion-label>
@@ -192,24 +234,12 @@
             </ion-grid>
           </ion-card-content>
         </ion-card>
-      </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-      <ion-item-options side="start">
-        <ion-item-option
-          (click)="presentPopoverupdateDialogNPC($event, interaction)"
-          >Editar</ion-item-option
-        >
-      </ion-item-options>
 
-      <ion-item-options *ngIf="interaction.numInteraction==totalInteractions">
-        <ion-item-option
-          color="danger"
-          (click)="presentAlertConfirmDeleteDialog( interaction.id )"
-          >Eliminar</ion-item-option
-        >
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button

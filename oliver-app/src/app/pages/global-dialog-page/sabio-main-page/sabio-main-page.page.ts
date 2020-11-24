@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AlertController, LoadingController, NavController, PopoverController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, PopoverController } from '@ionic/angular';
 import { PopoverAddSabioComponent } from 'src/app/commons/CARDS/Sabio/popover-add-sabio/popover-add-sabio.component';
 import { PopoverEditSabioComponent } from 'src/app/commons/CARDS/Sabio/popover-edit-sabio/popover-edit-sabio.component';
-import { Sabio } from 'src/app/interfaces/interfaces';
+import { AccionCausaConsecuencia, Sabio } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
@@ -27,7 +27,8 @@ export class SabioMainPagePage implements OnInit {
     private authCtrl: AuthService,
     private navCtrl: NavController,
     private globalOperation: GlobalOperationsService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private actionSheetController: ActionSheetController
   ) { }
 
  ngOnInit() {
@@ -40,6 +41,39 @@ export class SabioMainPagePage implements OnInit {
   
   }
  
+
+  async presentActionSheetSabio(data?:any ) {
+    console.log("setingcard", data)
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Sabio Configuration',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+          //this.deleteQuest(data);
+          this.presentAlertConfirmDelete(data.id);
+        }
+      },{
+        text: 'Editar',
+        icon: 'pencil',
+        handler: () => {
+          console.log('Share clicked');
+          this.presentPopoverupdate( data)
+        }
+      } ,{
+        text: 'Volver',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 
  async getSabios(){
   // show loader
@@ -89,7 +123,7 @@ export class SabioMainPagePage implements OnInit {
     return await popover.present();
   }
 
-  async presentPopoverupdate(ev, data: Sabio) {
+  async presentPopoverupdate( data: Sabio) {
     const popover = await this.popoverController.create({
       component: PopoverEditSabioComponent,
       cssClass: 'popover-big',
