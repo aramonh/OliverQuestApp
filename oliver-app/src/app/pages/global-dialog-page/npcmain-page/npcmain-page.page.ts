@@ -222,11 +222,11 @@ async selectNPC(data:NPC){
       interaction.id = doc.id;
   
         interactions.push( interaction )
-      
+       
     
     })
 
-
+    interactions.sort((a, b) => a.numInteraction - b.numInteraction)
    this.interactions = interactions;
    this.totalInteractions = interactions.length
    console.log("DIALOGOS",this.interactions )
