@@ -17,7 +17,7 @@
     </ion-button>
     
 
-    <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null"  slot="end" (click)="presentAlertConfirmDeleteDialogPlus(NPCNormalDialog.id ,NPCNormalDialog.idOriginal )">
+    <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null"  slot="end" (click)="presentAlertConfirmDeleteDialogPlus(NPCNormalDialog ,NPCNormalDialog.idOriginal )">
         <ion-icon  slot="icon-only" name="trash"></ion-icon>
     </ion-button>
 
@@ -117,11 +117,11 @@
             </ion-col>
             <ion-col size="6">
                 <ion-label>
-                    {{NPCNormalDialog.accionCausa}}
+                    {{NPCNormalDialog.accionCausa.npcCausa}} -> {{NPCNormalDialog.accionCausa.npcConsecuencia}} : {{NPCNormalDialog.accionCausa.name}}
                 </ion-label>
             </ion-col>
         </ion-row>
-          <ion-row>
+          <ion-row  *ngIf="NPCNormalDialog.accionConsecunecia!='Ninguno'"  >
               <ion-col size="6">
                   <ion-label>
                       <strong> AC a Activar: </strong>
@@ -129,7 +129,7 @@
               </ion-col>
               <ion-col size="6">
                   <ion-label>
-                      {{NPCNormalDialog.accionConsecunecia}}
+                        {{NPCNormalDialog.accionConsecunecia.npcCausa}} -> {{NPCNormalDialog.accionConsecunecia.npcConsecuencia}} : {{NPCNormalDialog.accionConsecunecia.name}}
                   </ion-label>
               </ion-col>
           </ion-row>

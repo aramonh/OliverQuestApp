@@ -58,8 +58,8 @@ export class PopoverDialogNPCComponent implements OnInit {
     idPlus: null,
     idOriginal: null,
   };
-  ACsCausa: string[] = [];
-  ACsConsecuencia: string[] = [];
+  ACsCausa: AccionCausaConsecuencia[] = [];
+  ACsConsecuencia: AccionCausaConsecuencia[] = [];
 
   constructor(
     private toastCtrl: ToastController,
@@ -111,22 +111,24 @@ export class PopoverDialogNPCComponent implements OnInit {
       await this.firestore.firestore
         .collection("accionCausaConsecuencias")
         .onSnapshot((querysnap) => {
-          var ACs1: string[] = [];
-          var ACs2: string[] = [];
+          var ACs1: AccionCausaConsecuencia[] = [];
+          var ACs2: AccionCausaConsecuencia[] = [];
           querysnap.forEach((doc) => {
             console.log("GUET CATEGORY");
             var AC;
             AC = doc.data();
             AC.id = doc.id;
+            if(AC.idconvCausa==null){
             if (this.NPCNormalDialog.npcName == AC.npcCausa) {
-              ACs1.push(AC.name);
-            }
+              ACs1.push(AC);
+            }}
+            if(AC.idconvConsecuencia == null ){
             if (
               this.NPCNormalDialog.npcName == AC.npcConsecuencia ||
               AC.npcConsecuencia == "Todos"
             ) {
-              ACs2.push(AC.name);
-            }
+              ACs2.push(AC);
+            }}
           });
           console.log("TAMAÑO", querysnap.size);
           console.log("FIN CAT", ACs1, ACs2);
@@ -137,28 +139,30 @@ export class PopoverDialogNPCComponent implements OnInit {
       console.log(error);
     }
   }
-  
+
   async getACPlus() {
     try {
       await this.firestore.firestore
         .collection("accionCausaConsecuencias")
         .onSnapshot((querysnap) => {
-          var ACs1: string[] = [];
-          var ACs2: string[] = [];
+          var ACs1: AccionCausaConsecuencia[] = [];
+          var ACs2: AccionCausaConsecuencia[] = [];
           querysnap.forEach((doc) => {
             console.log("GUET CATEGORY");
             var AC;
             AC = doc.data();
             AC.id = doc.id;
+            if(AC.idconvCausa==null){
             if (this.NPCNormalDialogOriginal.npcName == AC.npcCausa) {
-              ACs1.push(AC.name);
-            }
+              ACs1.push(AC);
+            }}
+            if(AC.idconvConsecuencia == null ){
             if (
               this.NPCNormalDialogOriginal.npcName == AC.npcConsecuencia ||
               AC.npcConsecuencia == "Todos"
             ) {
-              ACs2.push(AC.name);
-            }
+              ACs2.push(AC);
+            }}
           });
           console.log("TAMAÑO", querysnap.size);
           console.log("FIN CAT", ACs1, ACs2);
@@ -260,9 +264,9 @@ async getDialogOriginal(id){
             var interaction;
             interaction = doc.data();
             interaction.id = doc.id;
-            if(interaction.idOriginal==null){
+            
               interactions.push( interaction )
-            }
+            
           });
 
           this.NPCNormalDialog.numInteraction = interactions.length + 1;
@@ -280,7 +284,8 @@ async getDialogOriginal(id){
       (await loader).present();
 
       try {
-        this.dataSvc.createData("DialogsNPC", data);
+        this.dataSvc.createDialog("DialogsNPC", data);
+
 
         console.log("CREATED", data);
       } catch (er) {

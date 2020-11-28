@@ -220,14 +220,14 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row>
+              <ion-row  *ngIf="interaction.accionConsecunecia!='Ninguno'" >
                 <ion-col size="6">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
                 <ion-col size="6">
-                  <ion-label> {{interaction.accionConsecunecia}} </ion-label>
+                  <ion-label> {{interaction.accionConsecunecia.npcCausa}} -> {{interaction.accionConsecunecia.npcConsecuencia}} : {{interaction.accionConsecunecia.name}} </ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>

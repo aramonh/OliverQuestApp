@@ -180,12 +180,14 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             var AC;
             AC = doc.data();
             AC.id = doc.id;
+            if (this.NPCNormalDialog.npcName == AC.npcCausa) {
             if(this.NPCNormalDialog.npcName== AC.npcCausa   ){
             ACs1.push( AC.name );
-          }
+          }}
+          if(AC.idconvConsecuencia == null ){
           if( this.NPCNormalDialog.npcName== AC.npcConsecuencia  || AC.npcConsecuencia == "Todos"){
             ACs2.push( AC.name );
-          }
+          }}
           })
           console.log("TAMAÑO", querysnap.size)
           console.log("FIN CAT", ACs1,ACs2)

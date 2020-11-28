@@ -205,7 +205,7 @@ async getDialogOriginal(id){
   }
 }
 
-async presentAlertConfirmDeleteDialogPlus(id: string, idOriginal:string) {
+async presentAlertConfirmDeleteDialogPlus(dialog: any, idOriginal:string) {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
     header: '¿Confirmar Eliminacion?',
@@ -223,7 +223,7 @@ async presentAlertConfirmDeleteDialogPlus(id: string, idOriginal:string) {
         cssClass:'dark',
         handler: () => {
           console.log('Confirm Okay');
-          this.deleteDialogNPCPLus(id, this.NPCNormalDialogOriginal);
+          this.deleteDialogNPCPLus(dialog, this.NPCNormalDialogOriginal);
         }
       }
     ]
@@ -231,16 +231,16 @@ async presentAlertConfirmDeleteDialogPlus(id: string, idOriginal:string) {
 
   await alert.present();
 }
-async deleteDialogNPCPLus(id: string, DialogOriginal:NPCNormalDialog) {
+async deleteDialogNPCPLus(dialog, DialogOriginal:NPCNormalDialog) {
   // show loader
-  console.log('Delete', id);
+  console.log('Delete', dialog);
   const loader = this.loadingCtrl.create({
     message: 'Please wait...',
   });
   (await loader).present();
   try {
    // await this.firestore.doc('aerolines' + id).delete();
-    this.dataSvc.deleteDialogPlus('DialogsNPC',id,DialogOriginal)
+    this.dataSvc.deleteDialogPlus('DialogsNPC',dialog,DialogOriginal)
   } catch (er) {
     this.globalOperation.showToast(er);
   }

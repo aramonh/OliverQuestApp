@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActionSheetController, AlertController, LoadingController, NavController, PopoverController } from '@ionic/angular';
 import { PopoverAddACComponent } from 'src/app/commons/CARDS/AC/popover-add-ac/popover-add-ac.component';
 import { PopoverEditACComponent } from 'src/app/commons/CARDS/AC/popover-edit-ac/popover-edit-ac.component';
+import { PopoverDialogNPCVerComponent } from 'src/app/commons/CARDS/NPC/popover-dialog-npcver/popover-dialog-npcver.component';
 import { AccionCausaConsecuencia, NPC, Sabio } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
@@ -44,6 +45,20 @@ export class ACMainPagePage implements OnInit {
   
   }
 
+
+
+  async presentPopoverVerDialogoNPC(id:any) {
+    const popover = await this.popoverController.create({
+      component: PopoverDialogNPCVerComponent,
+      cssClass: 'popover-dialog',
+      translucent: true,
+      componentProps:{
+        id : id,
+      
+      }
+    });
+    return await popover.present();
+  }
 
   async presentActionSheetAC(data?:any ) {
     console.log("setingcard", data)

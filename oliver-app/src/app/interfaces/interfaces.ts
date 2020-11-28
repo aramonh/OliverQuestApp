@@ -11,8 +11,8 @@ export interface NPCNormalDialog {
     contenidoPages:string[];
 
 
-    accionCausa?:string;
-    accionConsecunecia?:string;
+    accionCausa?:any;
+    accionConsecunecia?:any;
     
     idPlus?:string;
     idOriginal?:string;
@@ -70,7 +70,9 @@ export interface AccionCausaConsecuencia{
     id?:string;
     name:string;
     npcCausa:string;
+    idconvCausa?:string;
     npcConsecuencia?:string;
+    idconvConsecuencia?:string;
     description:string;
 }
 

@@ -17,7 +17,9 @@ export class PopoverAddACComponent implements OnInit {
     name:"",
     npcCausa:"",
     npcConsecuencia:"",
-    description:""
+    description:"",
+    idconvCausa:null,
+    idconvConsecuencia:null,
   }; 
 
   NPCSAndSabios:{

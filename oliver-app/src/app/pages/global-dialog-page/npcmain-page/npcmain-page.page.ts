@@ -103,7 +103,7 @@ export class NPCMainPagePage implements OnInit {
         handler: () => {
           console.log('Delete clicked');
           //this.deleteQuest(data);
-          this.presentAlertConfirmDeleteDialog(data.id);
+          this.presentAlertConfirmDeleteDialog(data);
         }
       },{
         text: 'Editar',
@@ -359,16 +359,16 @@ async presentPopoverVerDialogoNPC(id:any) {
     await alert.present();
   }
 
-  async deleteDialogNPC(id: string) {
+  async deleteDialogNPC(dialog:any) {
     // show loader
-    console.log('Delete', id);
+    console.log('Delete', dialog);
     const loader = this.loadingCtrl.create({
       message: 'Please wait...',
     });
     (await loader).present();
     try {
      // await this.firestore.doc('aerolines' + id).delete();
-      this.dataSvc.deleteData("DialogsNPC",id);
+      this.dataSvc.deleteDialog("DialogsNPC",dialog);
     } catch (er) {
       this.globalOperation.showToast(er);
     }

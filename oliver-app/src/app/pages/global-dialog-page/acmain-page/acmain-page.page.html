@@ -34,8 +34,14 @@
                       {{AC.name}}</ion-label
                     >
                   </ion-card-title>
-   
-    
+                  
+
+                  <ion-button *ngIf="AC.idconvCausa!=null" (click)="presentPopoverVerDialogoNPC(AC.idconvCausa)" color="danger" slot="end" >
+                    Causa
+                  </ion-button>
+                  <ion-button  *ngIf="AC.idconvConsecuencia!=null" (click)="presentPopoverVerDialogoNPC(AC.idconvConsecuencia)" color="danger" slot="end" >
+                    Cons.
+                   </ion-button>
     
      
     
