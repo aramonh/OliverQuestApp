@@ -117,9 +117,11 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             const element = data["contenidoPages"][index];
             this.NPCNormalDialog.contenidoPages.push(element);
           }
+
+          this.getAC();
         });
 
-        this.getAC();
+     
       if (this.NPCNormalDialog == undefined || this.NPCNormalDialog == null) {
         this.globalOperation.showToast("Select NPCNormalDialog Again");
         await this.popoverCtrl.dismiss();
@@ -164,17 +166,22 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             var AC;
             AC = doc.data();
             AC.id = doc.id;
-            console.log("AC",AC.idconvCausa,AC.idconvConsecuencia,this.id)
+            if( AC.idconvConsecuencia==this.id  || AC.idconvCausa==this.id){
+              console.log("AC",AC.idconvCausa,AC.idconvConsecuencia,this.id)
+            }
+           
             if(AC.idconvCausa==null || AC.idconvCausa==this.id ){
               if (this.NPCNormalDialog.npcName == AC.npcCausa) {
                 ACs1.push(AC);
               }
             }
             if (AC.idconvConsecuencia == null || AC.idconvConsecuencia==this.id ) {
+              console.log("PAs2")
               if (
                 this.NPCNormalDialog.npcName == AC.npcConsecuencia ||
                 AC.npcConsecuencia == "Todos"
               ) {
+                console.log("PAs3",this.NPCNormalDialog.npcName)
                 ACs2.push(AC);
               }
             }

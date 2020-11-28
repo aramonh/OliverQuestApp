@@ -186,7 +186,6 @@ export class CRUDfirebaseService {
           });
 
         if (
-          dataNEW.accionCausa != null &&
           dataNEW.accionCausa.npcConsecuencia != "Todos"
         ) {
           var mew: AccionCausaConsecuencia;
@@ -247,11 +246,12 @@ export class CRUDfirebaseService {
             .then((data) => {
               console.log("updated", data);
 
-              if (dialog.accionConsecunecia != "Ninguno") {
+              if (
+                OldAccionCausa.npcConsecuencia != "Todos"
+              ) {
                 var mew: AccionCausaConsecuencia;
-                mew = dialog.accionConsecunecia;
-                mew.idconvCausa = id;
-      
+                mew = OldAccionCausa;
+                mew.idconvConsecuencia = null;
                 this.firestore
                   .collection("accionCausaConsecuencias")
                   .doc(mew.id)
