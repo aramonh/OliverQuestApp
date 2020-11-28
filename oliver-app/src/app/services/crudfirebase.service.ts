@@ -81,7 +81,7 @@ export class CRUDfirebaseService {
       });
 
     if (
-      dialog.accionCausa != null ||
+      dialog.accionCausa != null &&
       dialog.accionCausa.npcConsecuencia != "Todos"
     ) {
       var ch1: AccionCausaConsecuencia;
@@ -112,7 +112,7 @@ export class CRUDfirebaseService {
   }
   async deleteDialog(colleccion: string, dialog: any) {
     if (
-      dialog.accionCausa != null ||
+      dialog.accionCausa != null &&
       dialog.accionCausa.npcConsecuencia != "Todos"
     ) {
       var ch1: AccionCausaConsecuencia;
@@ -186,7 +186,7 @@ export class CRUDfirebaseService {
           });
 
         if (
-          dataNEW.accionCausa != null ||
+          dataNEW.accionCausa != null &&
           dataNEW.accionCausa.npcConsecuencia != "Todos"
         ) {
           var mew: AccionCausaConsecuencia;
@@ -220,7 +220,13 @@ export class CRUDfirebaseService {
       });
   }
 
-  async updateDialog(colleccion: string, id: any, dialog: any) {
+  async updateDialog(
+    colleccion: string,
+    id: any,
+    dialog: any,
+    OldAccionCausa,
+    OldAccionConse
+  ) {
     return await this.firestore
       .collection(colleccion)
       .doc(id)
@@ -228,36 +234,65 @@ export class CRUDfirebaseService {
       .then((data) => {
         console.log("updated", data);
 
+        if (
+          OldAccionCausa != dialog.accionCausa 
+        ) {
+          var mew1: AccionCausaConsecuencia;
+          mew1 = OldAccionCausa;
+          mew1.idconvConsecuencia = null;
+          this.firestore
+            .collection("accionCausaConsecuencias")
+            .doc(mew1.id)
+            .update(mew1)
+            .then((data) => {
+              console.log("updated", data);
+
+              if (dialog.accionConsecunecia != "Ninguno") {
+                var mew: AccionCausaConsecuencia;
+                mew = dialog.accionConsecunecia;
+                mew.idconvCausa = id;
+      
+                this.firestore
+                  .collection("accionCausaConsecuencias")
+                  .doc(mew.id)
+                  .update(mew)
+                  .then((data) => {
+                    console.log("updated", data);
+                  });
+              }
+            });
+        }
 
         if (
-          dialog.accionCausa != null ||
-          dialog.accionCausa.npcConsecuencia != "Todos"
+          OldAccionConse  != dialog.accionConsecunecia 
         ) {
-          var mew: AccionCausaConsecuencia;
-          mew = dialog.accionCausa;
-          mew.idconvConsecuencia = id;
+          var mew1: AccionCausaConsecuencia;
+          mew1 = OldAccionConse;
+          mew1.idconvConsecuencia = null;
           this.firestore
             .collection("accionCausaConsecuencias")
-            .doc(mew.id)
-            .update(mew)
+            .doc(mew1.id)
+            .update(mew1)
             .then((data) => {
               console.log("updated", data);
+              if (dialog.accionConsecunecia != "Ninguno") {
+                var mew: AccionCausaConsecuencia;
+                mew = dialog.accionConsecunecia;
+                mew.idconvCausa = id;
+      
+                this.firestore
+                  .collection("accionCausaConsecuencias")
+                  .doc(mew.id)
+                  .update(mew)
+                  .then((data) => {
+                    console.log("updated", data);
+                  });
+              }
             });
         }
-        if (dialog.accionConsecunecia != "Ninguno") {
-          var mew: AccionCausaConsecuencia;
-          mew = dialog.accionConsecunecia;
-          mew.idconvCausa = id;
 
-          this.firestore
-            .collection("accionCausaConsecuencias")
-            .doc(mew.id)
-            .update(mew)
-            .then((data) => {
-              console.log("updated", data);
-            });
-        }
-
+       
+      
       })
       .catch((err) => {
         console.log(err);

@@ -10,6 +10,7 @@
         </ion-button>
 
         <ion-card-subtitle> Dialogo N°  {{NPCNormalDialog?.numInteraction}} </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="NPCNormalDialog.idOriginal!=null" > PLUS </ion-card-subtitle>
         <ion-card-title> {{NPCNormalDialog?.npcName}} </ion-card-title>
 
       <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null"  slot="end" (click)="presentPopoverupdateDialogNPCPLUS(NPCNormalDialog.id)">
