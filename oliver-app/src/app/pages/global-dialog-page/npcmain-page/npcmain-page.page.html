@@ -132,22 +132,22 @@
               <ion-card-subtitle>
                 Dialogo N° {{interaction.numInteraction}}
               </ion-card-subtitle>
-              <ion-card-title> {{interaction.npcName}} </ion-card-title>
+              <ion-card-title> {{interaction.npc.name}} </ion-card-title>
 
               <ion-button
                 color="success"
-                *ngIf="interaction.idPlus==null"
+                
                 slot="end"
-                (click)="presentPopoverCreatePlusDialogNPC(interaction.id)"
+                (click)="presentPopoverCreatePlusDialogNPC(interaction.numInteraction,interaction.id)"
               >
                 <ion-icon slot="icon-only" name="add"></ion-icon>
               </ion-button>
 
               <ion-button
                 color="success"
-                *ngIf="interaction.idPlus!=null"
+                *ngIf="interaction.boolPlus!='false'"
                 slot="end"
-                (click)="presentPopoverVerDialogoNPC(interaction.idPlus)"
+                (click)="presentPopoverVerDialogoNPC(interaction.id)"
               >
                 <ion-icon slot="icon-only" name="star"></ion-icon>
               </ion-button>
@@ -220,15 +220,20 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row  *ngIf="interaction.accionConsecunecia!='Ninguno'" >
+              <ion-row  *ngIf="interaction.accionConsecuencia!='Ninguno'" >
                 <ion-col size="6">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
                 <ion-col size="6">
-                  <ion-label> {{interaction.accionConsecunecia.npcCausa}} -> {{interaction.accionConsecunecia.npcConsecuencia}} : {{interaction.accionConsecunecia.name}} </ion-label>
+                  <ion-label> {{interaction.accionConsecuencia.npcCausa.name}} -> {{interaction.accionConsecuencia.npcConsecuencia.name}} : {{interaction.accionConsecuencia.name}} </ion-label>
                 </ion-col>
+                <ion-col size="12">
+                  <ion-label>
+                      {{interaction.accionConsecuencia.description}}
+                  </ion-label>
+              </ion-col>
               </ion-row>
             </ion-grid>
           </ion-card-content>

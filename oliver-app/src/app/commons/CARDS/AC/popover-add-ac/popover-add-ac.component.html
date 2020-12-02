@@ -32,7 +32,7 @@
             placeholder="Select npcCausa"
             [value]="this.accionCausaConsecuencia.npcCausa"
              multiple="false">
-                <ion-select-option *ngFor="let NPCSAndSabio of NPCSAndSabios" [value]="NPCSAndSabio.name" >{{NPCSAndSabio.tipo}} - {{NPCSAndSabio.name}}</ion-select-option>
+                <ion-select-option *ngFor="let NPCSAndSabio of NPCSAndSabios" [value]="NPCSAndSabio" >{{NPCSAndSabio.tipo}} - {{NPCSAndSabio.name}}</ion-select-option>
 
             </ion-select>
           </ion-item>
@@ -47,7 +47,7 @@
             placeholder="Select npcConsecuencia"
             [value]="this.accionCausaConsecuencia.npcConsecuencia"
              multiple="false">
-                <ion-select-option *ngFor="let NPCSAndSabio of NPCSAndSabios" [value]="NPCSAndSabio.name" >{{NPCSAndSabio.tipo}} - {{NPCSAndSabio.name}}</ion-select-option>
+                <ion-select-option *ngFor="let NPCSAndSabio of NPCSAndSabios" [value]="NPCSAndSabio" >{{NPCSAndSabio.tipo}} - {{NPCSAndSabio.name}}</ion-select-option>
                 <ion-select-option [value]="Todos" >Todos</ion-select-option>
         
             </ion-select>

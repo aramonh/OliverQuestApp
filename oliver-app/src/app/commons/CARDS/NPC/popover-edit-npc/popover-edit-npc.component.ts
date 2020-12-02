@@ -8,6 +8,7 @@ import { Action, NPC, Town } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { LocalService } from 'src/app/services/local.service';
+import { NPCService } from 'src/app/services/npc.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
 
 @Component({
@@ -33,7 +34,7 @@ export class PopoverEditNPCComponent implements OnInit {
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private authCtrl: AuthService,
-    private dataSvc: CRUDfirebaseService,
+    private NPCSvc:NPCService,
     private localSvc: LocalService,
     private globalOperation: GlobalOperationsService,
     private popoverCtrl: PopoverController,
@@ -125,8 +126,8 @@ export class PopoverEditNPCComponent implements OnInit {
         (await loader).present();
   
         try {
-          this.dataSvc.updateData("NPC",this.id,npc);
-          
+         
+          await this.NPCSvc.updateNPC(this.id,npc);
         } catch (er) {
           this.globalOperation.showToast(er);
         }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { AccionCausaConsecuencia, NPC, Sabio } from 'src/app/interfaces/interfaces';
+import { ACService } from 'src/app/services/ac.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { LocalService } from 'src/app/services/local.service';
@@ -18,11 +19,12 @@ export class PopoverAddACComponent implements OnInit {
     npcCausa:"",
     npcConsecuencia:"",
     description:"",
-    idconvCausa:null,
-    idconvConsecuencia:null,
+    boolConvCausa:'false',
+    boolConvConsecuencia:'false',
   }; 
 
   NPCSAndSabios:{
+    id:any;
     tipo:string;
     name:string;
   }[]=[];
@@ -32,7 +34,7 @@ export class PopoverAddACComponent implements OnInit {
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private authCtrl: AuthService,
-    private dataSvc: CRUDfirebaseService,
+    private ACSvc: ACService,
     private localSvc: LocalService,
     private globalOperation: GlobalOperationsService,
     private popoverCtrl: PopoverController,
@@ -116,7 +118,7 @@ export class PopoverAddACComponent implements OnInit {
       (await loader).present();
 
       try {
-        this.dataSvc.createData("accionCausaConsecuencias", data);
+        await this.ACSvc.createAC(data);
     
       } catch (er) {
         this.globalOperation.showToast(er);

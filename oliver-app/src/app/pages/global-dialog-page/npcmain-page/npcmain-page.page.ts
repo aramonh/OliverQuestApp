@@ -13,6 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
 import { PopoverDialogNPCVerComponent } from 'src/app/commons/CARDS/NPC/popover-dialog-npcver/popover-dialog-npcver.component';
+import { NPCDialogService } from 'src/app/services/npcdialog.service';
+import { NPCService } from 'src/app/services/npc.service';
 
 @Component({
   selector: 'app-npcmain-page',
@@ -29,7 +31,8 @@ export class NPCMainPagePage implements OnInit {
   totalNPCS:number=0;
   constructor(
     private popoverController:PopoverController,
-    private dataSvc: CRUDfirebaseService,
+    private DialogNPCSvc:NPCDialogService,
+    private NPCSvc:NPCService,
 
     private loadingCtrl: LoadingController,
     private firestore: AngularFirestore,
@@ -188,19 +191,21 @@ async presentPopoverCreateDialogNPC() {
     cssClass: 'popover-dialog',
     translucent: true,
     componentProps:{
-      npcName:this.npcSelected.name,
+      npc:this.npcSelected,
     }
   });
   return await popover.present();
 };
 
-async presentPopoverCreatePlusDialogNPC(idOriginal:any) {
+async presentPopoverCreatePlusDialogNPC(numInt:any,idOriginal:any) {
   const popover = await this.popoverController.create({
     component: PopoverDialogNPCComponent,
     cssClass: 'popover-dialog',
     translucent: true,
     componentProps:{
       idOriginal:idOriginal,
+      npc:this.npcSelected,
+      numInt:numInt
     }
   });
   return await popover.present();
@@ -212,7 +217,7 @@ async selectNPC(data:NPC){
     this.npcSelected=data;
     await this.firestore.firestore.collection("DialogsNPC")
     .where("idOriginal","==",null)
-    .where("npcName","==",this.npcSelected.name)
+    .where("npc.id","==",this.npcSelected.id)
       .onSnapshot(querysnap=>{
     var interactions:any[]=[];
     querysnap.forEach(doc=>{
@@ -285,24 +290,12 @@ async presentPopoverVerDialogoNPC(id:any) {
       translucent: true,
       componentProps:{
         id : data.id,
-        npcName:this.npcSelected.name,
+        npc:this.npcSelected,
       }
     });
     return await popover.present();
   }
 
-  async presentPopoverupdateDialogNPCPLUS(idPlus:any) {
-    const popover = await this.popoverController.create({
-      component: PopoverDialogNPCEditComponent,
-      cssClass: 'popover-dialog',
-      translucent: true,
-      componentProps:{
-        idPlus : idPlus,
- 
-      }
-    });
-    return await popover.present();
-  }
 
   async presentAlertConfirmDelete(data?:any) {
     const alert = await this.alertController.create({
@@ -368,7 +361,8 @@ async presentPopoverVerDialogoNPC(id:any) {
     (await loader).present();
     try {
      // await this.firestore.doc('aerolines' + id).delete();
-      this.dataSvc.deleteDialog("DialogsNPC",dialog);
+        await this.DialogNPCSvc.deleteDialog(dialog);
+     // this.dataSvc.deleteDialog("DialogsNPC",dialog);
     } catch (er) {
       this.globalOperation.showToast(er);
     }
@@ -384,7 +378,7 @@ async presentPopoverVerDialogoNPC(id:any) {
     (await loader).present();
     try {
      // await this.firestore.doc('aerolines' + id).delete();
-      this.dataSvc.deleteData("NPC",id);
+      await this.NPCSvc.deleteNPC(id);
     } catch (er) {
       this.globalOperation.showToast(er);
     }

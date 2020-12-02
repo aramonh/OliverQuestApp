@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
 import { AccionCausaConsecuencia } from 'src/app/interfaces/interfaces';
+import { ACService } from 'src/app/services/ac.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { LocalService } from 'src/app/services/local.service';
@@ -19,11 +20,12 @@ export class PopoverEditACComponent implements OnInit {
     npcCausa:"",
     npcConsecuencia:"",
     description:"",
-    idconvCausa:null,
-    idconvConsecuencia:null,
+    boolConvCausa:'false',
+    boolConvConsecuencia:'false',
   }; 
 
   NPCSAndSabios:{
+    id:any;
     tipo:string;
     name:string;
   }[]=[];
@@ -37,7 +39,7 @@ export class PopoverEditACComponent implements OnInit {
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private authCtrl: AuthService,
-    private dataSvc: CRUDfirebaseService,
+    private ACSvc:ACService,
     private localSvc: LocalService,
     private globalOperation: GlobalOperationsService,
     private popoverCtrl: PopoverController,
@@ -75,9 +77,11 @@ export class PopoverEditACComponent implements OnInit {
         
         
         var name = {
+          id:"",
           tipo:"NPC",
           name:""
         };
+        name.id = doc.id;
         name.name = doc.data().name;
         console.log("GUET CATEGORY", name )
         names.push( name )
@@ -91,9 +95,11 @@ export class PopoverEditACComponent implements OnInit {
         
        
         var name = {
-          tipo:"Sabio",
+          id:"",
+          tipo:"NPC",
           name:""
         };
+        name.id = doc.id;
         name.name = doc.data().name;
         console.log("GUET CATEGORY", name )
         names.push( name )
@@ -163,8 +169,7 @@ export class PopoverEditACComponent implements OnInit {
       (await loader).present();
 
       try {
-        this.dataSvc.updateData("accionCausaConsecuencias",this.id,accionCausaConsecuencias);
-        
+        await this.ACSvc.updateAC(this.id,accionCausaConsecuencias);
       } catch (er) {
         this.globalOperation.showToast(er);
       }

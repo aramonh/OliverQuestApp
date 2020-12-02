@@ -2,8 +2,8 @@
   <ion-card-header class="text-center" >
 
     <ion-card-title>Update Interaccion</ion-card-title>
-    <ion-card-subtitle *ngIf="!thisIsPlus" >{{NPCNormalDialog.numInteraction }} - {{NPCNormalDialog.npcName}} </ion-card-subtitle>
-    <ion-card-subtitle  *ngIf="thisIsPlus"  >PLUS: {{NPCNormalDialog.numInteraction }} - {{NPCNormalDialog.npcName}}</ion-card-subtitle>
+    <ion-card-subtitle *ngIf="!thisIsPlus" >{{NPCNormalDialog.numInteraction }} - {{NPCNormalDialog.npc.name}} </ion-card-subtitle>
+    <ion-card-subtitle  *ngIf="thisIsPlus"  >PLUS: {{NPCNormalDialog.numInteraction }} - {{NPCNormalDialog.npc.name}}</ion-card-subtitle>
   </ion-card-header>
 
 
@@ -110,7 +110,7 @@
             placeholder="Select accionCausa"
             [value]="this.NPCNormalDialog.accionCausa"
              multiple="false">
-                <ion-select-option *ngFor="let AC of ACsCausa" [value]="AC"  > {{AC.npcCausa}} -> {{AC.npcConsecuencia}} : {{AC.name}}</ion-select-option>
+                <ion-select-option *ngFor="let AC of ACsCausa" [value]="AC"  > {{AC.npcCausa.name}} -> {{AC.npcConsecuencia.name}} : {{AC.name}}</ion-select-option>
 
     
             </ion-select>
@@ -124,12 +124,12 @@
         <ion-col size="12">
           <ion-item>
             <ion-label>Accion a Activar: </ion-label>
-            <ion-select [(ngModel)]="this.NPCNormalDialog.accionConsecunecia"     
+            <ion-select [(ngModel)]="this.NPCNormalDialog.accionConsecuencia"     
             interface="popover"
-            placeholder="Select accionConsecunecia"
-            [value]="this.NPCNormalDialog.accionConsecunecia"
+            placeholder="Select accionConsecuencia"
+            [value]="this.NPCNormalDialog.accionConsecuencia"
              multiple="false">
-                <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  > {{AC.npcCausa}} -> {{AC.npcConsecuencia}} : {{AC.name}}</ion-select-option>
+                <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  > {{AC.npcCausa.name}} -> {{AC.npcConsecuencia.name}} : {{AC.name}}</ion-select-option>
      
                 <ion-select-option value="Ninguno" >Ninguno</ion-select-option>
             </ion-select>

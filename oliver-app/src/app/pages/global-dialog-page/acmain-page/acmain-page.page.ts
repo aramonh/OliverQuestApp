@@ -5,6 +5,7 @@ import { PopoverAddACComponent } from 'src/app/commons/CARDS/AC/popover-add-ac/p
 import { PopoverEditACComponent } from 'src/app/commons/CARDS/AC/popover-edit-ac/popover-edit-ac.component';
 import { PopoverDialogNPCVerComponent } from 'src/app/commons/CARDS/NPC/popover-dialog-npcver/popover-dialog-npcver.component';
 import { AccionCausaConsecuencia, NPC, Sabio } from 'src/app/interfaces/interfaces';
+import { ACService } from 'src/app/services/ac.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
@@ -23,7 +24,7 @@ export class ACMainPagePage implements OnInit {
   totalAC:number=0;
   constructor(
     private popoverController:PopoverController,
-    private dataSvc: CRUDfirebaseService,
+    private ACSvc:ACService,
 
     private loadingCtrl: LoadingController,
     private firestore: AngularFirestore,
@@ -47,14 +48,14 @@ export class ACMainPagePage implements OnInit {
 
 
 
-  async presentPopoverVerDialogoNPC(id:any) {
+  async presentPopoverVerDialogoNPC(id:any,razon:string) {
     const popover = await this.popoverController.create({
       component: PopoverDialogNPCVerComponent,
       cssClass: 'popover-dialog',
       translucent: true,
       componentProps:{
-        id : id,
-      
+        idAC : id,
+        razon:razon
       }
     });
     return await popover.present();
@@ -203,7 +204,7 @@ console.log("DATA", data)
     (await loader).present();
     try {
      // await this.firestore.doc('aerolines' + id).delete();
-      this.dataSvc.deleteData("accionCausaConsecuencias",id);
+     await this.ACSvc.deleteAC(id);
     } catch (er) {
       this.globalOperation.showToast(er);
     }

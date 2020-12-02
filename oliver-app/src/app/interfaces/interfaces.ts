@@ -2,7 +2,7 @@
 export interface NPCNormalDialog {
     id?:string;
     numInteraction:number;
-    npcName:string;
+    npc:any;
     
     questSorprise:any;
     questSorpriseAnsGood?:string;
@@ -12,9 +12,9 @@ export interface NPCNormalDialog {
 
 
     accionCausa?:any;
-    accionConsecunecia?:any;
+    accionConsecuencia?:any;
     
-    idPlus?:string;
+    boolPlus?:any;
     idOriginal?:string;
 
 
@@ -43,7 +43,7 @@ export interface NPCSabioDialogAnswer {
 
     
     accionCausa?:string;
-    accionConsecunecia?:string;
+    accionConsecuencia?:string;
     
     idPlus?:string;
     idOriginal?:string;
@@ -69,10 +69,10 @@ export interface Sabio{
 export interface AccionCausaConsecuencia{
     id?:string;
     name:string;
-    npcCausa:string;
-    idconvCausa?:string;
-    npcConsecuencia?:string;
-    idconvConsecuencia?:string;
+    npcCausa:any;
+    boolConvCausa?:any;
+    npcConsecuencia?:any;
+    boolConvConsecuencia?:any;
     description:string;
 }
 
