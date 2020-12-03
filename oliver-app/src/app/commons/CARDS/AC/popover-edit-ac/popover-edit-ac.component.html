@@ -23,37 +23,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>npcCausa: </ion-label>
-            <ion-select [(ngModel)]="this.accionCausaConsecuencia.npcCausa"     
-            interface="popover"
-            placeholder="Select npcCausa"
-            [value]="this.accionCausaConsecuencia.npcCausa"
-             multiple="false">
-                <ion-select-option *ngFor="let NPCSAndSabio of NPCSAndSabios" [value]="NPCSAndSabio" >{{NPCSAndSabio.tipo}} - {{NPCSAndSabio.name}}</ion-select-option>
-
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>npcConsecuencia: </ion-label>
-            <ion-select [(ngModel)]="this.accionCausaConsecuencia.npcConsecuencia"     
-            interface="popover"
-            placeholder="Select npcConsecuencia"
-            [value]="this.accionCausaConsecuencia.npcConsecuencia"
-             multiple="false">
-                <ion-select-option *ngFor="let NPCSAndSabio of NPCSAndSabios" [value]="NPCSAndSabio" >{{NPCSAndSabio.tipo}} - {{NPCSAndSabio.name}}</ion-select-option>
-                <ion-select-option [value]="Todos" >Todos</ion-select-option>
-         
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+      
       <ion-row>
         <ion-col size="12">
           <ion-item>

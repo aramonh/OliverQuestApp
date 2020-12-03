@@ -90,12 +90,16 @@ export class PopoverEditNPCComponent implements OnInit {
           this.NPC.name= data["name"];
           this.NPC.town= data["town"];
 
-          for (const key in data["actions"]) {
-          
-              const element = data["actions"];
+
+
+          for (let index = 0; index < data["actions"].length; index++) {
+         
+            const element = data["actions"];
               
-              this.NPC.actions.push(...element );
+            this.NPC.actions.push(...element );
+            
           }
+  
 
           
         });
@@ -137,7 +141,12 @@ export class PopoverEditNPCComponent implements OnInit {
         await this.popoverCtrl.dismiss();
       }
     }
-
+    removeItemFromArr(arr, i) {
+      if (i !== -1) {
+        arr.splice(i, 1);
+      }
+    }
+  
 
   formValidation() {
 
@@ -151,6 +160,16 @@ export class PopoverEditNPCComponent implements OnInit {
           return false;
         }
      
+    }
+
+    for (
+      let index = this.NPC["actions"].length;
+      4 < index;
+      index--
+    ) {
+      const element = index - 1;
+       this.removeItemFromArr(this.NPC["actions"],element)
+        
     }
 
 

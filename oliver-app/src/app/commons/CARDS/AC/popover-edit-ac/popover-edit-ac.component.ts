@@ -20,8 +20,7 @@ export class PopoverEditACComponent implements OnInit {
     npcCausa:"",
     npcConsecuencia:"",
     description:"",
-    boolConvCausa:'false',
-    boolConvConsecuencia:'false',
+
   }; 
 
   NPCSAndSabios:{
@@ -138,7 +137,8 @@ export class PopoverEditACComponent implements OnInit {
         this.accionCausaConsecuencia.npcCausa= data["npcCausa"];
         this.accionCausaConsecuencia.npcConsecuencia= data["npcConsecuencia"];
         this.accionCausaConsecuencia.description= data["description"];
-
+        this.accionCausaConsecuencia.boolConvCausa= data["boolConvCausa"];
+        this.accionCausaConsecuencia.boolConvConsecuencia= data["boolConvConsecuencia"];
 
         
       });

@@ -111,7 +111,15 @@ export class ACService {
             .then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
                 doc.ref.update({
-                  accionCausa: data,
+                  accionCausa:{
+                    id:id,
+                    name:data.name,
+                    npcCausa:data.npcCausa,
+                    boolConvCausa:data.boolConvCausa,
+                    npcConsecuencia:data.npcConsecuencia,
+                    boolConvConsecuencia:data.boolConvConsecuencia,
+                    description:data.description,
+                  } 
                 });
               });
             });
@@ -122,7 +130,15 @@ export class ACService {
             .then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
                 doc.ref.update({
-                  accionConsecuencia: data,
+                  accionConsecuencia: {
+                    id:id,
+                    name:data.name,
+                    npcCausa:data.npcCausa,
+                    boolConvCausa:data.boolConvCausa,
+                    npcConsecuencia:data.npcConsecuencia,
+                    boolConvConsecuencia:data.boolConvConsecuencia,
+                    description:data.description,
+                  }
                 });
               });
             });

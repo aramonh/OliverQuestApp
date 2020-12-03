@@ -84,7 +84,11 @@ export class PopoverAddNPCComponent implements OnInit {
     //  this.navCtrl.navigateRoot("/quest-pages");
     }
   }
-
+  removeItemFromArr(arr, i) {
+    if (i !== -1) {
+      arr.splice(i, 1);
+    }
+  }
   formValidation() {
 
     for (const key in this.NPC) {
@@ -98,8 +102,15 @@ export class PopoverAddNPCComponent implements OnInit {
         }
      
     }
-
-
+    for (
+      let index = this.NPC["actions"].length;
+      4 < index;
+      index--
+    ) {
+      const element = index - 1;
+       this.removeItemFromArr(this.NPC["actions"],element)
+        
+    }
     return true;
   }
 
