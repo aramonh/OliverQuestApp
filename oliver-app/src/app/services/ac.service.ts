@@ -50,6 +50,7 @@ export class ACService {
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
+       
             doc.ref.delete()
           
             ///TODO DELETE DIALOG PLUS - traerlo del service de dialog 

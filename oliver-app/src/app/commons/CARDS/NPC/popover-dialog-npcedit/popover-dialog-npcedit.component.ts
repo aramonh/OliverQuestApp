@@ -84,7 +84,7 @@ export class PopoverDialogNPCEditComponent implements OnInit {
       this.globalOperation.showToast("Recuerda iniciar sesion...");
     } else {
       this.getNPCDialogById(this.id);
-      this.getAC();
+   
     }
   }
 
@@ -122,7 +122,7 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             this.NPCNormalDialog.contenidoPages.push(element);
           }
 
-          this.getAC();
+          this.getAC(this.NPCNormalDialog.npc);
         });
 
       if (this.NPCNormalDialog == undefined || this.NPCNormalDialog == null) {
@@ -163,7 +163,8 @@ export class PopoverDialogNPCEditComponent implements OnInit {
       await this.popoverCtrl.dismiss();
     }
   }
-  async getAC() {
+
+  async getAC(npc) {
     try {
 
   var cant1;
@@ -183,30 +184,24 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             AC.id = doc.id;
   
             if (AC.boolConvCausa == 'false'  ) {
-              if (this.NPCNormalDialog.npc.id == AC.npcCausa.id) {
+              if (npc.id == AC.npcCausa.id) {
                 ACs1.push(AC);
               }
-
-
             }
         
-      if(this.NPCNormalDialog.accionConsecuencia.id == AC.id){
-        ACs1.push(AC);
-                  }
-                  if(this.NPCNormalDialog.accionCausa.id == AC.id){
-                    ACs2.push(AC);
-                  }
+   
+
 
        
               if (
-                this.NPCNormalDialog.npc.id == AC.npcConsecuencia.id ||
+                npc.id == AC.npcConsecuencia.id ||
                 AC.npcConsecuencia == "Todos"
               ) {
 
 
                 await this.firestore.firestore
                 .collection("DialogsNPC")
-                .where('npc.id','==',this.NPCNormalDialog.npc.id)
+                .where('npc.id','==',npc.id)
                 .where("accionCausa.id", "==", AC.id)
                 .get()
                 .then(function (querySnapshot) {
@@ -215,7 +210,6 @@ export class PopoverDialogNPCEditComponent implements OnInit {
                     ACs2.push(AC);
                   }
                 
-              
     
                 });
 

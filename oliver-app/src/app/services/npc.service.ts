@@ -51,6 +51,47 @@ export class NPCService {
           doc.ref.delete();
         });
       });
+
+      await   this.firestore.firestore
+      .collection("DialogsNPC")
+      .where("accionCausa.npcConsecuencia.id", "==", id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      });
+
+      await   this.firestore.firestore
+      .collection("DialogsNPC")
+      .where("accionConsecuencia.npcCausa.id", "==", id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      });
+
+
+      await   this.firestore.firestore
+      .collection("DialogsNPC")
+      .where("accionCausa.npcCausa.id", "==", id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      });
+
+      await   this.firestore.firestore
+      .collection("DialogsNPC")
+      .where("accionConsecuencia.npcConsecuencia.id", "==", id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      });
   await  this.firestore.firestore
       .collection("accionCausaConsecuencias")
       .where("npcCausa.id", "==", id)
@@ -138,6 +179,67 @@ export class NPCService {
               querySnapshot.forEach(function (doc) {
                 doc.ref.update({
                   npcConsecuencia: {
+                    id:id,
+                    tipo:"NPC",
+                    name:data.name
+                  }
+                });
+              });
+            });
+
+            this.firestore.firestore
+            .collection("DialogsNPC")
+            .where("accionCausa.npcConsecuencia.id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                  npcConsecuencia: {
+                    id:id,
+                    tipo:"NPC",
+                    name:data.name
+                  }
+                });
+              });
+            });
+            this.firestore.firestore
+            .collection("DialogsNPC")
+            .where("accionConsecuencia.npcConsecuencia.id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                  npcConsecuencia: {
+                    id:id,
+                    tipo:"NPC",
+                    name:data.name
+                  }
+                });
+              });
+            });
+            this.firestore.firestore
+            .collection("DialogsNPC")
+            .where("accionCausa.npcCausa.id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                  npcCausa: {
+                    id:id,
+                    tipo:"NPC",
+                    name:data.name
+                  }
+                });
+              });
+            });
+            this.firestore.firestore
+            .collection("DialogsNPC")
+            .where("accionConsecuencia.npcCausa.id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                  npcCausa: {
                     id:id,
                     tipo:"NPC",
                     name:data.name

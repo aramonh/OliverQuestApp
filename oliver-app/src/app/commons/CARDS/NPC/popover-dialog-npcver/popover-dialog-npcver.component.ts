@@ -90,7 +90,23 @@ private alertController: AlertController,
       console.log("FIN CAT dialogs", dialogs)
      this.dialogs = dialogs;
      this.totaldialogs =   querysnap.size
+
+     if(this.totaldialogs==0){
+      this.firestore.firestore
+        .collection("accionCausaConsecuencias")
+        .doc(id)
+        .get()
+        .then(function (doc) {
+  
+          doc.ref.update({
+            boolConvConsecuencia: "false",
+          });
+     
+        });
+        this.close();
+    }
     })
+
   }
   if(razon=="accionConsecuencia"){
     await this.firestore.firestore.collection("DialogsNPC")
@@ -108,8 +124,22 @@ private alertController: AlertController,
     console.log("FIN CAT dialogs", dialogs)
    this.dialogs = dialogs;
    this.totaldialogs =  querysnap.size
+   if(this.totaldialogs==0){
+    this.firestore.firestore
+      .collection("accionCausaConsecuencias")
+      .doc(id)
+      .get()
+      .then(function (doc) {
+
+        doc.ref.update({
+          boolConvCausa: "false",
+        });
+   
+      });
+      this.close();
+  }
   })
-  
+
 }
   } catch (er) {
     this.globalOperation.showToast(er);
@@ -141,8 +171,24 @@ private alertController: AlertController,
       console.log("FIN CAT dialogs", dialogs)
      this.dialogs = dialogs;
      this.totaldialogs = querysnap.size
+     if(this.totaldialogs==0){
+      this.firestore.firestore
+        .collection("DialogsNPC")
+        .doc(id)
+        .get()
+        .then(function (doc) {
+  
+          doc.ref.update({
+            boolPlus: "false",
+          });
+     
+        });
+        this.close();
+    }
     })
   
+
+
     
   } catch (er) {
     this.globalOperation.showToast(er);

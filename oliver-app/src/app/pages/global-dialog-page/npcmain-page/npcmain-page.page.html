@@ -227,7 +227,7 @@
                   </ion-label>
                 </ion-col>
                 <ion-col size="6">
-                  <ion-label> {{interaction.accionConsecuencia.npcCausa.name}} -> {{interaction.accionConsecuencia.npcConsecuencia.name}} : {{interaction.accionConsecuencia.name}} </ion-label>
+                  <ion-label> {{interaction.accionConsecuencia.npcCausa.name}} -> {{interaction.accionConsecuencia.npcConsecuencia?.name  ||  'Todos'}} : {{interaction.accionConsecuencia.name}} </ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-label>

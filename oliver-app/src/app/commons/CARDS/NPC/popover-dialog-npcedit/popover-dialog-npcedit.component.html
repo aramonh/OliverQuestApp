@@ -110,7 +110,7 @@
             placeholder="Select accionCausa"
             [value]="this.NPCNormalDialog.accionCausa"
              multiple="false">
-                <ion-select-option *ngFor="let AC of ACsCausa" [value]="AC"  > {{AC.npcCausa.name}} -> {{AC.npcConsecuencia.name}} : {{AC.name}}</ion-select-option>
+                <ion-select-option *ngFor="let AC of ACsCausa" [value]="AC"  > {{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name  ||  'Todos'}} : {{AC.name}}</ion-select-option>
 
     
             </ion-select>
@@ -129,7 +129,7 @@
             placeholder="Select accionConsecuencia"
             [value]="this.NPCNormalDialog.accionConsecuencia"
              multiple="false">
-                <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  > {{AC.npcCausa.name}} -> {{AC.npcConsecuencia.name}} : {{AC.name}}</ion-select-option>
+                <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  > {{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name  ||  'Todos'}} : {{AC.name}}</ion-select-option>
      
                 <ion-select-option value="Ninguno" >Ninguno</ion-select-option>
             </ion-select>
