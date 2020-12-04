@@ -17,7 +17,7 @@ import { PopoverDialogNPCEditComponent } from '../popover-dialog-npcedit/popover
 })
 export class PopoverDialogNPCVerComponent implements OnInit {
 
-
+  razon=null;
   id:any;
   dialogs:NPCNormalDialog[]=[];
   totaldialogs:any=0;
@@ -42,6 +42,7 @@ private alertController: AlertController,
     let idAC = this.navParams.get('idAC');
     if(idAC){
       this.id=idAC;
+      this.razon=razon;
       this.getDialogsByAC(this.id,razon);
     }
     console.log(this.navParams.data);

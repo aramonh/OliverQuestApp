@@ -1,31 +1,66 @@
-<app-header [titulo]="titulo" ></app-header>
+<app-header [titulo]="titulo"></app-header>
 
-<ion-content  color="light" class="ion-no-padding" >
-    <ion-grid fixed style="width: 100%; height: 100%;">
-        <ion-row class="text-center">
-            <ion-col class="mx-auto  my-auto " size="6">
-                <ion-button routerLink="./npcmain-page"   class="mx-auto" style="width: 60%;" fill="solid" expand="full"  >
-                NPC
-                </ion-button>
-            </ion-col>
-           
-        </ion-row>
-        <ion-row>
-            <ion-col class="mx-auto my-auto  " size="6">
-                <ion-button routerLink="./sabio-main-page"  class="mx-auto" style="width: 60%;" fill="solid" expand="full"  >
-                    Sabios
-                    </ion-button>
-            </ion-col>
-           
-        </ion-row>
-        <ion-row>
-            <ion-col class="mx-auto  my-auto " size="6">
-                <ion-button  routerLink="./acmain-page"   class="mx-auto" style="width: 60%;" fill="solid" expand="full"  >
-                    AC
-                    </ion-button>
-            </ion-col>
-           
-        </ion-row>
-    </ion-grid>
+<ion-content
+  style="width: 100%; height: 100%"
+  color="light"
+  class="ion-no-padding"
+>
+  <ion-grid class="text-center" fixed style="width: 100%; height: 100%">
+    <ion-row class="text-center mt-4" style="height: 90%">
+      <ion-col class="mx-auto" size="12">
+        <ion-button
+            color="secondary"
+          class="mx-auto"
+          routerLink="./npcmain-page"
+          style="width: 60%; height: 50%"
+          shape="round"
+          fill="solid"
+          expand="full"
+        >
+       
+          <ion-icon
+            slot="icon-only"
+            style="font-size: 50px"
+            name="people-outline"
+          ></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="mx-auto" size="12">
+        <ion-button
+            color="tertiary"
+          class="mx-auto"
+          routerLink="./sabio-main-page"
+          style="width: 60%; height: 50%"
+          shape="round"
+          fill="solid"
+          expand="full"
+        >
+       
+          <ion-icon
+            slot="icon-only"
+            style="font-size: 50px"
+            name="school-outline"
+          ></ion-icon>
+        </ion-button>
+      </ion-col>
 
+      <ion-col class="mx-auto" size="12">
+        <ion-button
+          class="mx-auto"
+          routerLink="./acmain-page"
+          style="width: 60%; height: 50%"
+          shape="round"
+          fill="solid"
+          expand="full"
+        >
+     
+          <ion-icon
+            slot="icon-only"
+            style="font-size: 50px"
+            name="swap-horizontal-outline"
+          ></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

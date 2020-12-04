@@ -1,13 +1,24 @@
-<ion-card  *ngFor=" let NPCNormalDialog of dialogs"   style="width: 100%; text-transform: uppercase; margin: 0%;" (click)="close()" >
-  <ion-card-header color="primary">
+
+
+<ion-header color ="primary"  (click)="close()"  >
+    <ion-toolbar color ="primary">
+   
+        <ion-title  *ngIf="razon=='accionCausa'"  >Dialogos Consecuencia: {{totaldialogs}} </ion-title>
+        <ion-title  *ngIf="razon=='accionConsecuencia'"  >Dialogo Causa: {{totaldialogs}} </ion-title>
+        <ion-title  *ngIf="razon==null"  >Dialogos PLUS: {{totaldialogs}} </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+
+<ion-card  *ngFor=" let NPCNormalDialog of dialogs"   style="width: 100%; text-transform: uppercase; margin: 0%; text-align: center;" (click)="close()" >
+  <ion-card-header class="text-center" color="primary">
 
 
 
     <ion-toolbar color="primary">
 
-        <ion-button color="success"   slot="start" (click)="close()">
-            <ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon>        
-        </ion-button>
+
 
         <ion-card-subtitle> Dialogo N°  {{NPCNormalDialog?.numInteraction}} </ion-card-subtitle>
         <ion-card-subtitle *ngIf="NPCNormalDialog.idOriginal!=null" > PLUS </ion-card-subtitle>

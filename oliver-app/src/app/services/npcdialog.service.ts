@@ -96,107 +96,107 @@ export class NPCDialogService {
   async updateDialog(
     id: any,
     dialog: NPCNormalDialog,
-    OldAccionCausa: AccionCausaConsecuencia,
-    OldAccionConse: AccionCausaConsecuencia
+    OldAccionCausa: any,
+    OldAccionConse: any
   ) {
-    console.log("OLD",OldAccionCausa,OldAccionConse)
+    console.log("OLD", OldAccionCausa, OldAccionConse);
     var cantidad;
-    return await this.firestore
+    await this.firestore
       .collection("DialogsNPC")
       .doc(id)
       .update(dialog)
-      .then( async (data) => {
+      .then((data) => {
         console.log("updated", data);
         //Actualiza el AC viejo a FALSE
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
+    if (dialog.accionCausa != null) {
+      await this.firestore.firestore
+        .collection("DialogsNPC")
+        .where("accionCausa.id", "==", OldAccionCausa.id)
+        .get()
+        .then(function (querySnapshot) {
+          cantidad = querySnapshot.size;
+        });
 
-        if(dialog.accionCausa!=null){
-       await this.firestore.firestore
-          .collection("DialogsNPC")
-          .where("accionCausa.id", "==", OldAccionCausa.id)
-          .get()
-          .then(function (querySnapshot) {
-            cantidad = querySnapshot.size;
-          });
-
-        if (OldAccionCausa.id != dialog.accionCausa.id) {
-          if (cantidad > 1) {
-            var mew: AccionCausaConsecuencia;
-            mew = dialog.accionCausa;
-            mew.boolConvConsecuencia = "true";
-            this.firestore
-              .collection("accionCausaConsecuencias")
-              .doc(mew.id)
-              .update(mew)
-              .then((data) => {
-                console.log("updated", data);
-              });
-          } else {
-            //Solo tenia 1 o menos
-            var mew1: AccionCausaConsecuencia;
-            mew1 = OldAccionCausa;
-            mew1.boolConvConsecuencia = "false";
-            this.firestore
-              .collection("accionCausaConsecuencias")
-              .doc(mew1.id)
-              .update(mew1)
-              .then((data) => {
-                console.log("updated", data);
-                //Actualiza el AC nuevo a TRUE
-              });
-
-            var mew: AccionCausaConsecuencia;
-            mew = dialog.accionCausa;
-            mew.boolConvConsecuencia = "true";
-        this.firestore
-              .collection("accionCausaConsecuencias")
-              .doc(mew.id)
-              .update(mew)
-              .then((data) => {
-                console.log("updated", data);
-              });
-          }
-        }
-      }
-
-
-
-        if (OldAccionConse.id != dialog.accionConsecuencia.id) {
+      if (OldAccionCausa.id != dialog.accionCausa.id) {
+        if (cantidad > 1) {
+          var mew: AccionCausaConsecuencia;
+          mew = dialog.accionCausa;
+          mew.boolConvConsecuencia = "true";
+          await this.firestore
+            .collection("accionCausaConsecuencias")
+            .doc(mew.id)
+            .update(mew)
+            .then((data) => {
+              console.log("updated", data);
+            });
+        } else {
+          //Solo tenia 1 o menos
           var mew1: AccionCausaConsecuencia;
-          mew1 = OldAccionConse;
-          mew1.boolConvCausa = "false";
-           this.firestore
+          mew1 = OldAccionCausa;
+          mew1.boolConvConsecuencia = "false";
+          await this.firestore
             .collection("accionCausaConsecuencias")
             .doc(mew1.id)
             .update(mew1)
             .then((data) => {
               console.log("updated", data);
+              //Actualiza el AC nuevo a TRUE
             });
 
-          if (dialog.accionConsecuencia != "Ninguno") {
-            var mew: AccionCausaConsecuencia;
-            mew = dialog.accionConsecuencia;
-            mew.boolConvCausa = "true";
-
-             this.firestore
-              .collection("accionCausaConsecuencias")
-              .doc(mew.id)
-              .update(mew)
-              .then((data) => {
-                console.log("updated", data);
-              });
-          }
+          var mew: AccionCausaConsecuencia;
+          mew = dialog.accionCausa;
+          mew.boolConvConsecuencia = "true";
+          await this.firestore
+            .collection("accionCausaConsecuencias")
+            .doc(mew.id)
+            .update(mew)
+            .then((data) => {
+              console.log("updated", data);
+            });
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    }
+
+    if (OldAccionConse.id != dialog.accionConsecuencia.id) {
+      if (OldAccionConse != "Ninguno") {
+        var mew1: AccionCausaConsecuencia;
+        mew1 = OldAccionConse;
+        mew1.boolConvCausa = "false";
+        await this.firestore
+          .collection("accionCausaConsecuencias")
+          .doc(mew1.id)
+          .update(mew1)
+          .then((data) => {
+            console.log("updated", data);
+          });
+      }
+    }
+    if (dialog.accionConsecuencia != "Ninguno") {
+      var mew: AccionCausaConsecuencia;
+      mew = dialog.accionConsecuencia;
+      mew.boolConvCausa = "true";
+
+      await this.firestore
+        .collection("accionCausaConsecuencias")
+        .doc(mew.id)
+        .update(mew)
+        .then((data) => {
+          console.log("updated", data);
+        });
+    }
   }
 
   async deleteDialogPlus(dialog: NPCNormalDialog) {
     var cantidad1;
     var cantidad2;
     var cantDial;
+
+    if (dialog.idOriginal != null) {
     await this.firestore.firestore
       .collection("DialogsNPC")
       .where("idOriginal", "==", dialog.idOriginal)
@@ -216,7 +216,7 @@ export class NPCDialogService {
           });
         });
     }
-
+  }
     if (dialog.accionCausa != null) {
       await this.firestore.firestore
         .collection("DialogsNPC")
@@ -238,6 +238,7 @@ export class NPCDialogService {
           });
       }
     }
+  
     if (dialog.accionConsecuencia != "Ninguno") {
       await this.firestore.firestore
         .collection("DialogsNPC")

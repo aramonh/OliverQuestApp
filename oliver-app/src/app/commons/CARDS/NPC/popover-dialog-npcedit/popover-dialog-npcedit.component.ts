@@ -122,7 +122,7 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             this.NPCNormalDialog.contenidoPages.push(element);
           }
 
-          this.getAC(this.NPCNormalDialog.npc);
+          this.getAC(this.NPCNormalDialog.npc,this.NPCNormalDialog.accionConsecuencia,this.NPCNormalDialog.accionCausa);
         });
 
       if (this.NPCNormalDialog == undefined || this.NPCNormalDialog == null) {
@@ -164,7 +164,7 @@ export class PopoverDialogNPCEditComponent implements OnInit {
     }
   }
 
-  async getAC(npc) {
+  async getAC(npc,accionConsecuencia,accionCausa) {
     try {
 
   var cant1;
@@ -185,8 +185,25 @@ export class PopoverDialogNPCEditComponent implements OnInit {
   
             if (AC.boolConvCausa == 'false'  ) {
               if (npc.id == AC.npcCausa.id) {
-                ACs1.push(AC);
+
+                await this.firestore.firestore
+                .collection("DialogsNPC")
+                .where('npc.id','==',npc.id)
+                .where("accionConsecuencia.id", "==", AC.id)
+                .get()
+                .then(function (querySnapshot) {
+                  cant1 = querySnapshot.size;
+                  if(cant1==0){
+                    ACs1.push(AC);
+                  }
+                
+    
+                });
+             
               }
+            }
+            if(AC.id == accionConsecuencia.id){
+              ACs1.push(AC);
             }
         
    
@@ -220,7 +237,9 @@ export class PopoverDialogNPCEditComponent implements OnInit {
                
               
           }
-       
+          if(AC.id == accionCausa.id){
+            ACs2.push(AC);
+          }
        
         
           });
@@ -264,7 +283,7 @@ export class PopoverDialogNPCEditComponent implements OnInit {
       this.removeItemFromArr(this.NPCNormalDialog.contenidoPages, element);
     }
 
-    for (let index = 0; index < this.NPCNormalDialog.numPages - 1; index++) {
+    for (let index = 0; index < this.NPCNormalDialog.numPages ; index++) {
       const element = this.NPCNormalDialog.contenidoPages[index];
 
       if (element == "" || element == null || element == undefined) {
