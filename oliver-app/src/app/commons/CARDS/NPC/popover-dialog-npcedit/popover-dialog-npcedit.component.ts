@@ -84,7 +84,6 @@ export class PopoverDialogNPCEditComponent implements OnInit {
       this.globalOperation.showToast("Recuerda iniciar sesion...");
     } else {
       this.getNPCDialogById(this.id);
-   
     }
   }
 
@@ -122,7 +121,11 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             this.NPCNormalDialog.contenidoPages.push(element);
           }
 
-          this.getAC(this.NPCNormalDialog.npc,this.NPCNormalDialog.accionConsecuencia,this.NPCNormalDialog.accionCausa);
+          this.getAC(
+            this.NPCNormalDialog.npc,
+            this.NPCNormalDialog.accionConsecuencia,
+            this.NPCNormalDialog.accionCausa
+          );
         });
 
       if (this.NPCNormalDialog == undefined || this.NPCNormalDialog == null) {
@@ -164,12 +167,10 @@ export class PopoverDialogNPCEditComponent implements OnInit {
     }
   }
 
-  async getAC(npc,accionConsecuencia,accionCausa) {
+  async getAC(npc, accionConsecuencia, accionCausa) {
     try {
-
-  var cant1;
-  var cant2;
-
+      var cant1;
+      var cant2;
 
       await this.firestore.firestore
         .collection("accionCausaConsecuencias")
@@ -182,66 +183,45 @@ export class PopoverDialogNPCEditComponent implements OnInit {
             var AC;
             AC = doc.data();
             AC.id = doc.id;
-  
-            if (AC.boolConvCausa == 'false'  ) {
-              if (npc.id == AC.npcCausa.id) {
 
+            if (AC.boolConvCausa == "false") {
+              if (npc.id == AC.npcCausa.id) {
                 await this.firestore.firestore
-                .collection("DialogsNPC")
-                .where('npc.id','==',npc.id)
-                .where("accionConsecuencia.id", "==", AC.id)
-                .get()
-                .then(function (querySnapshot) {
-                  cant1 = querySnapshot.size;
-                  if(cant1==0){
-                    ACs1.push(AC);
-                  }
-                
-    
-                });
-             
+                  .collection("DialogsNPC")
+                  .where("npc.id", "==", npc.id)
+                  .where("accionConsecuencia.id", "==", AC.id)
+                  .get()
+                  .then(function (querySnapshot) {
+                    cant1 = querySnapshot.size;
+                    if (cant1 == 0) {
+                      ACs1.push(AC);
+                    }
+                  });
               }
             }
-            if(AC.id == accionConsecuencia.id){
+            if (AC.id == accionConsecuencia.id) {
               ACs1.push(AC);
             }
-        
-   
 
-
-       
-              if (
-                npc.id == AC.npcConsecuencia.id ||
-                AC.npcConsecuencia == "Todos"
-              ) {
-
-
-                await this.firestore.firestore
+            if (
+              npc.id == AC.npcConsecuencia.id ||
+              AC.npcConsecuencia == "Todos"
+            ) {
+              await this.firestore.firestore
                 .collection("DialogsNPC")
-                .where('npc.id','==',npc.id)
+                .where("npc.id", "==", npc.id)
                 .where("accionCausa.id", "==", AC.id)
                 .get()
                 .then(function (querySnapshot) {
                   cant2 = querySnapshot.size;
-                  if(cant2==0){
+                  if (cant2 == 0) {
                     ACs2.push(AC);
                   }
-                
-    
                 });
-
-
-
-
-
-               
-              
-          }
-          if(AC.id == accionCausa.id){
-            ACs2.push(AC);
-          }
-       
-        
+            }
+            if (AC.id == accionCausa.id) {
+              ACs2.push(AC);
+            }
           });
           console.log("TAMAÑO", querysnap.size);
           console.log("FIN CAT", ACs1, ACs2);
@@ -283,7 +263,7 @@ export class PopoverDialogNPCEditComponent implements OnInit {
       this.removeItemFromArr(this.NPCNormalDialog.contenidoPages, element);
     }
 
-    for (let index = 0; index < this.NPCNormalDialog.numPages ; index++) {
+    for (let index = 0; index < this.NPCNormalDialog.numPages; index++) {
       const element = this.NPCNormalDialog.contenidoPages[index];
 
       if (element == "" || element == null || element == undefined) {

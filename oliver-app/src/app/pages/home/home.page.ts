@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
       this.showToast('Recuerda iniciar sesion...');
     }else{
       this.user= this.authCtrl.user;
-      this.showToast(`Oliver te da la Bienvenida, ${this.user.name || "Aventurero"}`);
+   //   this.showToast(`Oliver te da la Bienvenida, ${this.user.name || "Aventurero"}`);
     }
   }
 

@@ -14,7 +14,7 @@ import {
 import { AuthService } from "src/app/services/auth.service";
 import { CRUDfirebaseService } from "src/app/services/crudfirebase.service";
 import { LocalService } from "src/app/services/local.service";
-import { NPCDialogService } from 'src/app/services/npcdialog.service';
+import { NPCDialogService } from "src/app/services/npcdialog.service";
 import { GlobalOperationsService } from "src/app/utils/global-operations.service";
 
 @Component({
@@ -37,7 +37,7 @@ export class PopoverDialogNPCComponent implements OnInit {
     accionCausa: null,
     accionConsecuencia: "Ninguno",
 
-    boolPlus: 'false',
+    boolPlus: "false",
     idOriginal: null,
   };
 
@@ -51,7 +51,7 @@ export class PopoverDialogNPCComponent implements OnInit {
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private authCtrl: AuthService,
-    private DialogNPCSvc:NPCDialogService,
+    private DialogNPCSvc: NPCDialogService,
     private localSvc: LocalService,
     private globalOperation: GlobalOperationsService,
     private popoverCtrl: PopoverController,
@@ -60,30 +60,25 @@ export class PopoverDialogNPCComponent implements OnInit {
   ) {
     console.log(this.navParams.data);
     let npc = this.navParams.get("npc");
-    //let idPlus = this.navParams.get("idPlus");
     let idOriginal = this.navParams.get("idOriginal");
     let numInt = this.navParams.get("numInt");
-    //console.log("id nav, ", idPlus, idOriginal);
+   
     if (npc) {
       this.NPCNormalDialog.npc = npc;
-  
+
       this.getAC(npc);
     }
-    /*if (idPlus) {
-      this.NPCNormalDialog.boolPlus = idPlus;
-    }*/
+
     if (idOriginal) {
       this.thisIsPlus = true;
-    
-   
+
       this.NPCNormalDialog.idOriginal = idOriginal;
-    }else{
+    } else {
       this.getsizeInteractions();
     }
     if (numInt) {
       this.thisIsPlus = true;
-    
-   
+
       this.NPCNormalDialog.numInteraction = numInt;
     }
   }
@@ -93,18 +88,13 @@ export class PopoverDialogNPCComponent implements OnInit {
       this.navCtrl.navigateRoot("login");
       this.globalOperation.showToast("Recuerda iniciar sesion...");
     } else {
-  
-
- 
     }
   }
 
   async getAC(npc) {
     try {
-
-  var cant1;
-  var cant2;
-
+      var cant1;
+      var cant2;
 
       await this.firestore.firestore
         .collection("accionCausaConsecuencias")
@@ -117,61 +107,39 @@ export class PopoverDialogNPCComponent implements OnInit {
             var AC;
             AC = doc.data();
             AC.id = doc.id;
-  
-            if (AC.boolConvCausa == 'false'  ) {
-              if (npc.id == AC.npcCausa.id) {
 
+            if (AC.boolConvCausa == "false") {
+              if (npc.id == AC.npcCausa.id) {
                 await this.firestore.firestore
-                .collection("DialogsNPC")
-                .where('npc.id','==',npc.id)
-                .where("accionConsecuencia.id", "==", AC.id)
-                .get()
-                .then(function (querySnapshot) {
-                  cant1 = querySnapshot.size;
-                  if(cant1==0){
-                    ACs1.push(AC);
-                  }
-                
-    
-                });
-             
+                  .collection("DialogsNPC")
+                  .where("npc.id", "==", npc.id)
+                  .where("accionConsecuencia.id", "==", AC.id)
+                  .get()
+                  .then(function (querySnapshot) {
+                    cant1 = querySnapshot.size;
+                    if (cant1 == 0) {
+                      ACs1.push(AC);
+                    }
+                  });
               }
             }
-        
-   
 
-
-       
-              if (
-                npc.id == AC.npcConsecuencia.id ||
-                AC.npcConsecuencia == "Todos"
-              ) {
-
-
-                await this.firestore.firestore
+            if (
+              npc.id == AC.npcConsecuencia.id ||
+              AC.npcConsecuencia == "Todos"
+            ) {
+              await this.firestore.firestore
                 .collection("DialogsNPC")
-                .where('npc.id','==',npc.id)
+                .where("npc.id", "==", npc.id)
                 .where("accionCausa.id", "==", AC.id)
                 .get()
                 .then(function (querySnapshot) {
                   cant2 = querySnapshot.size;
-                  if(cant2==0){
+                  if (cant2 == 0) {
                     ACs2.push(AC);
                   }
-                
-    
                 });
-
-
-
-
-
-               
-              
-          }
-       
-       
-        
+            }
           });
           console.log("TAMAÑO", querysnap.size);
           console.log("FIN CAT", ACs1, ACs2);
@@ -183,54 +151,40 @@ export class PopoverDialogNPCComponent implements OnInit {
     }
   }
 
+  async createNPCDialogPLUS() {
+    if (this.formValidation()) {
+      // show loader
+      const loader = this.loadingCtrl.create({
+        message: "Please Wait...",
+      });
+      (await loader).present();
 
-
-
-  async createNPCDialogPLUS(){
-
-      if (this.formValidation()) {
-    // show loader
-    const loader = this.loadingCtrl.create({
-      message: 'Please Wait...'
-    });
-    (await loader).present();
-
-    try {
-   
-      
-  
-
-
-  //this.dataSvc.createDialogPlus("DialogsNPC",this.NPCNormalDialogOriginal,  this.NPCNormalDialog);
-      await this.DialogNPCSvc.createDialogPlus(this.NPCNormalDialog);
-      
-
-
-  } catch (er) {
-    this.globalOperation.showToast(er);
-    await this.popoverCtrl.dismiss();
-
-  }
+      try {
+        await this.DialogNPCSvc.createDialogPlus(this.NPCNormalDialog);
+      } catch (er) {
+        this.globalOperation.showToast(er);
+        await this.popoverCtrl.dismiss();
+      }
       // dismiss loader
       await this.popoverCtrl.dismiss();
       (await loader).dismiss();
-}}
+    }
+  }
 
   async getsizeInteractions() {
     try {
       await this.firestore.firestore
         .collection("DialogsNPC")
-        .where("idOriginal","==",null)
-        .where("npc.id","==",this.NPCNormalDialog.npc.id)
+        .where("idOriginal", "==", null)
+        .where("npc.id", "==", this.NPCNormalDialog.npc.id)
         .onSnapshot((querysnap) => {
           var interactions: any[] = [];
           querysnap.forEach((doc) => {
             var interaction;
             interaction = doc.data();
             interaction.id = doc.id;
-            
-              interactions.push( interaction )
-            
+
+            interactions.push(interaction);
           });
 
           this.NPCNormalDialog.numInteraction = interactions.length + 1;
@@ -248,8 +202,6 @@ export class PopoverDialogNPCComponent implements OnInit {
       (await loader).present();
 
       try {
-        //this.dataSvc.createDialog("DialogsNPC", data);
-
         await this.DialogNPCSvc.createDialog(data);
         console.log("CREATED", data);
       } catch (er) {
@@ -258,8 +210,7 @@ export class PopoverDialogNPCComponent implements OnInit {
       // dismiss loader
       await this.popoverCtrl.dismiss();
       (await loader).dismiss();
-      // redirect to home page
-      //  this.navCtrl.navigateRoot("/quest-pages");
+
     }
   }
   removeItemFromArr(arr, i) {
@@ -267,9 +218,6 @@ export class PopoverDialogNPCComponent implements OnInit {
       arr.splice(i, 1);
     }
   }
-
-
-
 
   formValidation() {
     if (this.NPCNormalDialog.questSorprise == "false") {
@@ -296,7 +244,7 @@ export class PopoverDialogNPCComponent implements OnInit {
       this.removeItemFromArr(this.NPCNormalDialog.contenidoPages, element);
     }
 
-    for (let index = 0; index < this.NPCNormalDialog.numPages ; index++) {
+    for (let index = 0; index < this.NPCNormalDialog.numPages; index++) {
       const element = this.NPCNormalDialog.contenidoPages[index];
 
       if (element == "" || element == null || element == undefined) {
@@ -316,11 +264,12 @@ export class PopoverDialogNPCComponent implements OnInit {
       }
     }
 
-    if(this.thisIsPlus){
-    if(this.NPCNormalDialog.accionCausa==null){
-      this.globalOperation.showToast("Ingresa accionCausa" );
-      return false;
-    }}
+    if (this.thisIsPlus) {
+      if (this.NPCNormalDialog.accionCausa == null) {
+        this.globalOperation.showToast("Ingresa accionCausa");
+        return false;
+      }
+    }
 
     return true;
   }

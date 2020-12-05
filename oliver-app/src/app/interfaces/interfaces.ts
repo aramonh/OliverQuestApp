@@ -37,15 +37,15 @@ export interface NPCSabioDialogAnswer {
     idProvCorrecta?:string;
     idProvErronea?:string;
 
-    idInteractionOut?:string;
-    idInteractionBack?:string;
+    boolInteractionGoAndBack?:any;
+    interactionGoAndBack?:string;
 
 
     
-    accionCausa?:string;
-    accionConsecuencia?:string;
+    accionCausa?:any;
+    accionConsecuencia?:any;
     
-    idPlus?:string;
+    boolPlus?:any;
     idOriginal?:string;
 }
 
