@@ -7,6 +7,7 @@ import { Category, Sabio, Town } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CRUDfirebaseService } from 'src/app/services/crudfirebase.service';
 import { LocalService } from 'src/app/services/local.service';
+import { SabiosService } from 'src/app/services/sabios.service';
 import { GlobalOperationsService } from 'src/app/utils/global-operations.service';
 
 @Component({
@@ -34,7 +35,7 @@ export class PopoverEditSabioComponent implements OnInit {
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private authCtrl: AuthService,
-    private dataSvc: CRUDfirebaseService,
+    private sabioSvc:SabiosService,
     private localSvc: LocalService,
     private globalOperation: GlobalOperationsService,
     private popoverCtrl: PopoverController,
@@ -120,7 +121,8 @@ export class PopoverEditSabioComponent implements OnInit {
       (await loader).present();
 
       try {
-        this.dataSvc.updateData("Sabios",this.id,sabio);
+        await this.sabioSvc.updateSabio(this.id,sabio);
+      
         
       } catch (er) {
         this.globalOperation.showToast(er);

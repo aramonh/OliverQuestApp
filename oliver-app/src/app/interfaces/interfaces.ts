@@ -24,7 +24,7 @@ export interface NPCNormalDialog {
 export interface NPCSabioDialogAnswer {
     id?:string;
     numInteraction?:number;
-    sabio:string;
+    sabio:any;
     tipo:string;
 
     numCorrectas?:number;
@@ -38,7 +38,7 @@ export interface NPCSabioDialogAnswer {
     idProvErronea?:string;
 
     boolInteractionGoAndBack?:any;
-    interactionGoAndBack?:string;
+    interactionBack?:string;
 
 
     

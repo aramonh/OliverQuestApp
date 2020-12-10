@@ -80,12 +80,12 @@
         
                   <ion-row>
                     <ion-col size="6">
-                      <ion-button expand="block" fill="solid" shape="round" *ngIf="AC.boolConvCausa!='false'" (click)="presentPopoverVerDialogoNPC(AC.id , 'accionConsecuencia' )" color="danger" >
+                      <ion-button expand="block" fill="solid" shape="round" *ngIf="AC.boolConvCausa!='false'" (click)="presentPopoverVerDialogoNPC(AC.id , 'accionConsecuencia', AC )" color="danger" >
                       Causa
                     </ion-button>
                     </ion-col>
                     <ion-col size="6">
-                      <ion-button expand="block" fill="solid" shape="round" *ngIf="AC.boolConvConsecuencia!='false'" (click)="presentPopoverVerDialogoNPC(AC.id ,'accionCausa' )" color="danger" >
+                      <ion-button expand="block" fill="solid" shape="round" *ngIf="AC.boolConvConsecuencia!='false'" (click)="presentPopoverVerDialogoNPC(AC.id ,'accionCausa', AC )" color="danger" >
                          Consecuencia              
                        </ion-button>
                     </ion-col>

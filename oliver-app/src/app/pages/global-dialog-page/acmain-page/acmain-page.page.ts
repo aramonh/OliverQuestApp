@@ -10,6 +10,7 @@ import {
 import { PopoverAddACComponent } from "src/app/commons/CARDS/AC/popover-add-ac/popover-add-ac.component";
 import { PopoverEditACComponent } from "src/app/commons/CARDS/AC/popover-edit-ac/popover-edit-ac.component";
 import { PopoverDialogNPCVerComponent } from "src/app/commons/CARDS/NPC/popover-dialog-npcver/popover-dialog-npcver.component";
+import { PopoverDialogSabioVerComponent } from 'src/app/commons/CARDS/Sabio/popover-dialog-sabio-ver/popover-dialog-sabio-ver.component';
 import {
   AccionCausaConsecuencia,
   NPC,
@@ -52,17 +53,84 @@ export class ACMainPagePage implements OnInit {
     }
   }
 
-  async presentPopoverVerDialogoNPC(id: any, razon: string) {
-    const popover = await this.popoverController.create({
-      component: PopoverDialogNPCVerComponent,
-      cssClass: "popover-dialog",
-      translucent: true,
-      componentProps: {
-        idAC: id,
-        razon: razon,
-      },
-    });
-    return await popover.present();
+  async presentPopoverVerDialogoNPC(id: any, razon: string, AC:AccionCausaConsecuencia) {
+    if(razon=='accionConsecuencia'){
+      if(AC.npcCausa.tipo=='NPC'){
+        const popover = await this.popoverController.create({
+          component: PopoverDialogNPCVerComponent,
+          cssClass: "popover-dialog",
+          translucent: true,
+          componentProps: {
+            idAC: id,
+            razon: razon,
+          },
+        });
+        return await popover.present();
+      }else if(AC.npcCausa.tipo=='Sabio'){
+        const popover = await this.popoverController.create({
+          component: PopoverDialogSabioVerComponent,
+          cssClass: "popover-dialog",
+          translucent: true,
+          componentProps: {
+            idAC: id,
+            razon: razon,
+          },
+        });
+        return await popover.present();
+      }
+    }else if(razon=='accionCausa'){
+      if(AC.npcConsecuencia.tipo=='NPC'){
+        const popover = await this.popoverController.create({
+          component: PopoverDialogNPCVerComponent,
+          cssClass: "popover-dialog",
+          translucent: true,
+          componentProps: {
+            idAC: id,
+            razon: razon,
+          },
+        });
+        return await popover.present();
+      }else if(AC.npcConsecuencia.tipo=='Sabio'){
+        const popover = await this.popoverController.create({
+          component: PopoverDialogSabioVerComponent,
+          cssClass: "popover-dialog",
+          translucent: true,
+          componentProps: {
+            idAC: id,
+            razon: razon,
+          },
+        });
+        return await popover.present();
+      }else if(AC.npcConsecuencia=="Todos"){
+        const popover = await this.popoverController.create({
+          component: PopoverDialogNPCVerComponent,
+          cssClass: "popover-dialog",
+          translucent: true,
+          componentProps: {
+            idAC: id,
+            razon: razon,
+          },
+        });
+
+
+
+         return await popover.present();
+
+         /*await popover.onDidDismiss().then(async res=>{
+          const popover = await this.popoverController.create({
+            component: PopoverDialogSabioVerComponent,
+            cssClass: "popover-dialog",
+            translucent: true,
+            componentProps: {
+              idAC: id,
+              razon: razon,
+            },
+          });
+          return await popover.present();
+         })*/
+      }
+    }
+    
   }
 
  
