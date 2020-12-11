@@ -420,6 +420,7 @@ export class SabioMainPagePage implements OnInit {
       await this.firestore.firestore
         .collection("DialogsSabio")
         .where("idOriginal", "==", null)
+        .where('sabio.id','==',this.sabioSelected.id)
         .where("tipo", "==", "BadAnswer")
         .onSnapshot((querysnap) => {
           var interactionv: any;
@@ -444,6 +445,7 @@ export class SabioMainPagePage implements OnInit {
       await this.firestore.firestore
         .collection("DialogsSabio")
         .where("idOriginal", "==", null)
+        .where('sabio.id','==',this.sabioSelected.id)
         .where("tipo", "==", "GoodAnswer")
         .onSnapshot((querysnap) => {
           var interactionv: any;
@@ -822,6 +824,7 @@ export class SabioMainPagePage implements OnInit {
       await this.firestore.firestore
         .collection("DialogsSabio")
         .where("idOriginal", "==", null)
+        .where('sabio.id','==',this.sabioSelected.id)
         .where("tipo", "==", "interactions")
         .onSnapshot((querysnap) => {
           var interactions: any[] = [];
@@ -1010,6 +1013,7 @@ export class SabioMainPagePage implements OnInit {
       await this.firestore.firestore
         .collection("DialogsSabio")
         .where("idOriginal", "==", null)
+        .where('sabio.id','==',this.sabioSelected.id)
         .where("tipo", "==", "badWelcomeTime")
         .onSnapshot((querysnap) => {
           var interactions: any[] = [];
@@ -1197,6 +1201,7 @@ export class SabioMainPagePage implements OnInit {
       await this.firestore.firestore
         .collection("DialogsSabio")
         .where("idOriginal", "==", null)
+        .where('sabio.id','==',this.sabioSelected.id)
         .where("tipo", "==", "badWelcomeEscape")
         .onSnapshot((querysnap) => {
           var interactions: any[] = [];
