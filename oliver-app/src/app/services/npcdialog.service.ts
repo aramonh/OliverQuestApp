@@ -60,6 +60,20 @@ export class NPCDialogService {
       }
     }
 
+    if (dialog.boolPlus == 'true'  ||  dialog.boolPlus == true ) {
+      await this.firestore.firestore
+      .collection("DialogsNPC")
+      .where("idOriginal", "==", dialog.id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(doc=>{
+          doc.ref.delete();
+        })
+      });
+    }
+
+
+
     await this.firestore.collection("DialogsNPC").doc(dialog.id).delete();
   }
 

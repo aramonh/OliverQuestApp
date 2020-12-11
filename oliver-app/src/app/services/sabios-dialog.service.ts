@@ -81,6 +81,18 @@ export class SabiosDialogService {
        }
     }
 
+
+    if (dialog.boolPlus == 'true'  ||  dialog.boolPlus == true ) {
+      await this.firestore.firestore
+      .collection("DialogsSabio")
+      .where("idOriginal", "==", dialog.id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(doc=>{
+          doc.ref.delete();
+        })
+      });
+    }
     await this.firestore.collection("DialogsSabio").doc(dialog.id).delete();
   }
 

@@ -4,7 +4,7 @@
     <ion-card-title>Crear Dialog - {{NPCSabioDialogAnswer.tipo }}  </ion-card-title>
     <ion-card-subtitle *ngIf="!thisIsPlus" >{{NPCSabioDialogAnswer.numInteraction }} - {{NPCSabioDialogAnswer.sabio.name}} </ion-card-subtitle>
     <ion-card-subtitle  *ngIf="thisIsPlus"  >PLUS: {{NPCSabioDialogAnswer.numInteraction }} - {{NPCSabioDialogAnswer.sabio.name}}</ion-card-subtitle>
-    <ion-label *ngIf="thisIsPlus">
+    <ion-label *ngIf="thisIsPlus || this.NPCSabioDialogAnswer.tipo=='GoodAnswer'  || this.NPCSabioDialogAnswer.tipo=='BadAnswer'">
       <ion-badge color="success" mode="ios">{{NPCSabioDialogAnswer.numCorrectas}}</ion-badge>
       <ion-badge color="danger" mode="ios">{{NPCSabioDialogAnswer.numErroneas}}</ion-badge>
     </ion-label>
@@ -162,7 +162,7 @@
             placeholder="Select accionConsecuencia"
 
              multiple="false">
-                <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  >{{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name }} : {{AC.name}}</ion-select-option>
+                <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  >{{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name ||  'Todos' }} : {{AC.name}}</ion-select-option>
      
                 <ion-select-option value="Ninguno" >Ninguno</ion-select-option>
             </ion-select>

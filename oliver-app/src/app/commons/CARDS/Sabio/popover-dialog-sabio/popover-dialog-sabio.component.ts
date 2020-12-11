@@ -77,8 +77,9 @@ export class PopoverDialogSabioComponent implements OnInit {
     }
 
     if (tipo) {
+     
       this.NPCSabioDialogAnswer.tipo = tipo;
-
+     
     }
  
     if (sabio) {
@@ -91,7 +92,7 @@ export class PopoverDialogSabioComponent implements OnInit {
       this.thisIsPlus = true;
 
       this.NPCSabioDialogAnswer.idOriginal = idOriginal;
-    } else {
+    } else if((this.NPCSabioDialogAnswer.tipo!="GoodAnswer" && this.NPCSabioDialogAnswer.tipo!="BadAnswer"  ) ) {
       this.getsizeInteractions();
     }
     if (numInt) {
@@ -99,15 +100,17 @@ export class PopoverDialogSabioComponent implements OnInit {
 
       this.NPCSabioDialogAnswer.numInteraction = numInt;
     }
-    if (numCorrecta) {
-      this.thisIsPlus = true;
+    if (numCorrecta || numCorrecta==0) {
+     // this.thisIsPlus = true;
 
       this.NPCSabioDialogAnswer.numCorrectas = numCorrecta;
+      console.log("PLUJS numCorrecta",numCorrecta )
     }
-    if (numErronea) {
-      this.thisIsPlus = true;
+    if (numErronea || numErronea==0) {
+     // this.thisIsPlus = true;
 
       this.NPCSabioDialogAnswer.numErroneas = numErronea;
+      console.log("PLUJS ERRONEA",numErronea )
     }
   }
 
@@ -253,6 +256,8 @@ export class PopoverDialogSabioComponent implements OnInit {
 
  async verificarCorrectasErroneas(){
   try {
+
+    if(!this.thisIsPlus){
     await this.firestore.firestore
       .collection("DialogsSabio")
       .where("idOriginal", "==", null)
@@ -271,13 +276,14 @@ export class PopoverDialogSabioComponent implements OnInit {
 return false;
       
       });
+    }
   } catch (error) {}
   }
 
   formValidation() {
 
 
-    if( this.NPCSabioDialogAnswer.numInteraction==1 ){
+    if( this.NPCSabioDialogAnswer.numInteraction==1 && (this.NPCSabioDialogAnswer.tipo!="GoodAnswer" && this.NPCSabioDialogAnswer.tipo!="BadAnswer"  ) ){
       if( this.NPCSabioDialogAnswer.numCorrectas!=0  ||  this.NPCSabioDialogAnswer.numErroneas!=0  ){
         this.globalOperation.showToast("Primer dialogo con 0-0 Correctas-Erroneas, Por favor");
         return false;

@@ -1,151 +1,221 @@
+<ion-header color="primary" (click)="close()">
+    <ion-toolbar color="primary">
 
-
-<ion-header color ="primary"  (click)="close()"  >
-    <ion-toolbar color ="primary">
-   
-        <ion-title  *ngIf="razon=='accionCausa'"  >Dialogos Consecuencia: {{totaldialogs}} </ion-title>
-        <ion-title  *ngIf="razon=='accionConsecuencia'"  >Dialogo Causa: {{totaldialogs}} </ion-title>
-        <ion-title  *ngIf="razon==null"  >Dialogos PLUS: {{totaldialogs}} </ion-title>
+        <ion-title *ngIf="razon=='accionCausa'">Dialogos Consecuencia: {{totaldialogs}} </ion-title>
+        <ion-title *ngIf="razon=='accionConsecuencia'">Dialogo Causa: {{totaldialogs}} </ion-title>
+        <ion-title *ngIf="razon==null">Dialogos PLUS: {{totaldialogs}} </ion-title>
     </ion-toolbar>
 </ion-header>
 
 
 
-<ion-card  *ngFor=" let NPCNormalDialog of dialogs"   style="width: 100%; text-transform: uppercase; margin: 0%; text-align: center;" (click)="close()" >
-  <ion-card-header class="text-center" color="primary">
+<ion-card *ngFor=" let NPCNormalDialog of dialogs"
+    style="width: 100%; text-transform: uppercase; margin: 0%; text-align: center;" (click)="close()">
+
+    <ion-card-header  *ngIf="NPCNormalDialog.tipo=='GoodAnswer'"  class="text-center" color="success"  >
+        <ion-toolbar     color="success"    >
+            <ion-card-subtitle> Dialogo N° {{NPCNormalDialog?.numInteraction}} - {{NPCNormalDialog?.tipo}}
+            </ion-card-subtitle>
+            <ion-card-subtitle *ngIf="NPCNormalDialog.idOriginal!=null"> PLUS </ion-card-subtitle>
+            <ion-card-title> {{NPCNormalDialog?.sabio.name}} </ion-card-title>
+
+
+            <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null" slot="end"
+                (click)="presentPopoverupdateDialogNPCPLUS(NPCNormalDialog.id)">
+                <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+            </ion-button>
+
+
+            <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null" slot="end"
+                (click)="presentAlertConfirmDeleteDialogPlus(NPCNormalDialog ,NPCNormalDialog.idOriginal )">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+        </ion-toolbar>
+      </ion-card-header>
+
+
+      <ion-card-header  *ngIf="NPCNormalDialog.tipo=='BadAnswer'"  class="text-center" color="danger"  >
+        <ion-toolbar     color="danger"    >
+            <ion-card-subtitle> Dialogo N° {{NPCNormalDialog?.numInteraction}} - {{NPCNormalDialog?.tipo}}
+            </ion-card-subtitle>
+            <ion-card-subtitle *ngIf="NPCNormalDialog.idOriginal!=null"> PLUS </ion-card-subtitle>
+            <ion-card-title> {{NPCNormalDialog?.sabio.name}} </ion-card-title>
+
+
+            <ion-button color="primary" *ngIf="NPCNormalDialog.idOriginal!=null" slot="end"
+                (click)="presentPopoverupdateDialogNPCPLUS(NPCNormalDialog.id)">
+                <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+            </ion-button>
+
+
+            <ion-button color="primary" *ngIf="NPCNormalDialog.idOriginal!=null" slot="end"
+                (click)="presentAlertConfirmDeleteDialogPlus(NPCNormalDialog ,NPCNormalDialog.idOriginal )">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+        </ion-toolbar>
+      </ion-card-header>
+
+    <ion-card-header *ngIf="NPCNormalDialog.tipo!='BadAnswer'  &&   NPCNormalDialog.tipo!='GoodAnswer'" class="text-center" color="primary">
 
 
 
-    <ion-toolbar color="primary">
+        <ion-toolbar color="primary">
 
 
 
-        <ion-card-subtitle> Dialogo N°  {{NPCNormalDialog?.numInteraction}} </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="NPCNormalDialog.idOriginal!=null" > PLUS </ion-card-subtitle>
-        <ion-card-title> {{NPCNormalDialog?.sabio.name}} </ion-card-title>
-
-      <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null"  slot="end" (click)="presentPopoverupdateDialogNPCPLUS(NPCNormalDialog.id)">
-        <ion-icon  slot="icon-only" name="settings-outline"></ion-icon>
-    </ion-button>
-    
-
-    <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null"  slot="end" (click)="presentAlertConfirmDeleteDialogPlus(NPCNormalDialog ,NPCNormalDialog.idOriginal )">
-        <ion-icon  slot="icon-only" name="trash"></ion-icon>
-    </ion-button>
-
-    </ion-toolbar>
-
-    
-
-  </ion-card-header>
-  <ion-card-content>
-
-      <ion-grid class="text-center" fixed>
-
-  
+            <ion-card-subtitle> Dialogo N° {{NPCNormalDialog?.numInteraction}} - {{NPCNormalDialog?.tipo}}
+            </ion-card-subtitle>
+            <ion-card-subtitle *ngIf="NPCNormalDialog.idOriginal!=null"> PLUS </ion-card-subtitle>
+            <ion-card-title> {{NPCNormalDialog?.sabio.name}} </ion-card-title>
 
 
-          <ion-row>
-              <ion-col size="6">
-                  <ion-label>
-                      <strong> N°Pages: </strong>
-                  </ion-label>
-              </ion-col>
-              <ion-col size="6">
-                  <ion-label>
-                      {{NPCNormalDialog.numPages}}
-                  </ion-label>
-              </ion-col>
-          </ion-row>
-
-          <ion-row  *ngFor="let contenidoPage of NPCNormalDialog.contenidoPages; let in= index "  >
-              <ion-col size="6">
-                  <ion-label>
-                      <strong> contenido Page {{in+1}}: </strong>
-                  </ion-label>
-              </ion-col>
-              <ion-col size="6">
-                  <ion-label>
-                   -   {{contenidoPage}}
-                  </ion-label>
-              </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <p>___________________________________</p>
-            </ion-col>
-          </ion-row>
-   
-
-          <ion-row>
-              <ion-col size="6">
-                  <ion-label>
-                      <strong> boolInteractionGoAndBack: </strong>
-                  </ion-label>
-              </ion-col>
-              <ion-col size="6">
-                  <ion-label>
-                      {{NPCNormalDialog.boolInteractionGoAndBack}}
-                  </ion-label>
-              </ion-col>
-          </ion-row>
+            <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null" slot="end"
+                (click)="presentPopoverupdateDialogNPCPLUS(NPCNormalDialog.id)">
+                <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+            </ion-button>
 
 
-          <ion-row *ngIf="NPCNormalDialog.boolInteractionGoAndBack=='true'" >
-              <ion-col size="6">
-                  <ion-label>
-                      <strong> interactionBack: </strong>
-                  </ion-label>
-              </ion-col>
-              <ion-col size="6">
-                  <ion-label>
-                      {{NPCNormalDialog.interactionBack}}
-                  </ion-label>
-              </ion-col>
-          </ion-row>
+            <ion-button color="danger" *ngIf="NPCNormalDialog.idOriginal!=null" slot="end"
+                (click)="presentAlertConfirmDeleteDialogPlus(NPCNormalDialog ,NPCNormalDialog.idOriginal )">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
 
-          <ion-row>
-            <ion-col size="12">
-              <p>___________________________________</p>
-            </ion-col>
-          </ion-row>
+        </ion-toolbar>
 
-          <ion-row  *ngIf="NPCNormalDialog.accionCausa!=null" >
-            <ion-col size="6">
-                <ion-label>
-                    <strong> AC que Causa este dialogo: </strong>
-                </ion-label>
-            </ion-col>
-            <ion-col size="6">
-                <ion-label>
-                    {{NPCNormalDialog.accionCausa.npcCausa.name}} -> {{NPCNormalDialog.accionCausa.npcConsecuencia?.name  ||  'Todos'}} : {{NPCNormalDialog.accionCausa.name}}
-                </ion-label>
-            </ion-col>
+    </ion-card-header>
 
-            <ion-col size="12">
-                <ion-label>
-                    {{NPCNormalDialog.accionCausa.description}}
-                </ion-label>
-            </ion-col>
-        </ion-row>
-          <ion-row  *ngIf="NPCNormalDialog.accionConsecuencia!='Ninguno'"  >
-              <ion-col size="6">
-                  <ion-label>
-                      <strong> AC a Activar: </strong>
-                  </ion-label>
-              </ion-col>
-              <ion-col size="6">
-                  <ion-label>
-                        {{NPCNormalDialog.accionConsecuencia.npcCausa.name}} -> {{NPCNormalDialog.accionConsecuencia.npcConsecuencia?.name  ||  'Todos'}} : {{NPCNormalDialog.accionConsecuencia.name}}
-                  </ion-label>
-              </ion-col>
-              <ion-col size="12">
-                <ion-label>
-                    {{NPCNormalDialog.accionConsecuencia.description}}
-                </ion-label>
-            </ion-col>
-          </ion-row>
-      </ion-grid>
 
-  </ion-card-content>
+
+    <ion-card-content>
+
+        <ion-grid class="text-center" fixed>
+            <ion-row>
+                <ion-col class="text-center" size="12">
+                    <ion-label>
+                        <ion-badge color="success" mode="ios">{{NPCNormalDialog.numCorrectas}}</ion-badge>
+                        <ion-badge color="danger" mode="ios">{{NPCNormalDialog.numErroneas}}</ion-badge>
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+
+
+
+            <ion-row>
+                <ion-col size="6">
+                    <ion-label>
+                        <strong> N°Pages: </strong>
+                    </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-label>
+                        {{NPCNormalDialog.numPages}}
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngFor="let contenidoPage of NPCNormalDialog.contenidoPages; let in= index ">
+                <ion-col size="6">
+                    <ion-label>
+                        <strong> contenido Page {{in+1}}: </strong>
+                    </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-label>
+                        - {{contenidoPage}}
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="this.NPCNormalDialog.tipo=='interactions'">
+                <ion-col size="12">
+                    <p>___________________________________</p>
+                </ion-col>
+            </ion-row>
+
+
+            <ion-row *ngIf="this.NPCNormalDialog.tipo=='interactions'">
+                <ion-col size="6">
+                    <ion-label>
+                        <strong> boolInteractionGoAndBack: </strong>
+                    </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-label>
+                        {{NPCNormalDialog.boolInteractionGoAndBack}}
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+
+
+            <ion-row *ngIf="NPCNormalDialog.boolInteractionGoAndBack=='true'">
+                <ion-col size="6">
+                    <ion-label>
+                        <strong> interactionBack: </strong>
+                    </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-label>
+                        {{NPCNormalDialog.interactionBack}}
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12">
+                    <p>___________________________________</p>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="NPCNormalDialog.accionCausa!=null">
+                <ion-col size="6">
+                    <ion-label>
+                        <strong> AC que Causa este dialogo: </strong>
+                    </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-label>
+                        {{NPCNormalDialog.accionCausa.npcCausa.name}} ->
+                        {{NPCNormalDialog.accionCausa.npcConsecuencia?.name  ||  'Todos'}} :
+                        {{NPCNormalDialog.accionCausa.name}}
+                    </ion-label>
+                </ion-col>
+
+                <ion-col size="12">
+                    <ion-label>
+                        {{NPCNormalDialog.accionCausa.description}}
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="NPCNormalDialog.accionConsecuencia!='Ninguno'">
+                <ion-col size="6">
+                    <ion-label>
+                        <strong> AC a Activar: </strong>
+                    </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-label>
+                        {{NPCNormalDialog.accionConsecuencia.npcCausa.name}} ->
+                        {{NPCNormalDialog.accionConsecuencia.npcConsecuencia?.name  ||  'Todos'}} :
+                        {{NPCNormalDialog.accionConsecuencia.name}}
+                    </ion-label>
+                </ion-col>
+                <ion-col size="12">
+                    <ion-label>
+                        {{NPCNormalDialog.accionConsecuencia.description}}
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="NPCNormalDialog.accionConsecuencia =='Ninguno'">
+                <ion-col size="6">
+                    <ion-label>
+                        <strong> AC a Activar: </strong>
+                    </ion-label>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-label> "Ninguno" </ion-label>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+    </ion-card-content>
 </ion-card>

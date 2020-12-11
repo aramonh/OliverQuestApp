@@ -51,6 +51,55 @@ export class NPCService {
           });
         });
 
+
+        await this.firestore.firestore
+        .collection("DialogsSabio")
+        .where("accionCausa.npcConsecuencia.id", "==", id)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        });
+
+      await this.firestore.firestore
+        .collection("DialogsSabio")
+        .where("accionConsecuencia.npcCausa.id", "==", id)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.update({
+              accionConsecuencia:'Ninguno'
+            });
+          });
+        });
+
+      await this.firestore.firestore
+        .collection("DialogsSabio")
+        .where("accionCausa.npcCausa.id", "==", id)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        });
+
+        
+
+      await this.firestore.firestore
+        .collection("DialogsSabio")
+        .where("accionConsecuencia.npcConsecuencia.id", "==", id)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.update({
+              accionConsecuencia:'Ninguno'
+            });
+          });
+        });
+        //---------------------------
+
+
       await this.firestore.firestore
         .collection("DialogsNPC")
         .where("accionCausa.npcConsecuencia.id", "==", id)
@@ -80,6 +129,8 @@ export class NPCService {
             doc.ref.delete();
           });
         });
+
+
 
       await this.firestore.firestore
         .collection("DialogsNPC")
@@ -322,10 +373,160 @@ export class NPCService {
                 }
               });
             });
-        })
-        .catch((err) => {
+
+
+
+
+
+
+//_------------------------------------------
+            this.firestore.firestore
+            .collection("DialogsSabio")
+    
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                if (doc.data()["accionCausa"] != null) {
+                  if (
+                    doc.data()["accionCausa"]["npcConsecuencia"]["id"] == id
+                  ) {
+                    doc.ref.update({
+                      accionCausa: {
+                        id: doc.data()["accionCausa"]["id"],
+                        name: doc.data()["accionCausa"]["name"],
+                        boolConvCausa: doc.data()["accionCausa"][
+                          "boolConvCausa"
+                        ],
+                        npcCausa: doc.data()["accionCausa"]["npcCausa"],
+                        boolConvConsecuencia: doc.data()["accionCausa"][
+                          "boolConvConsecuencia"
+                        ],
+                        description: doc.data()["accionCausa"]["description"],
+                        npcConsecuencia: {
+                          id: id,
+                          tipo: "NPC",
+                          name: data.name,
+                        },
+                      },
+                    });
+                  }
+                }
+              });
+            });
+          this.firestore.firestore
+            .collection("DialogsSabio")
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                if (doc.data()["accionConsecuencia"] != "Ninguno") {
+                  if (
+                    doc.data()["accionConsecuencia"]["npcConsecuencia"]["id"] ==
+                    id
+                  ) {
+                    doc.ref.update({
+                      accionConsecuencia: {
+                        id: doc.data()["accionConsecuencia"]["id"],
+                        name: doc.data()["accionConsecuencia"]["name"],
+                        boolConvCausa: doc.data()["accionConsecuencia"][
+                          "boolConvCausa"
+                        ],
+                        npcCausa: doc.data()["accionConsecuencia"]["npcCausa"],
+                        boolConvConsecuencia: doc.data()["accionConsecuencia"][
+                          "boolConvConsecuencia"
+                        ],
+                        description: doc.data()["accionConsecuencia"][
+                          "description"
+                        ],
+                        npcConsecuencia: {
+                          id: id,
+                          tipo: "NPC",
+                          name: data.name,
+                        },
+                      },
+                    });
+                  }
+                }
+              });
+            });
+          this.firestore.firestore
+            .collection("DialogsSabio")
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                if (doc.data()["accionCausa"] != null) {
+                  if (doc.data()["accionCausa"]["npcCausa"]["id"] == id) {
+                    doc.ref.update({
+                      accionCausa: {
+                        id: doc.data()["accionCausa"]["id"],
+                        name: doc.data()["accionCausa"]["name"],
+                        boolConvCausa: doc.data()["accionCausa"][
+                          "boolConvCausa"
+                        ],
+                        npcConsecuencia: doc.data()["accionCausa"][
+                          "npcConsecuencia"
+                        ],
+                        boolConvConsecuencia: doc.data()["accionCausa"][
+                          "boolConvConsecuencia"
+                        ],
+                        description: doc.data()["accionCausa"]["description"],
+                        npcCausa: {
+                          id: id,
+                          tipo: "NPC",
+                          name: data.name,
+                        },
+                      },
+                    });
+                  }
+                }
+              });
+            });
+          this.firestore.firestore
+            .collection("DialogsSabio")
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                if (doc.data()["accionConsecuencia"] != "Ninguno") {
+                  if (
+                    doc.data()["accionConsecuencia"]["npcCausa"]["id"] == id
+                  ) {
+                    doc.ref.update({
+                      accionConsecuencia: {
+                        id: doc.data()["accionConsecuencia"]["id"],
+                        name: doc.data()["accionConsecuencia"]["name"],
+                        boolConvCausa: doc.data()["accionConsecuencia"][
+                          "boolConvCausa"
+                        ],
+                        npcConsecuencia: doc.data()["accionConsecuencia"][
+                          "npcConsecuencia"
+                        ],
+                        boolConvConsecuencia: doc.data()["accionConsecuencia"][
+                          "boolConvConsecuencia"
+                        ],
+                        description: doc.data()["accionConsecuencia"][
+                          "description"
+                        ],
+                        npcCausa: {
+                          id: id,
+                          tipo: "NPC",
+                          name: data.name,
+                        },
+                      },
+                    });
+                  }
+                }
+              });
+            });
+        
+
+
+        }).catch((err) => {
           console.log(err);
         });
+
+
+
+
+    
     } catch (error) {
       console.log(error);
     }

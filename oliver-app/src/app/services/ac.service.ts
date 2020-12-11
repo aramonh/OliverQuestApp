@@ -69,6 +69,32 @@ export class ACService {
             });
           });
         });
+        //-------------------------------------------
+        await this.firestore.firestore
+        .collection("DialogsSabio")
+        .where("accionCausa.id", "==", id)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+       
+            doc.ref.delete()
+          
+            ///TODO DELETE DIALOG PLUS - traerlo del service de dialog 
+          });
+        });
+      await this.firestore.firestore
+        .collection("DialogsSabio")
+        .where("accionConsecuencia.id", "==", id)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+
+            ///TODO UPDATE DIALOG PLUS - traerlo del service de dialog 
+            doc.ref.update({
+              accionConsecuencia: "Ninguno",
+            });
+          });
+        });
 
       await this.firestore
         .collection("accionCausaConsecuencias")
@@ -125,6 +151,46 @@ export class ACService {
             });
           this.firestore.firestore
             .collection("DialogsNPC")
+            .where("accionConsecuencia.id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                  accionConsecuencia: {
+                    id:id,
+                    name:data.name,
+                    npcCausa:data.npcCausa,
+                    boolConvCausa:data.boolConvCausa,
+                    npcConsecuencia:data.npcConsecuencia,
+                    boolConvConsecuencia:data.boolConvConsecuencia,
+                    description:data.description,
+                  }
+                });
+              });
+            });
+            ///----------------------------------
+
+            this.firestore.firestore
+            .collection("DialogsSabio")
+            .where("accionCausa.id", "==", id)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                doc.ref.update({
+                  accionCausa:{
+                    id:id,
+                    name:data.name,
+                    npcCausa:data.npcCausa,
+                    boolConvCausa:data.boolConvCausa,
+                    npcConsecuencia:data.npcConsecuencia,
+                    boolConvConsecuencia:data.boolConvConsecuencia,
+                    description:data.description,
+                  } 
+                });
+              });
+            });
+          this.firestore.firestore
+            .collection("DialogsSabio")
             .where("accionConsecuencia.id", "==", id)
             .get()
             .then(function (querySnapshot) {
