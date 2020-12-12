@@ -14,8 +14,7 @@
 
               <ion-card-title>
                 <ion-label style="width: 100%">
-                  <strong style="display: block"> {{i+1}}. </strong>
-                  {{sabio.name}}</ion-label>
+                  {{i+1}}. {{sabio.name}}</ion-label>
               </ion-card-title>
 
               <ion-button color="success" slot="end" (click)="selectSabio(sabio)">
@@ -65,7 +64,7 @@
   *ngIf="sabioSelected  &&  ( !sabioState.dialogQuest  && !sabioState.interactions  && !sabioState.badWelcome && !sabioState.badWelcomeTime  && !sabioState.badWelcomeEscape  ) "
   style="width: 100%; height: 100%" color="light" class="ion-no-padding">
   <ion-grid class="text-center" fixed style="width: 100%; height: 100%; text-transform: uppercase">
-    <ion-row>
+    <ion-row style="background-color: #b49bb6">
       <ion-col class="text-center my-auto" size="3">
         <ion-button class="my-auto" (click)="cleanSabio()">
           <ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon>
@@ -109,7 +108,7 @@
 <ion-content *ngIf="sabioSelected &&  sabioState.badWelcome" style="width: 100%; height: 100%" color="light"
   class="ion-no-padding">
   <ion-grid class="text-center" fixed style="width: 100%; height: 100%; text-transform: uppercase">
-    <ion-row>
+    <ion-row style="background-color: #b49bb6">
       <ion-col class="text-center my-auto" size="3">
         <ion-button class="my-auto" (click)="cleanStateSabio()">
           <ion-icon slot="icon-only" name="return-up-back-outline"></ion-icon>
@@ -169,18 +168,12 @@
       </ion-col>
     </ion-row>
 
-
-
     <!--INT 1-->
-    <ion-row *ngIf="interaction1!=null">
+    <ion-row *ngIf="interaction1!=null" style="background-color: #b49bb6">
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12">
         <ion-card style="text-align: center; text-transform: uppercase" class="text-center">
-          
-          
-          
-          
-          <ion-card-header  *ngIf="interaction1.tipo=='GoodAnswer'"  class="text-center" color="success"  >
-            <ion-toolbar     color="success"    >
+          <ion-card-header *ngIf="interaction1.tipo=='GoodAnswer'" class="text-center" color="success">
+            <ion-toolbar color="success">
               <ion-button color="danger" *ngIf="interaction1.idProvCorrecta==null && interaction1.idProvErronea==null "
                 slot="start" (click)="presentActionSheetSabioQuestWithDelete1(interaction1)">
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
@@ -195,7 +188,6 @@
                 Dialogo - {{interaction1.tipo}}
               </ion-card-subtitle>
               <ion-card-title> {{interaction1.sabio.name}} </ion-card-title>
-            
 
               <ion-button color="danger"
                 (click)="presentPopoverCreatePlusQuest( interaction1.tipo ,  interaction1.numInteraction,interaction1.id ,interaction1.numCorrectas, interaction1.numErroneas )   "
@@ -210,9 +202,8 @@
             </ion-toolbar>
           </ion-card-header>
 
-
-          <ion-card-header  *ngIf="interaction1.tipo=='BadAnswer'"  class="text-center" color="danger"  >
-            <ion-toolbar     color="danger"    >
+          <ion-card-header *ngIf="interaction1.tipo=='BadAnswer'" class="text-center" color="danger">
+            <ion-toolbar color="danger">
               <ion-button color="success" *ngIf="interaction1.idProvCorrecta==null && interaction1.idProvErronea==null "
                 slot="start" (click)="presentActionSheetSabioQuestWithDelete1(interaction1)">
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
@@ -223,11 +214,13 @@
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
               </ion-button>
 
-              <ion-card-subtitle>
+              <ion-card-subtitle *ngIf=" interaction1.numCorrectas<25 &&   interaction1.numErroneas<9 ">
                 Dialogo - {{interaction1.tipo}}
               </ion-card-subtitle>
+              <ion-card-subtitle *ngIf=" interaction1.numCorrectas>=25 ||   interaction1.numErroneas>=9 ">
+                Dialogo FINAL
+              </ion-card-subtitle>
               <ion-card-title> {{interaction1.sabio.name}} </ion-card-title>
-      
 
               <ion-button color="success"
                 (click)="presentPopoverCreatePlusQuest( interaction1.tipo ,  interaction1.numInteraction,interaction1.id ,interaction1.numCorrectas, interaction1.numErroneas )   "
@@ -241,8 +234,6 @@
               </ion-button>
             </ion-toolbar>
           </ion-card-header>
-
-
 
           <ion-card-content>
             <ion-grid class="text-center" fixed>
@@ -266,13 +257,8 @@
               </ion-row>
 
               <ion-row *ngFor="let contenidoPage of interaction1.contenidoPages; let in= index ">
-                <ion-col size="6">
-                  <ion-label>
-                    <strong> contenido Page {{in+1}}: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label> - {{contenidoPage}} </ion-label>
+                <ion-col size="12">
+                  <ion-label>{{in+1}}.-{{contenidoPage}} </ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -281,80 +267,80 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction1.accionConsecuencia!='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction1.accionConsecuencia!='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label>
                     {{interaction1.accionConsecuencia.npcCausa.name}} ->
                     {{interaction1.accionConsecuencia.npcConsecuencia?.name ||
-                    'Todos'}} : {{interaction1.accionConsecuencia.name}}
+                    'Todos'}}
                   </ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-label>
+                    {{interaction1.accionConsecuencia.name}}:
                     {{interaction1.accionConsecuencia.description}}
                   </ion-label>
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction1.accionConsecuencia =='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction1.accionConsecuencia =='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> "Ninguno" </ion-label>
                 </ion-col>
               </ion-row>
-
 
               <ion-row>
                 <ion-col size="12">
                   <p>___________________________________</p>
                 </ion-col>
               </ion-row>
-              
+
               <ion-row>
-                <ion-col size="6">
-                  <ion-button *ngIf="interaction1.idPrev!=null"  expand="block" fill="solid" shape="round"  color="primary"
-                  (click)="selectDiag1(interaction1.idPrev)"
-                  >
-                    Anterior
+                <ion-col class="my-auto" size="6">
+                  <ion-button class="my-auto" *ngIf="interaction1.idPrev!=null" expand="block" fill="solid"
+                    shape="round" color="primary" (click)="selectDiag1(interaction1.idPrev)">
+                    <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
-                <ion-col size="6">
-                  <ion-button *ngIf="interaction1.idProvCorrecta==null"  style="display: block;" expand="block" fill="solid" shape="round" 
-                  (click)="presentPopoverSabioDialogGoodAnswerNext(interaction1.id,interaction1.numCorrectas+1 , interaction1.numErroneas )"
-                     color="success">
-                    Add Correcta
+                <ion-col *ngIf=" interaction1.numCorrectas<25 &&   interaction1.numErroneas<9 " size="6">
+                  <ion-button *ngIf="interaction1.idProvCorrecta==null" style="display: block" expand="block"
+                    fill="solid" shape="round"
+                    (click)="presentPopoverSabioDialogGoodAnswerNext(interaction1.id,interaction1.numCorrectas+1 , interaction1.numErroneas )"
+                    color="success">
+                    <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="add-outline"></ion-icon>
                   </ion-button>
-                  <ion-button  *ngIf="interaction1.idProvCorrecta!=null"   style="display: block;" expand="block" fill="solid" shape="round" 
-                  (click)="selectDiag1(interaction1.idProvCorrecta)"
-                     color="success">
-                    Next Correcta
+                  <ion-button *ngIf="interaction1.idProvCorrecta!=null" style="display: block" expand="block"
+                    fill="solid" shape="round" (click)="selectDiag1(interaction1.idProvCorrecta)" color="success">
+                    <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+
+                    <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
                   </ion-button>
 
-
-                  <ion-button  *ngIf="interaction1.idProvErronea==null"   expand="block" fill="solid" shape="round" 
-                  (click)="presentPopoverSabioDialogBadAnswerNext(interaction1.id,interaction1.numCorrectas , interaction1.numErroneas+1 )"
+                  <ion-button *ngIf="interaction1.idProvErronea==null" expand="block" fill="solid" shape="round"
+                    (click)="presentPopoverSabioDialogBadAnswerNext(interaction1.id,interaction1.numCorrectas , interaction1.numErroneas+1 )"
                     color="danger">
-                    Add Erronea
+                    <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="add-outline"></ion-icon>
                   </ion-button>
-                  <ion-button  *ngIf="interaction1.idProvErronea!=null"    expand="block" fill="solid" shape="round" 
-                  (click)="selectDiag1(interaction1.idProvErronea)"
-                    color="danger">
-                    Next Erronea
+                  <ion-button *ngIf="interaction1.idProvErronea!=null" expand="block" fill="solid" shape="round"
+                    (click)="selectDiag1(interaction1.idProvErronea)" color="danger">
+                    <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
               </ion-row>
-
-
-
             </ion-grid>
           </ion-card-content>
         </ion-card>
@@ -362,15 +348,11 @@
     </ion-row>
 
     <!--INT 2-->
-    <ion-row *ngIf="interaction2!=null">
+    <ion-row *ngIf="interaction2!=null" style="background-color: #b49bb6">
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12">
         <ion-card style="text-align: center; text-transform: uppercase" class="text-center">
-          
-          
-          
-          
-          <ion-card-header  *ngIf="interaction2.tipo=='GoodAnswer'"  class="text-center" color="success"  >
-            <ion-toolbar     color="success"    >
+          <ion-card-header *ngIf="interaction2.tipo=='GoodAnswer'" class="text-center" color="success">
+            <ion-toolbar color="success">
               <ion-button color="danger" *ngIf="interaction2.idProvCorrecta==null && interaction2.idProvErronea==null "
                 slot="start" (click)="presentActionSheetSabioQuestWithDelete2(interaction2)">
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
@@ -381,11 +363,13 @@
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
               </ion-button>
 
-              <ion-card-subtitle>
-                Dialogo - {{interaction2.tipo}}
+              <ion-card-subtitle *ngIf=" interaction2.numCorrectas<25 &&   interaction2.numErroneas<9 ">
+                Dialogo - {{interaction1.tipo}}
+              </ion-card-subtitle>
+              <ion-card-subtitle *ngIf=" interaction2.numCorrectas>=25 ||   interaction2.numErroneas>=9 ">
+                Dialogo FINAL
               </ion-card-subtitle>
               <ion-card-title> {{interaction2.sabio.name}} </ion-card-title>
-            
 
               <ion-button color="danger"
                 (click)="presentPopoverCreatePlusQuest( interaction2.tipo ,  interaction2.numInteraction,interaction2.id ,interaction2.numCorrectas, interaction2.numErroneas )   "
@@ -400,9 +384,8 @@
             </ion-toolbar>
           </ion-card-header>
 
-
-          <ion-card-header  *ngIf="interaction2.tipo=='BadAnswer'"  class="text-center" color="danger"  >
-            <ion-toolbar     color="danger"    >
+          <ion-card-header *ngIf="interaction2.tipo=='BadAnswer'" class="text-center" color="danger">
+            <ion-toolbar color="danger">
               <ion-button color="success" *ngIf="interaction2.idProvCorrecta==null && interaction2.idProvErronea==null "
                 slot="start" (click)="presentActionSheetSabioQuestWithDelete2(interaction2)">
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
@@ -417,7 +400,6 @@
                 Dialogo - {{interaction2.tipo}}
               </ion-card-subtitle>
               <ion-card-title> {{interaction2.sabio.name}} </ion-card-title>
-      
 
               <ion-button color="success"
                 (click)="presentPopoverCreatePlusQuest( interaction2.tipo ,  interaction2.numInteraction,interaction2.id ,interaction2.numCorrectas, interaction2.numErroneas )   "
@@ -431,8 +413,6 @@
               </ion-button>
             </ion-toolbar>
           </ion-card-header>
-
-
 
           <ion-card-content>
             <ion-grid class="text-center" fixed>
@@ -456,13 +436,8 @@
               </ion-row>
 
               <ion-row *ngFor="let contenidoPage of interaction2.contenidoPages; let in= index ">
-                <ion-col size="6">
-                  <ion-label>
-                    <strong> contenido Page {{in+1}}: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label> - {{contenidoPage}} </ion-label>
+                <ion-col size="12">
+                  <ion-label>{{in+1}}.-{{contenidoPage}} </ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -471,89 +446,85 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction2.accionConsecuencia!='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction2.accionConsecuencia!='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label>
                     {{interaction2.accionConsecuencia.npcCausa.name}} ->
                     {{interaction2.accionConsecuencia.npcConsecuencia?.name ||
-                    'Todos'}} : {{interaction2.accionConsecuencia.name}}
+                    'Todos'}}
                   </ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-label>
+                    {{interaction2.accionConsecuencia.name}}:
                     {{interaction2.accionConsecuencia.description}}
                   </ion-label>
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction2.accionConsecuencia =='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction2.accionConsecuencia =='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> "Ninguno" </ion-label>
                 </ion-col>
               </ion-row>
-
 
               <ion-row>
                 <ion-col size="12">
                   <p>___________________________________</p>
                 </ion-col>
               </ion-row>
-              
+
               <ion-row>
                 <ion-col size="6">
-                  <ion-button *ngIf="interaction2.idPrev!=null"  expand="block" fill="solid" shape="round"  color="primary"
-                  (click)="selectDiag2(interaction2.idPrev)"
-                  >
-                    Anterior
+                  <ion-button *ngIf="interaction2.idPrev!=null" expand="block" fill="solid" shape="round"
+                    color="primary" (click)="selectDiag2(interaction2.idPrev)">
+                    <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
-                <ion-col size="6">
-                  <ion-button *ngIf="interaction2.idProvCorrecta==null"  style="display: block;" expand="block" fill="solid" shape="round" 
-                  (click)="presentPopoverSabioDialogGoodAnswerNext(interaction2.id,interaction2.numCorrectas+1 , interaction2.numErroneas )"
-                     color="success">
-                    Add Correcta
+                <ion-col size="6"  *ngIf=" interaction2.numCorrectas<25 &&   interaction2.numErroneas<9 "   >
+                  <ion-button *ngIf="interaction2.idProvCorrecta==null" style="display: block" expand="block"
+                    fill="solid" shape="round"
+                    (click)="presentPopoverSabioDialogGoodAnswerNext(interaction2.id,interaction2.numCorrectas+1 , interaction2.numErroneas )"
+                    color="success">
+                    <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="add-outline"></ion-icon>
                   </ion-button>
-                  <ion-button  *ngIf="interaction2.idProvCorrecta!=null"   style="display: block;" expand="block" fill="solid" shape="round" 
-                  (click)="selectDiag2(interaction2.idProvCorrecta)"
-                     color="success">
-                    Next Correcta
+                  <ion-button *ngIf="interaction2.idProvCorrecta!=null" style="display: block" expand="block"
+                    fill="solid" shape="round" (click)="selectDiag2(interaction2.idProvCorrecta)" color="success">
+                    <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+
+                    <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
                   </ion-button>
 
-
-                  <ion-button  *ngIf="interaction2.idProvErronea==null"   expand="block" fill="solid" shape="round" 
-                  (click)="presentPopoverSabioDialogBadAnswerNext(interaction2.id,interaction2.numCorrectas , interaction2.numErroneas+1 )"
+                  <ion-button *ngIf="interaction2.idProvErronea==null" expand="block" fill="solid" shape="round"
+                    (click)="presentPopoverSabioDialogBadAnswerNext(interaction2.id,interaction2.numCorrectas , interaction2.numErroneas+1 )"
                     color="danger">
-                    Add Erronea
+                    <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="add-outline"></ion-icon>
                   </ion-button>
-                  <ion-button  *ngIf="interaction2.idProvErronea!=null"    expand="block" fill="solid" shape="round" 
-                  (click)="selectDiag2(interaction2.idProvErronea)"
-                    color="danger">
-                    Next Erronea
+                  <ion-button *ngIf="interaction2.idProvErronea!=null" expand="block" fill="solid" shape="round"
+                    (click)="selectDiag2(interaction2.idProvErronea)" color="danger">
+                    <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+                    <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
               </ion-row>
-
-
-
             </ion-grid>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
-
-
-
-
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -593,7 +564,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row style="background-color: #b49bb6">
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
         *ngFor="let interaction of interactions ; let i = index;">
         <ion-card style="text-align: center; text-transform: uppercase" class="text-center">
@@ -643,14 +614,9 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngFor="let contenidoPage of interaction.contenidoPages; let in= index ">
-                <ion-col size="6">
-                  <ion-label>
-                    <strong> contenido Page {{in+1}}: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label> - {{contenidoPage}} </ion-label>
+              <ion-row class="text-center" *ngFor="let contenidoPage of interaction.contenidoPages; let in= index ">
+                <ion-col size="12">
+                  <ion-label>{{in+1}}.-{{contenidoPage}} </ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -659,33 +625,34 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction.accionConsecuencia!='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction.accionConsecuencia!='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label>
                     {{interaction.accionConsecuencia.npcCausa.name}} ->
                     {{interaction.accionConsecuencia.npcConsecuencia?.name ||
-                    'Todos'}} : {{interaction.accionConsecuencia.name}}
+                    'Todos'}}
                   </ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-label>
+                    {{interaction.accionConsecuencia.name}}:
                     {{interaction.accionConsecuencia.description}}
                   </ion-label>
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction.accionConsecuencia =='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction.accionConsecuencia =='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> "Ninguno" </ion-label>
                 </ion-col>
               </ion-row>
@@ -715,7 +682,7 @@
       </ion-col>
       <ion-col class="text-center my-auto" size="6">
         <ion-label class="my-auto">
-          <h1><strong> Bad Welcome Time </strong></h1>
+          <h1><strong> Bad Welcome by Time </strong></h1>
           <ion-badge class="my-auto" color="secondary" mode="ios">
             <h1><strong> {{sabioSelected.name}} </strong></h1>
           </ion-badge>
@@ -729,7 +696,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row style="background-color: #b49bb6">
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
         *ngFor="let interaction of interactions ; let i = index;">
         <ion-card style="text-align: center; text-transform: uppercase" class="text-center">
@@ -779,14 +746,9 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngFor="let contenidoPage of interaction.contenidoPages; let in= index ">
-                <ion-col size="6">
-                  <ion-label>
-                    <strong> contenido Page {{in+1}}: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label> - {{contenidoPage}} </ion-label>
+              <ion-row class="text-center" *ngFor="let contenidoPage of interaction.contenidoPages; let in= index ">
+                <ion-col size="12">
+                  <ion-label>{{in+1}}.-{{contenidoPage}}</ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -795,32 +757,33 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction.accionConsecuencia!='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction.accionConsecuencia!='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    {{interaction.accionConsecuencia.npcCausa.name}} ->
-                    {{interaction.accionConsecuencia.npcConsecuencia?.name ||
-                    'Todos'}} : {{interaction.accionConsecuencia.name}}
                   </ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-label>
+                    {{interaction.accionConsecuencia.npcCausa.name}} ->
+                    {{interaction.accionConsecuencia.npcConsecuencia?.name ||
+                    'Todos'}}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-label>
+                    {{interaction.accionConsecuencia.name}}:
                     {{interaction.accionConsecuencia.description}}
                   </ion-label>
                 </ion-col>
               </ion-row>
-              <ion-row *ngIf="interaction.accionConsecuencia =='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction.accionConsecuencia =='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> "Ninguno" </ion-label>
                 </ion-col>
               </ion-row>
@@ -850,7 +813,7 @@
       </ion-col>
       <ion-col class="text-center my-auto" size="6">
         <ion-label class="my-auto">
-          <h1><strong> Bad Welcome Escape </strong></h1>
+          <h1><strong> Bad Welcome by Escape </strong></h1>
           <ion-badge class="my-auto" color="secondary" mode="ios">
             <h1><strong> {{sabioSelected.name}} </strong></h1>
           </ion-badge>
@@ -864,7 +827,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row style="background-color: #b49bb6">
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
         *ngFor="let interaction of interactions ; let i = index;">
         <ion-card style="text-align: center; text-transform: uppercase" class="text-center">
@@ -914,14 +877,9 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngFor="let contenidoPage of interaction.contenidoPages; let in= index ">
-                <ion-col size="6">
-                  <ion-label>
-                    <strong> contenido Page {{in+1}}: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label> - {{contenidoPage}} </ion-label>
+              <ion-row class="text-center" *ngFor="let contenidoPage of interaction.contenidoPages; let in= index ">
+                <ion-col size="12">
+                  <ion-label>{{in+1}}.-{{contenidoPage}}</ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -930,32 +888,33 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row *ngIf="interaction.accionConsecuencia!='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction.accionConsecuencia!='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    {{interaction.accionConsecuencia.npcCausa.name}} ->
-                    {{interaction.accionConsecuencia.npcConsecuencia?.name ||
-                    'Todos'}} : {{interaction.accionConsecuencia.name}}
                   </ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-label>
+                    {{interaction.accionConsecuencia.npcCausa.name}} ->
+                    {{interaction.accionConsecuencia.npcConsecuencia?.name ||
+                    'Todos'}}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-label>
+                    {{interaction.accionConsecuencia.name}}:
                     {{interaction.accionConsecuencia.description}}
                   </ion-label>
                 </ion-col>
               </ion-row>
-              <ion-row *ngIf="interaction.accionConsecuencia =='Ninguno'">
-                <ion-col size="6">
+              <ion-row class="text-center" *ngIf="interaction.accionConsecuencia =='Ninguno'">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> "Ninguno" </ion-label>
                 </ion-col>
               </ion-row>

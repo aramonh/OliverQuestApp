@@ -28,8 +28,7 @@
 
               <ion-card-title>
                 <ion-label style="width: 100%">
-                  <strong style="display: block"> {{i+1}}. </strong>
-                  {{npc.name}}</ion-label
+                  {{i+1}}. {{npc.name}}</ion-label
                 >
               </ion-card-title>
               <ion-card-subtitle>
@@ -100,7 +99,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row  style="background-color: #b49bb6;"  >
       <ion-col
         size="12"
         size-lg="3"
@@ -173,13 +172,9 @@
               <ion-row
                 *ngFor="let contenidoPage of interaction.contenidoPages; let in= index "
               >
-                <ion-col size="6">
-                  <ion-label>
-                    <strong> contenido Page {{in+1}}: </strong>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label> - {{contenidoPage}} </ion-label>
+         
+                <ion-col size="12">
+                  <ion-label>{{in+1}}.-{{contenidoPage}}</ion-label>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -199,22 +194,22 @@
               </ion-row>
 
               <ion-row *ngIf="interaction.questSorprise=='true'">
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label>
                     <strong> QS-AnsGood: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> {{interaction.questSorpriseAnsGood}} </ion-label>
                 </ion-col>
               </ion-row>
               <ion-row *ngIf="interaction.questSorprise=='true'">
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label>
                     <strong> QS-AnsBad: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> {{interaction.questSorpriseAnsBad}} </ion-label>
                 </ion-col>
               </ion-row>
@@ -225,27 +220,27 @@
               </ion-row>
 
               <ion-row  *ngIf="interaction.accionConsecuencia!='Ninguno'" >
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
-                  <ion-label> {{interaction.accionConsecuencia.npcCausa.name}} -> {{interaction.accionConsecuencia.npcConsecuencia?.name  ||  'Todos'}} : {{interaction.accionConsecuencia.name}} </ion-label>
+                <ion-col size="12">
+                  <ion-label> {{interaction.accionConsecuencia.npcCausa.name}} -> {{interaction.accionConsecuencia.npcConsecuencia?.name  ||  'Todos'}}</ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-label>
-                      {{interaction.accionConsecuencia.description}}
+                  {{interaction.accionConsecuencia.name}}: {{interaction.accionConsecuencia.description}}
                   </ion-label>
               </ion-col>
               </ion-row>
               <ion-row  *ngIf="interaction.accionConsecuencia =='Ninguno'" >
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label>
                     <strong> AC a Activar: </strong>
                   </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                   <ion-label> "Ninguno" </ion-label>
                 </ion-col>
               </ion-row>

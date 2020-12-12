@@ -211,7 +211,7 @@ export class PopoverDialogSabioEditComponent implements OnInit {
                   });
               }
             }
-            if (AC.id == accionConsecuencia.id) {
+            if (AC == accionConsecuencia) {
               ACs1.push(AC);
             }
 
@@ -231,7 +231,7 @@ export class PopoverDialogSabioEditComponent implements OnInit {
                   }
                 });
             }
-            if (AC.id == accionCausa.id) {
+            if (AC == accionCausa) {
               ACs2.push(AC);
             }
           });

@@ -55,7 +55,7 @@
             placeholder="Select numPages"
             [value]="this.NPCSabioDialogAnswer.numPages"
              multiple="false">
-             <ion-select-option  *ngFor="let c of [1,1,1,1,1]; let i = index  "  [value]="i+1" > {{i+1}} </ion-select-option>
+             <ion-select-option  *ngFor="let c of [1,1,1,1,1,1,1,1,1,1]; let i = index  "  [value]="i+1" > {{i+1}} </ion-select-option>
           
             </ion-select>
           </ion-item>
@@ -125,6 +125,82 @@
               <ion-label position="floating">Dialogo Pagina: 5</ion-label>
               <ion-input
                 [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[4]"
+                type="text"
+                required
+              ></ion-input>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row  >
+        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 6" size="12">
+          <ion-item>
+            <ion-label>
+              <ion-label position="floating">Dialogo Pagina: 6</ion-label>
+              <ion-input
+                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[5]"
+                type="text"
+                required
+              ></ion-input>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row  >
+        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 7" size="12">
+          <ion-item>
+            <ion-label>
+              <ion-label position="floating">Dialogo Pagina: 7</ion-label>
+              <ion-input
+                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[6]"
+                type="text"
+                required
+              ></ion-input>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row  >
+        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 8" size="12">
+          <ion-item>
+            <ion-label>
+              <ion-label position="floating">Dialogo Pagina: 8</ion-label>
+              <ion-input
+                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[7]"
+                type="text"
+                required
+              ></ion-input>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row  >
+        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 9" size="12">
+          <ion-item>
+            <ion-label>
+              <ion-label position="floating">Dialogo Pagina: 9</ion-label>
+              <ion-input
+                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[8]"
+                type="text"
+                required
+              ></ion-input>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row  >
+        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 10" size="12">
+          <ion-item>
+            <ion-label>
+              <ion-label position="floating">Dialogo Pagina: 10</ion-label>
+              <ion-input
+                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[9]"
                 type="text"
                 required
               ></ion-input>

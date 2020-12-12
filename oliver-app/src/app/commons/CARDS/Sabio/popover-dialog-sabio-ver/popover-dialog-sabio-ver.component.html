@@ -113,15 +113,11 @@
                 </ion-col>
             </ion-row>
 
-            <ion-row *ngFor="let contenidoPage of NPCNormalDialog.contenidoPages; let in= index ">
-                <ion-col size="6">
+            <ion-row class="text-center" *ngFor="let contenidoPage of NPCNormalDialog.contenidoPages; let in= index ">
+
+                <ion-col size="12">
                     <ion-label>
-                        <strong> contenido Page {{in+1}}: </strong>
-                    </ion-label>
-                </ion-col>
-                <ion-col size="6">
-                    <ion-label>
-                        - {{contenidoPage}}
+                        -{{in+1}}. {{contenidoPage}}
                     </ion-label>
                 </ion-col>
             </ion-row>
@@ -146,15 +142,15 @@
             </ion-row>
 
 
-            <ion-row *ngIf="NPCNormalDialog.boolInteractionGoAndBack=='true'">
-                <ion-col size="6">
+            <ion-row class="text-center" *ngIf="NPCNormalDialog.boolInteractionGoAndBack=='true'">
+                <ion-col size="12">
                     <ion-label>
                         <strong> interactionBack: </strong>
                     </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                     <ion-label>
-                        {{NPCNormalDialog.interactionBack}}
+                       - {{NPCNormalDialog.interactionBack}}
                     </ion-label>
                 </ion-col>
             </ion-row>
@@ -165,53 +161,51 @@
                 </ion-col>
             </ion-row>
 
-            <ion-row *ngIf="NPCNormalDialog.accionCausa!=null">
-                <ion-col size="6">
+            <ion-row class="text-center" *ngIf="NPCNormalDialog.accionCausa!=null">
+                <ion-col size="12">
                     <ion-label>
                         <strong> AC que Causa este dialogo: </strong>
                     </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                     <ion-label>
                         {{NPCNormalDialog.accionCausa.npcCausa.name}} ->
-                        {{NPCNormalDialog.accionCausa.npcConsecuencia?.name  ||  'Todos'}} :
-                        {{NPCNormalDialog.accionCausa.name}}
+                        {{NPCNormalDialog.accionCausa.npcConsecuencia?.name  ||  'Todos'}}
                     </ion-label>
                 </ion-col>
 
                 <ion-col size="12">
                     <ion-label>
-                        {{NPCNormalDialog.accionCausa.description}}
+                        {{NPCNormalDialog.accionCausa.name}}: {{NPCNormalDialog.accionCausa.description}}
                     </ion-label>
                 </ion-col>
             </ion-row>
-            <ion-row *ngIf="NPCNormalDialog.accionConsecuencia!='Ninguno'">
-                <ion-col size="6">
+            <ion-row class="text-center" *ngIf="NPCNormalDialog.accionConsecuencia!='Ninguno'">
+                <ion-col size="12">
                     <ion-label>
                         <strong> AC a Activar: </strong>
                     </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                     <ion-label>
                         {{NPCNormalDialog.accionConsecuencia.npcCausa.name}} ->
-                        {{NPCNormalDialog.accionConsecuencia.npcConsecuencia?.name  ||  'Todos'}} :
-                        {{NPCNormalDialog.accionConsecuencia.name}}
+                        {{NPCNormalDialog.accionConsecuencia.npcConsecuencia?.name  ||  'Todos'}}
                     </ion-label>
                 </ion-col>
                 <ion-col size="12">
                     <ion-label>
-                        {{NPCNormalDialog.accionConsecuencia.description}}
+                        {{NPCNormalDialog.accionConsecuencia.name}}: {{NPCNormalDialog.accionConsecuencia.description}}
                     </ion-label>
                 </ion-col>
             </ion-row>
 
-            <ion-row *ngIf="NPCNormalDialog.accionConsecuencia =='Ninguno'">
-                <ion-col size="6">
+            <ion-row class="text-center" *ngIf="NPCNormalDialog.accionConsecuencia =='Ninguno'">
+                <ion-col size="12">
                     <ion-label>
                         <strong> AC a Activar: </strong>
                     </ion-label>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12">
                     <ion-label> "Ninguno" </ion-label>
                 </ion-col>
             </ion-row>
