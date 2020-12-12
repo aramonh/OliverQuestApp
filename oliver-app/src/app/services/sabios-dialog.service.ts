@@ -18,7 +18,14 @@ export class SabiosDialogService {
         .where("accionCausa.id", "==", dialog.accionCausa.id)
         .get()
         .then(function (querySnapshot) {
-          cantidad1 = querySnapshot.size;
+          cantidad1 = cantidad1+ querySnapshot.size;
+        });
+        await this.firestore.firestore
+        .collection("DialogsNPC")
+        .where("accionCausa.id", "==", dialog.accionCausa.id)
+        .get()
+        .then(function (querySnapshot) {
+          cantidad1 = cantidad1+ querySnapshot.size;
         });
       if (cantidad1 <= 1) {
         var mew: AccionCausaConsecuencia;
@@ -39,7 +46,14 @@ export class SabiosDialogService {
         .where("accionConsecuencia.id", "==", dialog.accionConsecuencia.id)
         .get()
         .then(function (querySnapshot) {
-          cantidad2 = querySnapshot.size;
+          cantidad2 =  cantidad2+querySnapshot.size;
+        });
+        await this.firestore.firestore
+        .collection("DialogsNPC")
+        .where("accionConsecuencia.id", "==", dialog.accionConsecuencia.id)
+        .get()
+        .then(function (querySnapshot) {
+          cantidad2 =cantidad2+ querySnapshot.size;
         });
 
       if (cantidad2 <= 1) {
@@ -196,7 +210,14 @@ export class SabiosDialogService {
         .where("accionCausa.id", "==", OldAccionCausa.id)
         .get()
         .then(function (querySnapshot) {
-          cantidad = querySnapshot.size;
+          cantidad = cantidad+ querySnapshot.size;
+        });
+        await this.firestore.firestore
+        .collection("DialogsNPC")
+        .where("accionCausa.id", "==", OldAccionCausa.id)
+        .get()
+        .then(function (querySnapshot) {
+          cantidad = cantidad+ querySnapshot.size;
         });
 
       if (OldAccionCausa.id != dialog.accionCausa.id) {
@@ -282,6 +303,7 @@ export class SabiosDialogService {
         cantDial = querySnapshot.size;
       });
 
+
     if (cantDial <= 1) {
       await this.firestore.firestore
         .collection("DialogsSabio")
@@ -300,7 +322,14 @@ export class SabiosDialogService {
         .where("accionCausa.id", "==", dialog.accionCausa.id)
         .get()
         .then(function (querySnapshot) {
-          cantidad1 = querySnapshot.size;
+          cantidad1 = cantidad1+querySnapshot.size;
+        });
+        await this.firestore.firestore
+        .collection("DialogsNPC")
+        .where("accionCausa.id", "==", dialog.accionCausa.id)
+        .get()
+        .then(function (querySnapshot) {
+          cantidad1 = cantidad1+querySnapshot.size;
         });
       if (cantidad1 <= 1) {
         var mew: AccionCausaConsecuencia;
@@ -322,7 +351,14 @@ export class SabiosDialogService {
         .where("accionConsecuencia.id", "==", dialog.accionConsecuencia.id)
         .get()
         .then(function (querySnapshot) {
-          cantidad2 = querySnapshot.size;
+          cantidad2 = cantidad2+ querySnapshot.size;
+        });
+        await this.firestore.firestore
+        .collection("DialogsNPC")
+        .where("accionConsecuencia.id", "==", dialog.accionConsecuencia.id)
+        .get()
+        .then(function (querySnapshot) {
+          cantidad2 = cantidad2+ querySnapshot.size;
         });
 
       if (cantidad2 <= 1) {

@@ -10,6 +10,7 @@ import {
 import { PopoverAddACComponent } from "src/app/commons/CARDS/AC/popover-add-ac/popover-add-ac.component";
 import { PopoverEditACComponent } from "src/app/commons/CARDS/AC/popover-edit-ac/popover-edit-ac.component";
 import { PopoverDialogNPCVerComponent } from "src/app/commons/CARDS/NPC/popover-dialog-npcver/popover-dialog-npcver.component";
+import { PopoverVerDialogSabioAndNPCComponent } from 'src/app/commons/CARDS/popover-ver-dialog-sabio-and-npc/popover-ver-dialog-sabio-and-npc.component';
 import { PopoverDialogSabioVerComponent } from 'src/app/commons/CARDS/Sabio/popover-dialog-sabio-ver/popover-dialog-sabio-ver.component';
 import {
   AccionCausaConsecuencia,
@@ -103,7 +104,7 @@ export class ACMainPagePage implements OnInit {
         return await popover.present();
       }else if(AC.npcConsecuencia=="Todos"){
         const popover = await this.popoverController.create({
-          component: PopoverDialogNPCVerComponent,
+          component: PopoverVerDialogSabioAndNPCComponent,
           cssClass: "popover-dialog",
           translucent: true,
           componentProps: {

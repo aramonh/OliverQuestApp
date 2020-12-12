@@ -184,8 +184,11 @@
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
               </ion-button>
 
-              <ion-card-subtitle>
+              <ion-card-subtitle *ngIf=" interaction1.numCorrectas<25 &&   interaction1.numErroneas<9 ">
                 Dialogo - {{interaction1.tipo}}
+              </ion-card-subtitle>
+              <ion-card-subtitle *ngIf=" interaction1.numCorrectas>=25 ||   interaction1.numErroneas>=9 ">
+                Dialogo FINAL
               </ion-card-subtitle>
               <ion-card-title> {{interaction1.sabio.name}} </ion-card-title>
 
@@ -364,7 +367,7 @@
               </ion-button>
 
               <ion-card-subtitle *ngIf=" interaction2.numCorrectas<25 &&   interaction2.numErroneas<9 ">
-                Dialogo - {{interaction1.tipo}}
+                Dialogo - {{interaction2.tipo}}
               </ion-card-subtitle>
               <ion-card-subtitle *ngIf=" interaction2.numCorrectas>=25 ||   interaction2.numErroneas>=9 ">
                 Dialogo FINAL
@@ -396,8 +399,11 @@
                 <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
               </ion-button>
 
-              <ion-card-subtitle>
+              <ion-card-subtitle *ngIf=" interaction2.numCorrectas<25 &&   interaction2.numErroneas<9 ">
                 Dialogo - {{interaction2.tipo}}
+              </ion-card-subtitle>
+              <ion-card-subtitle *ngIf=" interaction2.numCorrectas>=25 ||   interaction2.numErroneas>=9 ">
+                Dialogo FINAL
               </ion-card-subtitle>
               <ion-card-title> {{interaction2.sabio.name}} </ion-card-title>
 
