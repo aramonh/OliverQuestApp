@@ -1,85 +1,82 @@
-<ion-card style="width: 90%; height: 100%;"  class="text-center" >
-  <ion-card-header class="text-center" >
 
-    <ion-card-title>Editar Sabio</ion-card-title>
-  </ion-card-header>
+<ion-content style="width: 100%; height: 100%;"  class="text-center"  >
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Editar Sabio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid fixed class="text-center" >
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input
+              [(ngModel)]="sabio.name"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-
-  <ion-card-content class="text-center"  >
-    
-    <ion-grid fixed class="text-center" >
-      <ion-row>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Name</ion-label>
-              <ion-input
-                [(ngModel)]="sabio.name"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>Town: </ion-label>
-            <ion-select [(ngModel)]="this.sabio.town"
-            interface="popover"
-            placeholder="Select Town"
-            [value]="this.sabio.town"
-            multiple="false">
-                <ion-select-option *ngFor="let town of towns | async" [value]="town.town" >{{town.town}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>Town: </ion-label>
+          <ion-select [(ngModel)]="this.sabio.town"
+          interface="popover"
+          placeholder="Select Town"
+          [value]="this.sabio.town"
+          multiple="false">
+              <ion-select-option *ngFor="let town of towns | async" [value]="town.town" >{{town.town}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
 
-      <ion-row>
-        <ion-col size="12">
-   
-        
-          <ion-item>
-            <ion-label>Categoria : {{ sabio.category || "?"}}</ion-label>
-            <ion-select
-              [(ngModel)]="sabio.category"
-              interface="popover"
-              placeholder="Select Category"
-              [value]="sabio.category"
-            >
-              <ion-select-option
-                *ngFor="let category of categorys | async"
-                [value]="category.categoria"
-                >{{category.categoria}}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-  
-       
+    <ion-row>
+      <ion-col size="12">
+ 
       
-        </ion-col>
-      </ion-row>
-
-
-      <ion-row>
-        <ion-col size="12">
-          <ion-button
-            (click)="updateData(sabio)"
-            class="ion-padding"
-            expand="full"
-            fill="solid"
-            shape="round"
+        <ion-item>
+          <ion-label>Categoria : {{ sabio.category || "?"}}</ion-label>
+          <ion-select
+            [(ngModel)]="sabio.category"
+            interface="popover"
+            placeholder="Select Category"
+            [value]="sabio.category"
           >
-            Update
-          </ion-button>
-        </ion-col>
-      </ion-row>
+            <ion-select-option
+              *ngFor="let category of categorys | async"
+              [value]="category.categoria"
+              >{{category.categoria}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
 
-    </ion-grid>
+     
+    
+      </ion-col>
+    </ion-row>
 
-  </ion-card-content>
-</ion-card>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          (click)="updateData(sabio)"
+          class="ion-padding"
+          expand="full"
+          fill="solid"
+          shape="round"
+        >
+          Update
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
+

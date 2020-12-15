@@ -1,307 +1,303 @@
-<ion-card style="width: 90%; height: 100%;"  class="text-center" >
-  <ion-card-header class="text-center" >
+<ion-content  style="width: 100%; height: 100%;"  class="text-center" >
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Crear Interaccion {{NPCSabioDialogAnswer.tipo }}</ion-title>
+      <ion-card-subtitle *ngIf="!thisIsPlus" >{{NPCSabioDialogAnswer.numInteraction }} - {{NPCSabioDialogAnswer.sabio.name}} </ion-card-subtitle>
+      <ion-card-subtitle  *ngIf="thisIsPlus"  >PLUS: {{NPCSabioDialogAnswer.numInteraction }} - {{NPCSabioDialogAnswer.sabio.name}}</ion-card-subtitle>
+      <ion-label *ngIf="thisIsPlus || this.NPCSabioDialogAnswer.tipo=='GoodAnswer'  || this.NPCSabioDialogAnswer.tipo=='BadAnswer'">
+        <ion-badge color="success" mode="ios">{{NPCSabioDialogAnswer.numCorrectas}}</ion-badge>
+        <ion-badge color="danger" mode="ios">{{NPCSabioDialogAnswer.numErroneas}}</ion-badge>
+      </ion-label>
+    </ion-toolbar>
+  </ion-header>
 
-    <ion-card-title>Crear Interaccion {{NPCSabioDialogAnswer.tipo }}  </ion-card-title>
-    <ion-card-subtitle *ngIf="!thisIsPlus" >{{NPCSabioDialogAnswer.numInteraction }} - {{NPCSabioDialogAnswer.sabio.name}} </ion-card-subtitle>
-    <ion-card-subtitle  *ngIf="thisIsPlus"  >PLUS: {{NPCSabioDialogAnswer.numInteraction }} - {{NPCSabioDialogAnswer.sabio.name}}</ion-card-subtitle>
-    <ion-label *ngIf="thisIsPlus || this.NPCSabioDialogAnswer.tipo=='GoodAnswer'  || this.NPCSabioDialogAnswer.tipo=='BadAnswer'">
-      <ion-badge color="success" mode="ios">{{NPCSabioDialogAnswer.numCorrectas}}</ion-badge>
-      <ion-badge color="danger" mode="ios">{{NPCSabioDialogAnswer.numErroneas}}</ion-badge>
-    </ion-label>
-  </ion-card-header>
-
-
-  <ion-card-content class="text-center"  >
-    
-    <ion-grid fixed class="text-center" >
-      <ion-row>
-        <ion-col  *ngIf="this.NPCSabioDialogAnswer.tipo!='GoodAnswer'  && this.NPCSabioDialogAnswer.tipo!='BadAnswer'   &&  !thisIsPlus " size="12">
-          <ion-item>
-            <ion-label>numCorrectas: </ion-label>
-            <ion-select (ionChange)="verificarCorrectasErroneas()" [(ngModel)]="this.NPCSabioDialogAnswer.numCorrectas"     
-            interface="popover"
-            placeholder="Select numCorrectas"
-            [value]="this.NPCSabioDialogAnswer.numCorrectas"
-             multiple="false">
-             <ion-select-option  *ngFor="let c of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let i = index  "  [value]="i" > {{i}} </ion-select-option>
-          
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.tipo!='GoodAnswer'  && this.NPCSabioDialogAnswer.tipo!='BadAnswer'  &&  !thisIsPlus   " size="12">
-          <ion-item>
-            <ion-label>numErroneas: </ion-label>
-            <ion-select (ionChange)="verificarCorrectasErroneas()" [(ngModel)]="this.NPCSabioDialogAnswer.numErroneas"     
-            interface="popover"
-            placeholder="Select numErroneas"
-            [value]="this.NPCSabioDialogAnswer.numErroneas"
-             multiple="false">
-             <ion-select-option  *ngFor="let c of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let i = index  "  [value]="i" > {{i}} </ion-select-option>
-          
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+  <ion-grid fixed class="text-center" >
+    <ion-row>
+      <ion-col  *ngIf="this.NPCSabioDialogAnswer.tipo!='GoodAnswer'  && this.NPCSabioDialogAnswer.tipo!='BadAnswer'   &&  !thisIsPlus " size="12">
+        <ion-item>
+          <ion-label>numCorrectas: </ion-label>
+          <ion-select (ionChange)="verificarCorrectasErroneas()" [(ngModel)]="this.NPCSabioDialogAnswer.numCorrectas"     
+          interface="popover"
+          placeholder="Select numCorrectas"
+          [value]="this.NPCSabioDialogAnswer.numCorrectas"
+           multiple="false">
+           <ion-select-option  *ngFor="let c of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let i = index  "  [value]="i" > {{i}} </ion-select-option>
+        
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.tipo!='GoodAnswer'  && this.NPCSabioDialogAnswer.tipo!='BadAnswer'  &&  !thisIsPlus   " size="12">
+        <ion-item>
+          <ion-label>numErroneas: </ion-label>
+          <ion-select (ionChange)="verificarCorrectasErroneas()" [(ngModel)]="this.NPCSabioDialogAnswer.numErroneas"     
+          interface="popover"
+          placeholder="Select numErroneas"
+          [value]="this.NPCSabioDialogAnswer.numErroneas"
+           multiple="false">
+           <ion-select-option  *ngFor="let c of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; let i = index  "  [value]="i" > {{i}} </ion-select-option>
+        
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
 
-      <ion-row>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>numPages: </ion-label>
-            <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.numPages"     
-            interface="popover"
-            placeholder="Select numPages"
-            [value]="this.NPCSabioDialogAnswer.numPages"
-             multiple="false">
-             <ion-select-option  *ngFor="let c of [1,1,1,1,1,1,1,1,1,1]; let i = index  "  [value]="i+1" > {{i+1}} </ion-select-option>
-          
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>numPages: </ion-label>
+          <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.numPages"     
+          interface="popover"
+          placeholder="Select numPages"
+          [value]="this.NPCSabioDialogAnswer.numPages"
+           multiple="false">
+           <ion-select-option  *ngFor="let c of [1,1,1,1,1,1,1,1,1,1]; let i = index  "  [value]="i+1" > {{i+1}} </ion-select-option>
+        
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 1" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 1</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[0]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 2" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 2</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[1]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 3" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 3</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[2]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages  >= 4" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 4</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[3]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 5" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 5</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[4]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 1" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 1</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[0]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 2" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 2</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[1]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 3" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 3</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[2]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages  >= 4" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 4</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[3]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 5" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 5</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[4]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
 
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 6" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 6</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[5]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 6" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 6</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[5]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 7" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 7</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[6]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 7" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 7</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[6]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 8" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 8</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[7]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 8" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 8</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[7]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 9" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 9</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[8]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 9" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 9</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[8]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 10" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo Pagina: 10</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[9]"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.numPages >= 10" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo Pagina: 10</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.contenidoPages[9]"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
 
 
-      <ion-row  *ngIf="thisIsPlus" >
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>Accion que Causa este Dialog: </ion-label>
-            <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.accionCausa"     
-            interface="popover"
-            placeholder="Select accionCausa"
-     
-             multiple="false">
-                <ion-select-option *ngFor="let AC of ACsCausa" [value]="AC"  >{{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name  ||  'Todos'}} : {{AC.name}}</ion-select-option>
-
-    
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-
-
-      <ion-row>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>Accion a Activar con este Dialog: </ion-label>
-            <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.accionConsecuencia"     
-            interface="popover"
-            placeholder="Select accionConsecuencia"
-
-             multiple="false">
-                <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  >{{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name  ||  'Todos'}} : {{AC.name}}</ion-select-option>
-     
-                <ion-select-option value="Ninguno" >Ninguno</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-
-      <ion-row>
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.tipo=='interactions'" size="12">
-          <ion-item>
-            <ion-label>boolInteractionGoAndBack: </ion-label>
-            <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.boolInteractionGoAndBack"     
-            interface="popover"
-            placeholder="Select boolInteractionGoAndBack"
-            [value]="this.NPCSabioDialogAnswer.boolInteractionGoAndBack"
-             multiple="false">
-             <ion-select-option value=true >Si</ion-select-option>
-
-                <ion-select-option value=false >No</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-
-      <ion-row  >
-        <ion-col *ngIf="this.NPCSabioDialogAnswer.boolInteractionGoAndBack=='true'" size="12">
-          <ion-item>
-            <ion-label>
-              <ion-label position="floating">Dialogo interactionBack:</ion-label>
-              <ion-input
-                [(ngModel)]="NPCSabioDialogAnswer.interactionBack"
-                type="text"
-                required
-              ></ion-input>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-
+    <ion-row  *ngIf="thisIsPlus" >
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>Accion que Causa este Dialog: </ion-label>
+          <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.accionCausa"     
+          interface="popover"
+          placeholder="Select accionCausa"
+   
+           multiple="false">
+              <ion-select-option *ngFor="let AC of ACsCausa" [value]="AC"  >{{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name  ||  'Todos'}} : {{AC.name}}</ion-select-option>
 
   
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>Accion a Activar con este Dialog: </ion-label>
+          <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.accionConsecuencia"     
+          interface="popover"
+          placeholder="Select accionConsecuencia"
+
+           multiple="false">
+              <ion-select-option *ngFor="let AC of ACsConsecuencia"  [value]="AC"  >{{AC.npcCausa.name}} -> {{AC.npcConsecuencia?.name  ||  'Todos'}} : {{AC.name}}</ion-select-option>
+   
+              <ion-select-option value="Ninguno" >Ninguno</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.tipo=='interactions'" size="12">
+        <ion-item>
+          <ion-label>boolInteractionGoAndBack: </ion-label>
+          <ion-select [(ngModel)]="this.NPCSabioDialogAnswer.boolInteractionGoAndBack"     
+          interface="popover"
+          placeholder="Select boolInteractionGoAndBack"
+          [value]="this.NPCSabioDialogAnswer.boolInteractionGoAndBack"
+           multiple="false">
+           <ion-select-option value=true >Si</ion-select-option>
+
+              <ion-select-option value=false >No</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row  >
+      <ion-col *ngIf="this.NPCSabioDialogAnswer.boolInteractionGoAndBack=='true'" size="12">
+        <ion-item>
+          <ion-label>
+            <ion-label position="floating">Dialogo interactionBack:</ion-label>
+            <ion-input
+              [(ngModel)]="NPCSabioDialogAnswer.interactionBack"
+              type="text"
+              required
+            ></ion-input>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
 
 
 
-      <ion-row      >
-        <ion-col size="12">
-          <ion-button
-          (click)="updateData( NPCSabioDialogAnswer )"
-            class="ion-padding"
-            expand="full"
-            fill="solid"
-            shape="round" >
-            Update
-          </ion-button>
-        </ion-col>
-      </ion-row>
 
-    </ion-grid>
 
-  </ion-card-content>
-</ion-card>
+
+
+    <ion-row      >
+      <ion-col size="12">
+        <ion-button
+        (click)="updateData( NPCSabioDialogAnswer )"
+          class="ion-padding"
+          expand="full"
+          fill="solid"
+          shape="round" >
+          Update
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

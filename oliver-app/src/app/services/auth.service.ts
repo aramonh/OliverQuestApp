@@ -101,13 +101,14 @@ user:User ={
   }*/
 
   loginGoogle() {
-    if (this.platform.is('cordova')) {
+    this.loginGoogleAndroid();
+    /*if (this.platform.is('capacitor')) {
       console.log("PLATFORM ANDROID")
-      this.loginGoogleAndroid();
+     
     } else {
       console.log("PLATFORM WEB")
       this.loginGoogleWeb();
-    }
+    }*/
   }
   async loginGoogleAndroid() {
     const res = await this.googlePlus.login({
